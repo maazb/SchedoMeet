@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unicons/unicons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -115,14 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Stack(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(width * 0.03),
+                        padding: EdgeInsets.all(width * 0.028),
                         decoration: BoxDecoration(
                             color: white,
                             borderRadius: BorderRadius.circular(width * 5)),
                         child: Icon(
-                          CupertinoIcons.bell_fill,
+                          UniconsLine.bell,
                           color: textColor,
-                          size: height * 0.03,
+                          size: height * 0.032,
                         ),
                       ),
                       Positioned(
@@ -130,8 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           top: 0,
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: width * 0.01,
-                                vertical: height * 0.0005),
+                                horizontal: width * 0.012,
+                                vertical: height * 0.000),
                             decoration: BoxDecoration(
                                 color: red,
                                 borderRadius: BorderRadius.circular(width * 5)),
@@ -141,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 textStyle: TextStyle(
                                     color: white,
                                     //height: 1.3,
-                                    fontSize: height * 0.012,
+                                    fontSize: height * 0.014,
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
