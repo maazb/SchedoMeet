@@ -1,5 +1,5 @@
 import 'package:bit_planner/View/bottom_navigator.dart';
-import 'package:bit_planner/View/home_screen.dart';
+import 'package:bit_planner/View/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

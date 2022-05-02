@@ -10,3 +10,4 @@ Color brown = const Color.fromRGBO(57, 36, 19, 1);
 Color yellowLight = const Color.fromRGBO(254, 243, 226, 1);
 Color greyLight = const Color.fromRGBO(247, 247, 247, 1);
 Color grey = const Color.fromRGBO(134, 134, 155, 1);
+Color greyMedium = const Color.fromRGBO(245, 245, 245, 1);

@@ -336,10 +336,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(
-                              left: width * 0.03,
+                              left: width * 0.04,
                               top: height * 0.015,
                               bottom: height * 0.005,
-                              right: width * 0.03),
+                              right: width * 0.04),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -370,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(
-                              horizontal: width * 0.03,
+                              horizontal: width * 0.04,
                               vertical: height * 0.005),
                           child: Text(
                             'Design team - Finalize checkout flow and add cards with clients.',
@@ -387,10 +387,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Container(
                           margin: EdgeInsets.only(
-                              left: width * 0.03,
+                              left: width * 0.04,
                               bottom: height * 0.015,
                               top: height * 0.00,
-                              right: width * 0.03),
+                              right: width * 0.04),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

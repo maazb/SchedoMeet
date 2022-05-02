@@ -1,6 +1,9 @@
 import 'package:bit_planner/Helper/values.dart';
-import 'package:bit_planner/View/home_screen.dart';
-import 'package:bit_planner/View/messages.dart';
+import 'package:bit_planner/View/Calendar/calendar.dart';
+import 'package:bit_planner/View/Home/home_screen.dart';
+import 'package:bit_planner/View/Meetings/meetings.dart';
+import 'package:bit_planner/View/Messages/messages.dart';
+import 'package:bit_planner/View/Profile/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,7 +25,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
-    return [HomeScreen(), Messages()];
+    return [HomeScreen(), Meetings(), Calendar(), Messages(), Profile()];
   }
 
   @override
@@ -47,7 +50,33 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             textStyle: TextStyle(
                 //color: grey,
                 height: 1,
-                fontSize: height * 0.015,
+                fontSize: height * 0.014,
+                fontWeight: FontWeight.w400),
+          ),
+          activeColorPrimary: primaryBlue,
+          inactiveColorPrimary: grey,
+        ),
+        PersistentBottomNavBarItem(
+          icon: Icon(UniconsLine.meeting_board),
+          title: ("Meetings"),
+          textStyle: GoogleFonts.poppins(
+            textStyle: TextStyle(
+                //color: grey,
+                height: 1,
+                fontSize: height * 0.014,
+                fontWeight: FontWeight.w400),
+          ),
+          activeColorPrimary: primaryBlue,
+          inactiveColorPrimary: grey,
+        ),
+        PersistentBottomNavBarItem(
+          icon: Icon(UniconsLine.calender),
+          title: ("Calendar"),
+          textStyle: GoogleFonts.poppins(
+            textStyle: TextStyle(
+                //color: grey,
+                height: 1,
+                fontSize: height * 0.014,
                 fontWeight: FontWeight.w400),
           ),
           activeColorPrimary: primaryBlue,
@@ -60,7 +89,20 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             textStyle: TextStyle(
                 //color: grey,
                 height: 1,
-                fontSize: height * 0.015,
+                fontSize: height * 0.014,
+                fontWeight: FontWeight.w400),
+          ),
+          activeColorPrimary: primaryBlue,
+          inactiveColorPrimary: grey,
+        ),
+        PersistentBottomNavBarItem(
+          icon: Icon(UniconsLine.user),
+          title: ("Profile"),
+          textStyle: GoogleFonts.poppins(
+            textStyle: TextStyle(
+                //color: grey,
+                height: 1,
+                fontSize: height * 0.014,
                 fontWeight: FontWeight.w400),
           ),
           activeColorPrimary: primaryBlue,
