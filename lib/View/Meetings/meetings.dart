@@ -3,6 +3,7 @@ import 'package:bit_planner/Helper/values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -20,7 +21,8 @@ class _MeetingsState extends State<Meetings> {
   late double height;
   late double width;
   final MeetingController _meetingController = Get.put(MeetingController());
-  late final PageController _pageController;
+  PageController _pageController = PageController();
+  ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -33,11 +35,11 @@ class _MeetingsState extends State<Meetings> {
         titleSpacing: 0.0,
         backgroundColor: greyLight,
         elevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.light,
-          statusBarColor: greyLight,
-          statusBarIconBrightness: Brightness.dark,
-        ),
+        // systemOverlayStyle: SystemUiOverlayStyle(
+        //   statusBarBrightness: Brightness.light,
+        //   statusBarColor: greyLight,
+        //   statusBarIconBrightness: Brightness.dark,
+        // ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(
@@ -84,7 +86,7 @@ class _MeetingsState extends State<Meetings> {
                             Border.all(color: grey.withOpacity(0.4), width: 1),
                         borderRadius: BorderRadius.circular(width * 5)),
                     child: Icon(
-                      Icons.more_horiz_outlined,
+                      UniconsLine.plus,
                       color: textColor,
                       size: height * 0.032,
                     ),
@@ -94,6 +96,7 @@ class _MeetingsState extends State<Meetings> {
             )),
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             Container(
@@ -105,84 +108,82 @@ class _MeetingsState extends State<Meetings> {
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: height * 0.015),
+                          margin: EdgeInsets.only(top: height * 0),
                           width: width,
-                          height: height * 0.055,
-                          decoration: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(width * 0.03),
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //       blurRadius: 20,
-                            //       color: shadowgrey,
-                            //       offset: const Offset(0, 1))
-                            //]
-                          ),
+                          //height: height * 0.055,
+                          // decoration: BoxDecoration(
+                          //   color: white,
+                          //   borderRadius: BorderRadius.circular(width * 0.03),
+                          //   // boxShadow: [
+                          //   //   BoxShadow(
+                          //   //       blurRadius: 20,
+                          //   //       color: shadowgrey,
+                          //   //       offset: const Offset(0, 1))
+                          //   //]
+                          // ),
                           child: Row(
                             children: [
-                              CupertinoButton(
-                                onPressed: () {
-                                  // int difference = _meetingController
-                                  //     .focusedDay!.value
-                                  //     .difference(DateTime.now()
-                                  //         .add(Duration(days: -90)))
-                                  //     .inDays;
-                                  // int val = (difference / 30).ceil();
-                                  // print(val);
-                                  // if (val > 0) {
-                                  //   if (val == 1) {
-                                  //     _meetingController.focusedDay!.value =
-                                  //         DateTime.now()
-                                  //             .add(Duration(days: -90));
-                                  //   } else {
-                                  _meetingController.focusedDay!.value =
-                                      _meetingController.focusedDay!.value
-                                          .add(const Duration(days: -7));
-                                  // }
-                                  // }
-                                },
-                                child: Icon(
-                                  Icons.arrow_back_ios_sharp,
-                                  color: textColor,
-                                  size: height * 0.02,
-                                ),
-                              ),
                               Expanded(
-                                child: Center(
-                                  child: Obx(
-                                    () => Text(
-                                      DateFormat('MMMM, yyyy')
-                                          .format(_meetingController
-                                              .focusedDay!.value)
-                                          .toString(),
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                            color: textColor,
-                                            fontSize: height * 0.018,
-                                            fontWeight: FontWeight.w400),
-                                      ),
+                                child: Obx(
+                                  () => Text(
+                                    DateFormat('MMMM yyyy')
+                                        .format(_meetingController
+                                            .focusedDay!.value)
+                                        .toString(),
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                          color: textColor,
+                                          height: 1,
+                                          fontSize: height * 0.024,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                 ),
                               ),
                               CupertinoButton(
                                 onPressed: () {
-                                  // int difference = DateTime.now()
-                                  //     .difference(
-                                  //         _meetingController.focusedDay!.value)
-                                  //     .inDays;
-                                  // int val = (difference / 30).floor();
-                                  // print(val);
-                                  // if (val > 0) {
-                                  _meetingController.focusedDay!.value =
-                                      _meetingController.focusedDay!.value
-                                          .add(const Duration(days: 7));
-                                  // }
+                                  _pageController.previousPage(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeOut);
                                 },
-                                child: Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  color: textColor,
-                                  size: height * 0.02,
+                                child: Container(
+                                  padding: EdgeInsets.all(height * 0.01),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1,
+                                          color: grey.withOpacity(0.4)),
+                                      borderRadius:
+                                          BorderRadius.circular(width * 5)),
+                                  child: Icon(
+                                    Icons.arrow_back_ios_sharp,
+                                    color: textColor,
+                                    size: height * 0.02,
+                                  ),
+                                ),
+                              ),
+                              CupertinoButton(
+                                padding: const EdgeInsets.all(0.0),
+                                minSize: width * 0.08,
+                                onPressed: () {
+                                  _pageController.nextPage(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeOut);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(height * 0.01),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1,
+                                          color: grey.withOpacity(0.4)),
+                                      borderRadius:
+                                          BorderRadius.circular(width * 5)),
+                                  child: Icon(
+                                    Icons.arrow_forward_ios_sharp,
+                                    color: textColor,
+                                    size: height * 0.02,
+                                  ),
                                 ),
                               ),
                             ],
@@ -192,7 +193,7 @@ class _MeetingsState extends State<Meetings> {
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.02,
+                    height: height * 0.0,
                   ),
                   Center(
                     child: Container(
@@ -541,7 +542,7 @@ class _MeetingsState extends State<Meetings> {
                                                     const EdgeInsets.all(0.0),
                                                 minSize: 0.0001,
                                                 onPressed: () {},
-                                                child: Container(
+                                                child: SizedBox(
                                                     width: width * 0.14,
                                                     height: height * 0.04,
                                                     child: ListView.builder(
@@ -600,13 +601,56 @@ class _MeetingsState extends State<Meetings> {
                             ],
                           );
                         }),
-                  )
+                  ),
+                  // SizedBox(
+                  //   height: height * 0.1,
+                  // )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // floatingActionButton: CupertinoButton(
+      //   padding: EdgeInsets.all(0.0),
+      //   minSize: 0.0001,
+      //   onPressed: () {},
+      //   child: Container(
+      //     decoration: BoxDecoration(boxShadow: [
+      //       BoxShadow(
+      //           color: grey.withOpacity(0.7),
+      //           blurRadius: 10,
+      //           spreadRadius: -8,
+      //           offset: Offset(2, 4))
+      //     ]),
+      //     child: ScrollingFabAnimated(
+      //         elevation: 0,
+      //         animateIcon: false,
+      //         duration: Duration(milliseconds: 150),
+      //         width: width * 0.42,
+      //         radius: width * 0.03,
+      //         icon: Icon(
+      //           UniconsLine.plus,
+      //           color: primaryBlue,
+      //         ),
+      //         text: Text(
+      //           "Add meeting",
+      //           maxLines: 1,
+      //           overflow: TextOverflow.ellipsis,
+      //           style: GoogleFonts.poppins(
+      //             textStyle: TextStyle(
+      //                 color: primaryBlue,
+      //                 //height: 1.3,
+      //                 fontSize: width * 0.035,
+      //                 fontWeight: FontWeight.w500),
+      //           ),
+      //         ),
+      //         color: primaryLight,
+      //         onPress: null,
+      //         scrollController: _scrollController),
+      //   ),
+      // )
     );
   }
 }

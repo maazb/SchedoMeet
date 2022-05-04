@@ -1,9 +1,6 @@
 import 'package:bit_planner/View/bottom_navigator.dart';
-import 'package:bit_planner/View/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'Helper/values.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: BottomNavigator(),
+      home: const BottomNavigator(),
     );
   }
 }

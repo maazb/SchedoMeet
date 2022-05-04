@@ -27,11 +27,11 @@ class _ProfileState extends State<Profile> {
         titleSpacing: 0.0,
         backgroundColor: white,
         elevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.light,
-          statusBarColor: white,
-          statusBarIconBrightness: Brightness.dark,
-        ),
+        // systemOverlayStyle: SystemUiOverlayStyle(
+        //   statusBarBrightness: Brightness.light,
+        //   statusBarColor: white,
+        //   statusBarIconBrightness: Brightness.dark,
+        // ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(
@@ -39,7 +39,7 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CupertinoButton(
-                  padding: EdgeInsets.all(0.0),
+                  padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
                   onPressed: () {},
                   child: Container(
@@ -55,22 +55,20 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                Container(
-                  child: Text(
-                    'Profile',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: textColor,
-                          height: 1.3,
-                          fontSize: height * 0.026,
-                          fontWeight: FontWeight.w500),
-                    ),
+                Text(
+                  'Profile',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                        color: textColor,
+                        height: 1.3,
+                        fontSize: height * 0.026,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
                 CupertinoButton(
-                  padding: EdgeInsets.all(0.0),
+                  padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
                   onPressed: () {},
                   child: Container(

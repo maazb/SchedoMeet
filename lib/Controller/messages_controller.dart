@@ -1,7 +1,7 @@
 import 'package:bit_planner/Model/event_model.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class MessagesController extends GetxController {
   RxList<EventModel> eventList = RxList<EventModel>();
 
   getEvents() {

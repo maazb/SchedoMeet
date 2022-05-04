@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -25,11 +24,5 @@ class MeetingController extends GetxController {
   void onMonthChange(int index) {
     selectedMonthIndex.value = index;
     selectedMonth.value = DateFormat('MMM yyyy').format(monthList[index]);
-  }
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
   }
 }
