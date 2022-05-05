@@ -554,7 +554,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           )),
                                       ),
                                       SizedBox(
-                                        width: width * 0.03,
+                                        width: width * 0.04,
                                       ),
                                       Expanded(
                                         child: Column(

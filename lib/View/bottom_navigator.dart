@@ -1,9 +1,9 @@
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Account/account.dart';
 import 'package:bit_planner/View/Calendar/calendar.dart';
 import 'package:bit_planner/View/Home/home_screen.dart';
 import 'package:bit_planner/View/Meetings/meetings.dart';
 import 'package:bit_planner/View/Messages/messages.dart';
-import 'package:bit_planner/View/Profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +29,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       const Meetings(),
       const Calendar(),
       const Messages(),
-      const Profile()
+      const Account()
     ];
   }
 
@@ -109,7 +109,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(UniconsLine.user),
-          title: ("Profile"),
+          title: ("Account"),
           textStyle: GoogleFonts.poppins(
             textStyle: TextStyle(
                 //color: grey,

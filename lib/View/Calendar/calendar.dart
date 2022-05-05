@@ -118,9 +118,12 @@ class _CalendarState extends State<Calendar> {
         controller: _scrollController,
         child: Column(
           children: [
+            SizedBox(
+              height: height * 0.01,
+            ),
             Container(
               margin: EdgeInsets.only(
-                  right: width * 0.05, left: width * 0.05, top: height * 0.01),
+                  right: width * 0.05, left: width * 0.05, top: 0),
               child: Column(
                 children: [
                   Center(
@@ -160,25 +163,9 @@ class _CalendarState extends State<Calendar> {
                                 ),
                               ),
                               CupertinoButton(
+                                padding: EdgeInsets.all(0.0),
+                                minSize: width * 0.08,
                                 onPressed: () {
-                                  // int difference = _calendarController
-                                  //     .focusedDay!.value
-                                  //     .difference(DateTime.now()
-                                  //         .add(Duration(days: -90)))
-                                  //     .inDays;
-                                  // int val = (difference / 30).ceil();
-                                  // print(val);
-                                  // if (val > 0) {
-                                  //   if (val == 1) {
-                                  //     _calendarController.focusedDay!.value =
-                                  //         DateTime.now()
-                                  //             .add(Duration(days: -90));
-                                  //   } else {
-                                  //     _calendarController.focusedDay!.value =
-                                  //         _calendarController.focusedDay!.value
-                                  //             .add(Duration(days: -30));
-                                  //   }
-                                  // }
                                   _pageController.previousPage(
                                       duration:
                                           const Duration(milliseconds: 300),
@@ -199,8 +186,9 @@ class _CalendarState extends State<Calendar> {
                                   ),
                                 ),
                               ),
+                              SizedBox(width: width * 0.035),
                               CupertinoButton(
-                                padding: const EdgeInsets.all(0.0),
+                                padding: EdgeInsets.all(0.0),
                                 minSize: width * 0.08,
                                 onPressed: () {
                                   _pageController.nextPage(
@@ -242,7 +230,7 @@ class _CalendarState extends State<Calendar> {
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.0,
+                    height: height * 0.02,
                   ),
                   Center(
                     child: Container(
@@ -528,7 +516,7 @@ class _CalendarState extends State<Calendar> {
                                                           )),
                                       ),
                                       SizedBox(
-                                        width: width * 0.03,
+                                        width: width * 0.04,
                                       ),
                                       Expanded(
                                         child: Column(

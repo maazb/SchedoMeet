@@ -101,6 +101,7 @@ class _MessagesState extends State<Messages> {
           controller: _scrollController,
           child: Column(
             children: [
+              SizedBox(height: height * 0.01),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: width * 0.05),
                 decoration: BoxDecoration(

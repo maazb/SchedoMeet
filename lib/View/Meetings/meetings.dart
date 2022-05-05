@@ -101,99 +101,101 @@ class _MeetingsState extends State<Meetings> {
           children: [
             Container(
               margin: EdgeInsets.only(
-                  right: width * 0.05, left: width * 0.05, top: height * 0.01),
+                  right: width * 0.05, left: width * 0.05, top: height * 0.0),
               child: Column(
                 children: [
-                  Center(
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: height * 0),
-                          width: width,
-                          //height: height * 0.055,
-                          // decoration: BoxDecoration(
-                          //   color: white,
-                          //   borderRadius: BorderRadius.circular(width * 0.03),
-                          //   // boxShadow: [
-                          //   //   BoxShadow(
-                          //   //       blurRadius: 20,
-                          //   //       color: shadowgrey,
-                          //   //       offset: const Offset(0, 1))
-                          //   //]
-                          // ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Obx(
-                                  () => Text(
-                                    DateFormat('MMMM yyyy')
-                                        .format(_meetingController
-                                            .focusedDay!.value)
-                                        .toString(),
-                                    style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                          color: textColor,
-                                          height: 1,
-                                          fontSize: height * 0.024,
-                                          fontWeight: FontWeight.w500),
-                                    ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: height * 0),
+                        width: width,
+                        //height: height * 0.055,
+                        // decoration: BoxDecoration(
+                        //   color: white,
+                        //   borderRadius: BorderRadius.circular(width * 0.03),
+                        //   // boxShadow: [
+                        //   //   BoxShadow(
+                        //   //       blurRadius: 20,
+                        //   //       color: shadowgrey,
+                        //   //       offset: const Offset(0, 1))
+                        //   //]
+                        // ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Obx(
+                                () => Text(
+                                  DateFormat('MMMM yyyy')
+                                      .format(
+                                          _meetingController.focusedDay!.value)
+                                      .toString(),
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        color: textColor,
+                                        height: 1,
+                                        fontSize: height * 0.024,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ),
-                              CupertinoButton(
-                                onPressed: () {
-                                  _pageController.previousPage(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      curve: Curves.easeOut);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(height * 0.01),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1,
-                                          color: grey.withOpacity(0.4)),
-                                      borderRadius:
-                                          BorderRadius.circular(width * 5)),
-                                  child: Icon(
-                                    Icons.arrow_back_ios_sharp,
-                                    color: textColor,
-                                    size: height * 0.02,
-                                  ),
+                            ),
+                            CupertinoButton(
+                              padding: EdgeInsets.all(0.0),
+                              minSize: width * 0.08,
+                              onPressed: () {
+                                _pageController.previousPage(
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeOut);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(height * 0.01),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1, color: grey.withOpacity(0.4)),
+                                    borderRadius:
+                                        BorderRadius.circular(width * 5)),
+                                child: Icon(
+                                  Icons.arrow_back_ios_sharp,
+                                  color: textColor,
+                                  size: height * 0.02,
                                 ),
                               ),
-                              CupertinoButton(
-                                padding: const EdgeInsets.all(0.0),
-                                minSize: width * 0.08,
-                                onPressed: () {
-                                  _pageController.nextPage(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      curve: Curves.easeOut);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(height * 0.01),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1,
-                                          color: grey.withOpacity(0.4)),
-                                      borderRadius:
-                                          BorderRadius.circular(width * 5)),
-                                  child: Icon(
-                                    Icons.arrow_forward_ios_sharp,
-                                    color: textColor,
-                                    size: height * 0.02,
-                                  ),
+                            ),
+                            SizedBox(
+                              width: width * 0.035,
+                            ),
+                            CupertinoButton(
+                              padding: EdgeInsets.all(0.0),
+                              minSize: width * 0.08,
+                              onPressed: () {
+                                _pageController.nextPage(
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeOut);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(height * 0.01),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1, color: grey.withOpacity(0.4)),
+                                    borderRadius:
+                                        BorderRadius.circular(width * 5)),
+                                child: Icon(
+                                  Icons.arrow_forward_ios_sharp,
+                                  color: textColor,
+                                  size: height * 0.02,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    height: height * 0.0,
+                    height: height * 0.02,
                   ),
                   Center(
                     child: Container(
