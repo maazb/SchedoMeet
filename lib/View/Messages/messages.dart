@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 
+import '../../Controller/navigation_controller.dart';
+
 class Messages extends StatefulWidget {
   const Messages({Key? key}) : super(key: key);
 
@@ -23,6 +25,8 @@ class _MessagesState extends State<Messages> {
   ScrollController _scrollController = ScrollController();
 
   MessagesController _messagesController = Get.put(MessagesController());
+  NavigationController _navigationController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -49,7 +53,9 @@ class _MessagesState extends State<Messages> {
                 CupertinoButton(
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
-                  onPressed: () {},
+                  onPressed: () {
+                    _navigationController.persistentTabController.jumpToTab(0);
+                  },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),
                     decoration: BoxDecoration(
@@ -143,7 +149,7 @@ class _MessagesState extends State<Messages> {
                 ),
               ),
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.03,
               ),
               Container(
                 color: white,
@@ -151,7 +157,7 @@ class _MessagesState extends State<Messages> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: height * 0.022,
+                      height: height * 0.02,
                     ),
                     ListView.builder(
                         itemCount: 10,
@@ -159,6 +165,7 @@ class _MessagesState extends State<Messages> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CupertinoButton(
                                 padding: const EdgeInsets.all(0.0),
@@ -168,30 +175,22 @@ class _MessagesState extends State<Messages> {
                                     margin: EdgeInsets.symmetric(
                                         horizontal: width * 0.05),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        CupertinoButton(
-                                          padding: const EdgeInsets.all(0.0),
-                                          minSize: 0.0001,
-                                          onPressed: null,
-                                          child: Container(
-                                              // padding:
-                                              //     EdgeInsets.all(width * 0.03),
-
-                                              decoration: BoxDecoration(
-                                                  color: greyLight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          width * 5)),
-                                              child: CircleAvatar(
-                                                radius: width * 0.065,
-                                                backgroundImage: Image.asset(
-                                                        "assets/images/profile2.jpg")
-                                                    .image,
-                                              )),
+                                        SizedBox(
+                                          height: width * 0.13,
+                                          width: width * 0.13,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                width * 5),
+                                            child: Image.asset(
+                                              "assets/images/profile2.jpg",
+                                              fit: BoxFit.cover,
+                                              // height: height * 0.05,
+                                              // width: height * 0.05,
+                                            ),
+                                          ),
                                         ),
                                         SizedBox(
                                           width: width * 0.03,

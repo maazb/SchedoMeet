@@ -1,5 +1,7 @@
 import 'package:bit_planner/Controller/home_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Calendar/event_detail.dart';
+import 'package:bit_planner/View/Meetings/meeting_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
+
+import '../../Controller/navigation_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late double height;
   late double width;
   final HomeController _homeController = Get.put(HomeController());
+  NavigationController _navigationController = Get.find();
 
   getData() async {
     await _homeController.getEvents();
@@ -57,16 +62,23 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  height: width * 0.12,
-                  width: width * 0.12,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(width * 5),
-                    child: Image.asset(
-                      "assets/images/profilewoman.jpg",
-                      fit: BoxFit.cover,
-                      height: height * 0.05,
-                      width: height * 0.05,
+                CupertinoButton(
+                  padding: EdgeInsets.all(0.0),
+                  minSize: 0.0001,
+                  onPressed: () {
+                    _navigationController.persistentTabController.jumpToTab(4);
+                  },
+                  child: SizedBox(
+                    height: width * 0.12,
+                    width: width * 0.12,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(width * 5),
+                      child: Image.asset(
+                        "assets/images/profilewoman.jpg",
+                        fit: BoxFit.cover,
+                        height: height * 0.05,
+                        width: height * 0.05,
+                      ),
                     ),
                   ),
                 ),
@@ -169,11 +181,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   CupertinoButton(
                     padding: const EdgeInsets.all(0.0),
-                    minSize: 0.0001,
+                    minSize: width * 0.05,
                     onPressed: () {},
                     child: Icon(
                       CupertinoIcons.multiply,
-                      size: height * 0.03,
+                      size: height * 0.025,
                       color: grey,
                     ),
                   )
@@ -313,7 +325,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }),
             ),
-            SizedBox(height: height * 0.02),
+            SizedBox(height: height * 0.03),
             Container(
               width: width,
               //height: height,
@@ -323,7 +335,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   CupertinoButton(
                     padding: const EdgeInsets.all(0.0),
                     minSize: 0.0001,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => MeetingDetail());
+                    },
                     child: Container(
                       //height: height * 0.15,
                       margin: EdgeInsets.symmetric(
@@ -354,11 +368,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 CupertinoButton(
                                   padding: const EdgeInsets.all(0.0),
-                                  minSize: 0.0001,
+                                  minSize: width * 0.05,
                                   onPressed: () {},
                                   child: Icon(
                                     CupertinoIcons.multiply,
-                                    size: height * 0.03,
+                                    size: height * 0.025,
                                     color: grey,
                                   ),
                                 )
@@ -404,7 +418,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 CupertinoButton(
                                     padding: const EdgeInsets.all(0.0),
                                     minSize: 0.0001,
-                                    onPressed: () {},
+                                    onPressed: null,
                                     child: SizedBox(
                                         width: width * 0.14,
                                         height: height * 0.04,
@@ -495,7 +509,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             CupertinoButton(
                               padding: const EdgeInsets.all(0.0),
                               minSize: width * 0.04,
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => EventDetail());
+                              },
                               child: Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: width * 0.05),

@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:bit_planner/Controller/calendar_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Calendar/event_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:unicons/unicons.dart';
 import 'package:intl/intl.dart';
+
+import '../../Controller/navigation_controller.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -26,6 +29,7 @@ class _CalendarState extends State<Calendar> {
   final CalendarController _calendarController = Get.put(CalendarController());
   PageController _pageController = PageController();
   ScrollController _scrollController = ScrollController();
+  NavigationController _navigationController = Get.find();
 
   getData() async {
     await _calendarController.getEvents();
@@ -68,7 +72,9 @@ class _CalendarState extends State<Calendar> {
                 CupertinoButton(
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
-                  onPressed: () {},
+                  onPressed: () {
+                    _navigationController.persistentTabController.jumpToTab(0);
+                  },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),
                     decoration: BoxDecoration(
@@ -383,7 +389,7 @@ class _CalendarState extends State<Calendar> {
               ),
             ),
             SizedBox(
-              height: height * 0.02,
+              height: height * 0.03,
             ),
             Container(
               color: white,
@@ -457,7 +463,9 @@ class _CalendarState extends State<Calendar> {
                             CupertinoButton(
                               padding: const EdgeInsets.all(0.0),
                               minSize: 0.0001,
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => EventDetail());
+                              },
                               child: Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: width * 0.05),

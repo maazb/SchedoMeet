@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 
+import '../../Controller/navigation_controller.dart';
+
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);
 
@@ -19,6 +21,7 @@ class _AccountState extends State<Account> {
   late double height;
   late double width;
   AccountController _accountController = Get.put(AccountController());
+  NavigationController _navigationController = Get.find();
 
   getData() async {
     _accountController.getEvents();
@@ -63,7 +66,9 @@ class _AccountState extends State<Account> {
                 CupertinoButton(
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
-                  onPressed: () {},
+                  onPressed: () {
+                    _navigationController.persistentTabController.jumpToTab(0);
+                  },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),
                     decoration: BoxDecoration(
@@ -323,7 +328,7 @@ class _AccountState extends State<Account> {
               ),
             ),
             SizedBox(
-              height: height * 0.02,
+              height: height * 0.03,
             ),
             Container(
               color: white,

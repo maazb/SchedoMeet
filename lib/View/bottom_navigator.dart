@@ -1,3 +1,4 @@
+import 'package:bit_planner/Controller/navigation_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Account/account.dart';
 import 'package:bit_planner/View/Calendar/calendar.dart';
@@ -6,6 +7,7 @@ import 'package:bit_planner/View/Meetings/meetings.dart';
 import 'package:bit_planner/View/Messages/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:unicons/unicons.dart';
@@ -20,8 +22,7 @@ class BottomNavigator extends StatefulWidget {
 class _BottomNavigatorState extends State<BottomNavigator> {
   late double height;
   late double width;
-  final PersistentTabController _persistentTabController =
-      PersistentTabController(initialIndex: 0);
+  NavigationController _navigationController = Get.put(NavigationController());
 
   List<Widget> _buildScreens() {
     return [
@@ -52,7 +53,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     width = MediaQuery.of(context).size.width;
     return PersistentTabView(
       context,
-      controller: _persistentTabController,
+      controller: _navigationController.persistentTabController,
       screens: _buildScreens(),
       items: [
         PersistentBottomNavBarItem(

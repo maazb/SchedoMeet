@@ -1,6 +1,8 @@
+import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,21 +15,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Bit Planner',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+          dialogTheme: const DialogTheme(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16)))),
+          timePickerTheme: TimePickerThemeData(
+            backgroundColor: white,
+            dialBackgroundColor: primaryLight,
+            dialHandColor: primaryBlue,
+            hourMinuteColor: primaryLight,
+            hourMinuteTextColor: primaryBlue,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+            dayPeriodTextColor: primaryBlue,
+          ),
+          colorScheme: ColorScheme(
+              primary: primaryBlue,
+              secondary: white,
+              surface: white,
+              background: white,
+              error: primaryBlue,
+              onPrimary: white,
+              onSecondary: primaryBlue,
+              onSurface: primaryBlue,
+              onBackground: primaryBlue,
+              onError: white,
+              brightness: Brightness.light)),
       home: const BottomNavigator(),
     );
   }
