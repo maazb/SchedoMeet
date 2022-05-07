@@ -1,8 +1,19 @@
 import 'package:bit_planner/Model/event_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CalendarController extends GetxController {
+  Rx<DateTime>? startDate = DateTime.now().obs;
+  Rx<DateTime>? endDate = DateTime.now().obs;
+  Rx<TimeOfDay>? startTime = TimeOfDay.now().obs;
+  Rx<TimeOfDay>? endTime = TimeOfDay.now().obs;
+  TextEditingController txtStartDate = TextEditingController();
+  TextEditingController txtEndDate = TextEditingController();
+
+  TextEditingController txtStartTime = TextEditingController();
+  TextEditingController txtEndTime = TextEditingController();
+
   RxBool loading = false.obs;
   RxInt selectedMonthIndex = 7.obs;
   RxString selectedMonth =

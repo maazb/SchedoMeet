@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:bit_planner/Controller/calendar_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Calendar/add_event.dart';
 import 'package:bit_planner/View/Calendar/event_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +104,9 @@ class _CalendarState extends State<Calendar> {
                 CupertinoButton(
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => AddEvent());
+                  },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),
                     decoration: BoxDecoration(
