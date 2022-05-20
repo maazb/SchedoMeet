@@ -1,5 +1,6 @@
 import 'package:bit_planner/Controller/messages_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Messages/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +27,18 @@ class _MessagesState extends State<Messages> {
 
   MessagesController _messagesController = Get.put(MessagesController());
   NavigationController _navigationController = Get.find();
+
+  getData() async {
+    await _messagesController.getChat().then((value) async =>
+        _messagesController.searchList.value =
+            _messagesController.chatList.where((p0) => true).toList());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +183,9 @@ class _MessagesState extends State<Messages> {
                               CupertinoButton(
                                 padding: const EdgeInsets.all(0.0),
                                 minSize: 0.0001,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.to(() => ChatScreen());
+                                },
                                 child: Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: width * 0.05),

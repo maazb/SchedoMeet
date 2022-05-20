@@ -138,7 +138,12 @@ class _AddMeetingState extends State<AddMeeting> {
             ),
             SizedBox(height: height * 0.02),
             Container(
+              alignment: Alignment.center,
               width: width,
+              height: height * 0.06,
+              decoration: BoxDecoration(
+                  border: Border.all(color: grey.withOpacity(0.4), width: 1),
+                  borderRadius: BorderRadius.circular(width * 0.02)),
               margin: EdgeInsets.symmetric(horizontal: width * 0.05),
               child: TextField(
                 focusNode: titleFocus,
@@ -154,20 +159,22 @@ class _AddMeetingState extends State<AddMeeting> {
                 decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: width * 0.04),
-                    errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(width * 0.02),
-                        borderSide: BorderSide(color: red, width: 1)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(width * 0.02),
-                        borderSide: BorderSide(color: primaryBlue, width: 1)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(width * 0.02),
-                        borderSide:
-                            BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(width * 0.02),
-                        borderSide: BorderSide(
-                            color: grey.withOpacity(0.4), width: 1))),
+                    // errorBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(width * 0.02),
+                    //     borderSide: BorderSide(color: red, width: 1)),
+                    // focusedBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(width * 0.02),
+                    //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                    // enabledBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(width * 0.02),
+                    //     borderSide:
+                    //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                    border: InputBorder.none
+                    //  OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(width * 0.02),
+                    //     borderSide: BorderSide(
+                    //         color: grey.withOpacity(0.4), width: 1))
+                    ),
               ),
             ),
             SizedBox(height: height * 0.03),
@@ -398,14 +405,15 @@ class _AddMeetingState extends State<AddMeeting> {
                                     child: Container(
                                         alignment: Alignment.center,
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: width * 0.04,
-                                            vertical: height * 0.017),
+                                          horizontal: width * 0.04,
+                                        ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
                                                 color: grey.withOpacity(0.4)),
                                             borderRadius: BorderRadius.circular(
                                                 width * 0.02)),
+                                        height: height * 0.06,
                                         //width: width,
                                         margin: EdgeInsets.only(
                                             right: width * 0.01),
@@ -453,14 +461,16 @@ class _AddMeetingState extends State<AddMeeting> {
                                     child: Container(
                                         alignment: Alignment.center,
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: width * 0.04,
-                                            vertical: height * 0.017),
+                                          horizontal: width * 0.04,
+                                        ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
                                                 color: grey.withOpacity(0.4)),
                                             borderRadius: BorderRadius.circular(
                                                 width * 0.02)),
+                                        height: height * 0.06,
+
                                         //width: width,
                                         margin:
                                             EdgeInsets.only(left: width * 0.01),
@@ -520,14 +530,16 @@ class _AddMeetingState extends State<AddMeeting> {
                                     child: Container(
                                         alignment: Alignment.center,
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: width * 0.04,
-                                            vertical: height * 0.017),
+                                          horizontal: width * 0.04,
+                                        ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
                                                 color: grey.withOpacity(0.4)),
                                             borderRadius: BorderRadius.circular(
                                                 width * 0.02)),
+                                        height: height * 0.06,
+
                                         //width: width,
                                         margin: EdgeInsets.only(
                                             right: width * 0.01),
@@ -575,14 +587,16 @@ class _AddMeetingState extends State<AddMeeting> {
                                     child: Container(
                                         alignment: Alignment.center,
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: width * 0.04,
-                                            vertical: height * 0.017),
+                                          horizontal: width * 0.04,
+                                        ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
                                                 color: grey.withOpacity(0.4)),
                                             borderRadius: BorderRadius.circular(
                                                 width * 0.02)),
+                                        height: height * 0.06,
+
                                         //width: width,
                                         margin:
                                             EdgeInsets.only(left: width * 0.01),
@@ -671,14 +685,16 @@ class _AddMeetingState extends State<AddMeeting> {
                                     child: Container(
                                         alignment: Alignment.center,
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: width * 0.04,
-                                            vertical: height * 0.017),
+                                          horizontal: width * 0.04,
+                                        ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
                                                 color: grey.withOpacity(0.4)),
                                             borderRadius: BorderRadius.circular(
                                                 width * 0.02)),
+                                        height: height * 0.06,
+
                                         //width: width,
                                         margin: EdgeInsets.only(
                                             right: width * 0.02),
@@ -734,14 +750,16 @@ class _AddMeetingState extends State<AddMeeting> {
                                     child: Container(
                                         alignment: Alignment.center,
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: width * 0.04,
-                                            vertical: height * 0.017),
+                                          horizontal: width * 0.04,
+                                        ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
                                                 color: grey.withOpacity(0.4)),
                                             borderRadius: BorderRadius.circular(
                                                 width * 0.02)),
+                                        height: height * 0.06,
+
                                         //width: width,
                                         margin:
                                             EdgeInsets.only(left: width * 0.02),
@@ -826,14 +844,16 @@ class _AddMeetingState extends State<AddMeeting> {
                                     child: Container(
                                         alignment: Alignment.center,
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: width * 0.04,
-                                            vertical: height * 0.017),
+                                          horizontal: width * 0.04,
+                                        ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
                                                 color: grey.withOpacity(0.4)),
                                             borderRadius: BorderRadius.circular(
                                                 width * 0.02)),
+                                        height: height * 0.06,
+
                                         //width: width,
                                         margin: EdgeInsets.only(
                                             right: width * 0.02),
@@ -886,14 +906,16 @@ class _AddMeetingState extends State<AddMeeting> {
                                     child: Container(
                                         alignment: Alignment.center,
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: width * 0.04,
-                                            vertical: height * 0.017),
+                                          horizontal: width * 0.04,
+                                        ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
                                                 color: grey.withOpacity(0.4)),
                                             borderRadius: BorderRadius.circular(
                                                 width * 0.02)),
+                                        height: height * 0.06,
+
                                         //width: width,
                                         margin:
                                             EdgeInsets.only(left: width * 0.02),

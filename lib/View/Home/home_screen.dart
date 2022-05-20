@@ -1,6 +1,8 @@
 import 'package:bit_planner/Controller/home_controller.dart';
+import 'package:bit_planner/Controller/messages_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Calendar/event_detail.dart';
+import 'package:bit_planner/View/Home/notifications.dart';
 import 'package:bit_planner/View/Meetings/meeting_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getData() async {
     await _homeController.getEvents();
+    // await _messagesController
+    //     .getChat()
+    //     .then((value) async => _messagesController.searchList.value =
+    //         _messagesController.chatList.where((p0) => true).toList())
+    //     .then((value) async => await _messagesController.getChatDates());
   }
 
   @override
@@ -119,7 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 CupertinoButton(
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => Notifications());
+                  },
                   child: Stack(
                     children: [
                       Container(
