@@ -8,6 +8,7 @@ class MessagesController extends GetxController {
   RxList<EventModel> eventList = RxList<EventModel>();
   RxList<ChatModel> chatList = RxList<ChatModel>();
   TextEditingController txtSearch = TextEditingController();
+  RxList<int> selectedContacts = RxList<int>();
 
   RxList<ChatModel> searchList = RxList();
 

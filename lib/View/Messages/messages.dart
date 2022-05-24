@@ -1,6 +1,7 @@
 import 'package:bit_planner/Controller/messages_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Messages/chat_screen.dart';
+import 'package:bit_planner/View/Messages/new_message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -97,7 +98,9 @@ class _MessagesState extends State<Messages> {
                 CupertinoButton(
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => NewMessage());
+                  },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),
                     decoration: BoxDecoration(

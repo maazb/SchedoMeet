@@ -72,7 +72,7 @@ class _NotificationsState extends State<Notifications> {
                   ),
                 ),
                 Container(
-                  width: width * 0.12,
+                  width: width * 0.13,
                 )
               ],
             )),
