@@ -6,13 +6,8 @@ class AccountController extends GetxController {
   RxList<SettingModel> settingsList = RxList<SettingModel>();
 
   getEvents() {
-    settingsList.add(SettingModel(
-        name: "Calendar settings", icon: "assets/icons/Calendar.svg"));
     settingsList.add(
-        SettingModel(name: "Messages settings", icon: "assets/icons/Chat.svg"));
-
-    settingsList.add(SettingModel(
-        name: "Scheduling settings", icon: "assets/icons/Alarm.svg"));
+        SettingModel(name: "App settings", icon: "assets/icons/Settings.svg"));
 
     settingsList.add(
         SettingModel(name: "Privacy policy", icon: "assets/icons/Shield.svg"));

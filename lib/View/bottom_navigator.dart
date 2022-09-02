@@ -37,14 +37,6 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
-      statusBarColor: greyLight,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarContrastEnforced: true,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ));
   }
 
   @override

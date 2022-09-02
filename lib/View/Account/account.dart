@@ -1,5 +1,12 @@
 import 'package:bit_planner/Controller/account_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Account/about_us.dart';
+import 'package:bit_planner/View/Account/app_settings.dart';
+import 'package:bit_planner/View/Account/change_credentials.dart';
+import 'package:bit_planner/View/Account/change_password.dart';
+import 'package:bit_planner/View/Account/notification_settings.dart';
+import 'package:bit_planner/View/Account/privacy_policy.dart';
+import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,6 +45,14 @@ class _AccountState extends State<Account> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.light,
+      statusBarColor: white,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarContrastEnforced: true,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ));
   }
 
   @override
@@ -52,11 +67,11 @@ class _AccountState extends State<Account> {
         titleSpacing: 0.0,
         backgroundColor: greyLight,
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   statusBarBrightness: Brightness.light,
-        //   statusBarColor: white,
-        //   statusBarIconBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+          statusBarColor: greyLight,
+          statusBarIconBrightness: Brightness.dark,
+        ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(
@@ -67,7 +82,7 @@ class _AccountState extends State<Account> {
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
                   onPressed: () {
-                    _navigationController.persistentTabController.jumpToTab(0);
+                    Get.back();
                   },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),
@@ -97,20 +112,21 @@ class _AccountState extends State<Account> {
                 CupertinoButton(
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
-                  onPressed: () {},
+                  onPressed: null,
                   child: Container(
-                    padding: EdgeInsets.all(width * 0.028),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: grey.withOpacity(0.4), width: 1),
-                        borderRadius: BorderRadius.circular(width * 5)),
-                    child: Icon(
-                      Icons.more_horiz_outlined,
-                      color: textColor,
-                      size: height * 0.032,
-                    ),
+                    width: width * 0.12,
+                    height: height * 0.01,
+                    // padding: EdgeInsets.all(width * 0.028),
+                    // decoration: BoxDecoration(
+                    //     border:
+                    //         Border.all(color: grey.withOpacity(0.4), width: 1),
+                    //     borderRadius: BorderRadius.circular(width * 5)),
+                    // child: Icon(
+                    //   UniconsLine.plus,
+                    //   color: textColor,
+                    //   size: height * 0.032,
                   ),
-                )
+                ),
               ],
             )),
       ),
@@ -181,7 +197,9 @@ class _AccountState extends State<Account> {
                     child: CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => ChangeCredentials());
+                      },
                       child: Column(
                         children: [
                           Container(
@@ -218,7 +236,9 @@ class _AccountState extends State<Account> {
                     child: CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => ChangePassword());
+                      },
                       child: Column(
                         children: [
                           Container(
@@ -292,7 +312,9 @@ class _AccountState extends State<Account> {
                     child: CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => NotificationSettings());
+                      },
                       child: Column(
                         children: [
                           Container(
@@ -402,7 +424,20 @@ class _AccountState extends State<Account> {
                             CupertinoButton(
                               padding: const EdgeInsets.all(0.0),
                               minSize: 0.0001,
-                              onPressed: () {},
+                              onPressed: () {
+                                if (index == 0) {
+                                  Get.to(() => AppSettings());
+                                }
+                                if (index == 1) {
+                                  Get.to(() => PrivacyPolicy());
+                                }
+                                if (index == 2) {
+                                  Get.to(() => AboutUs());
+                                }
+                                if (index == 3) {
+                                  Get.offAll(() => Welcome());
+                                }
+                              },
                               child: Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: width * 0.05),

@@ -4,6 +4,7 @@ import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Calendar/event_detail.dart';
 import 'package:bit_planner/View/Home/notifications.dart';
 import 'package:bit_planner/View/Meetings/meeting_detail.dart';
+import 'package:bit_planner/View/Messages/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,11 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
         titleSpacing: 0.0,
         backgroundColor: greyLight,
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   statusBarBrightness: Brightness.light,
-        //   statusBarColor: greyLight,
-        //   statusBarIconBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+          statusBarColor: greyLight,
+          statusBarIconBrightness: Brightness.dark,
+        ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(
@@ -216,7 +217,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         CupertinoButton(
                           padding: const EdgeInsets.all(0.0),
                           minSize: 0.0001,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => ChatScreen());
+                          },
                           child: Container(
                             width: width * 0.6,
                             //height: height * 0.2,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
@@ -29,11 +30,11 @@ class _MeetingDetailState extends State<MeetingDetail> {
         titleSpacing: 0.0,
         backgroundColor: greyLight,
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   statusBarBrightness: Brightness.light,
-        //   statusBarColor: white,
-        //   statusBarIconBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+          statusBarColor: greyLight,
+          statusBarIconBrightness: Brightness.dark,
+        ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(

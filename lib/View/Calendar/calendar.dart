@@ -4,6 +4,7 @@ import 'package:bit_planner/Controller/calendar_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Calendar/add_event.dart';
 import 'package:bit_planner/View/Calendar/event_detail.dart';
+import 'package:bit_planner/View/Calendar/event_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,11 +60,11 @@ class _CalendarState extends State<Calendar> {
         titleSpacing: 0.0,
         backgroundColor: greyLight,
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   statusBarBrightness: Brightness.light,
-        //   statusBarColor: greyLight,
-        //   statusBarIconBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+          statusBarColor: greyLight,
+          statusBarIconBrightness: Brightness.dark,
+        ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(
@@ -105,7 +106,7 @@ class _CalendarState extends State<Calendar> {
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
                   onPressed: () {
-                    Get.to(() => AddEvent());
+                    Get.bottomSheet(EventSheet(width: width, height: height));
                   },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),

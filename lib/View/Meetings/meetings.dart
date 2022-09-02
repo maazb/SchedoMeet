@@ -3,6 +3,7 @@ import 'package:bit_planner/Controller/navigation_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Meetings/add_meeting.dart';
 import 'package:bit_planner/View/Meetings/meeting_detail.dart';
+import 'package:bit_planner/View/Meetings/meeting_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,11 +40,11 @@ class _MeetingsState extends State<Meetings> {
         titleSpacing: 0.0,
         backgroundColor: greyLight,
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   statusBarBrightness: Brightness.light,
-        //   statusBarColor: greyLight,
-        //   statusBarIconBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+          statusBarColor: greyLight,
+          statusBarIconBrightness: Brightness.dark,
+        ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(
@@ -85,7 +86,7 @@ class _MeetingsState extends State<Meetings> {
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
                   onPressed: () {
-                    Get.to(() => AddMeeting());
+                    Get.bottomSheet(MeetingSheet(width: width, height: height));
                   },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),

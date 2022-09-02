@@ -3,6 +3,7 @@ import 'package:bit_planner/Controller/meeting_controller.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -36,18 +37,18 @@ class _AddEventState extends State<AddEvent> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: greyLight,
+      backgroundColor: white,
       appBar: AppBar(
         toolbarHeight: height * 0.1,
         automaticallyImplyLeading: false,
         titleSpacing: 0.0,
-        backgroundColor: greyLight,
+        backgroundColor: white,
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   statusBarBrightness: Brightness.light,
-        //   statusBarColor: white,
-        //   statusBarIconBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+          statusBarColor: white,
+          statusBarIconBrightness: Brightness.dark,
+        ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(
@@ -88,20 +89,21 @@ class _AddEventState extends State<AddEvent> {
                 CupertinoButton(
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
-                  onPressed: () {},
+                  onPressed: null,
                   child: Container(
-                    padding: EdgeInsets.all(width * 0.028),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: grey.withOpacity(0.4), width: 1),
-                        borderRadius: BorderRadius.circular(width * 5)),
-                    child: Icon(
-                      Icons.more_horiz_outlined,
-                      color: textColor,
-                      size: height * 0.032,
-                    ),
+                    width: width * 0.12,
+                    height: height * 0.01,
+                    // padding: EdgeInsets.all(width * 0.028),
+                    // decoration: BoxDecoration(
+                    //     border:
+                    //         Border.all(color: grey.withOpacity(0.4), width: 1),
+                    //     borderRadius: BorderRadius.circular(width * 5)),
+                    // child: Icon(
+                    //   UniconsLine.plus,
+                    //   color: textColor,
+                    //   size: height * 0.032,
                   ),
-                )
+                ),
               ],
             )),
       ),
@@ -374,18 +376,22 @@ class _AddEventState extends State<AddEvent> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Obx(
-                                      () => Text(
-                                        DateFormat('dd MMMM yyyy')
-                                            .format(_calendarController
-                                                .startDate!.value)
-                                            .toString(),
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              color: textColor,
-                                              height: 1.5,
-                                              fontSize: height * 0.018,
-                                              fontWeight: FontWeight.w400),
+                                    Expanded(
+                                      child: Obx(
+                                        () => Text(
+                                          DateFormat('dd MMM yyyy')
+                                              .format(_calendarController
+                                                  .startDate!.value)
+                                              .toString(),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                                color: textColor,
+                                                height: 1.5,
+                                                fontSize: height * 0.018,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -427,17 +433,21 @@ class _AddEventState extends State<AddEvent> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Obx(
-                                      () => Text(
-                                        _calendarController.startTime!.value
-                                            .format(context)
-                                            .toString(),
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              color: textColor,
-                                              height: 1.5,
-                                              fontSize: height * 0.018,
-                                              fontWeight: FontWeight.w400),
+                                    Expanded(
+                                      child: Obx(
+                                        () => Text(
+                                          _calendarController.startTime!.value
+                                              .format(context)
+                                              .toString(),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                                color: textColor,
+                                                height: 1.5,
+                                                fontSize: height * 0.018,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -490,18 +500,22 @@ class _AddEventState extends State<AddEvent> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Obx(
-                                      () => Text(
-                                        DateFormat('dd MMMM yyyy')
-                                            .format(_calendarController
-                                                .endDate!.value)
-                                            .toString(),
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              color: textColor,
-                                              height: 1.5,
-                                              fontSize: height * 0.018,
-                                              fontWeight: FontWeight.w400),
+                                    Expanded(
+                                      child: Obx(
+                                        () => Text(
+                                          DateFormat('dd MMM yyyy')
+                                              .format(_calendarController
+                                                  .endDate!.value)
+                                              .toString(),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                                color: textColor,
+                                                height: 1.5,
+                                                fontSize: height * 0.018,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -543,17 +557,21 @@ class _AddEventState extends State<AddEvent> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Obx(
-                                      () => Text(
-                                        _calendarController.endTime!.value
-                                            .format(context)
-                                            .toString(),
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              color: textColor,
-                                              height: 1.5,
-                                              fontSize: height * 0.018,
-                                              fontWeight: FontWeight.w400),
+                                    Expanded(
+                                      child: Obx(
+                                        () => Text(
+                                          _calendarController.endTime!.value
+                                              .format(context)
+                                              .toString(),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                                color: textColor,
+                                                height: 1.5,
+                                                fontSize: height * 0.018,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
                                       ),
                                     ),

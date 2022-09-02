@@ -1,4 +1,5 @@
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
               onBackground: primaryBlue,
               onError: white,
               brightness: Brightness.light)),
-      home: const BottomNavigator(),
+      home: const Welcome(),
     );
   }
 }

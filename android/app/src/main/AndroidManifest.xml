@@ -12,8 +12,8 @@
       </intent>
     </queries>
    <application
-        android:label="BitPlanner"
-        android:icon="@mipmap/ic_launcher">
+        android:label="SchedoMeet"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
