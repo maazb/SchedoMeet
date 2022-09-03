@@ -1,4 +1,5 @@
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Startup/splash_screen.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
               onBackground: primaryBlue,
               onError: white,
               brightness: Brightness.light)),
-      home: const Welcome(),
+      home: const SplashScreen(),
     );
   }
 }

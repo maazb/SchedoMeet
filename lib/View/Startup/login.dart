@@ -4,6 +4,7 @@ import 'package:bit_planner/View/Startup/register.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
@@ -18,6 +19,28 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   late double height;
   late double width;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.light,
+      statusBarColor: greyLight,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.light,
+      statusBarColor: white,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
