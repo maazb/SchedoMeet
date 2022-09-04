@@ -194,7 +194,6 @@ class _WelcomeState extends State<Welcome> {
                             height: height * 0.08,
                           ),
                           Container(
-                            color: red,
                             height: height * 0.25,
                             width: height * 0.25,
                             child: Image.asset(
