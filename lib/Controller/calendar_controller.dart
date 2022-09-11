@@ -13,6 +13,7 @@ class CalendarController extends GetxController {
 
   TextEditingController txtStartTime = TextEditingController();
   TextEditingController txtEndTime = TextEditingController();
+  RxList<int> selectedTimeSlots = RxList<int>();
 
   RxBool loading = false.obs;
   RxInt selectedMonthIndex = 7.obs;

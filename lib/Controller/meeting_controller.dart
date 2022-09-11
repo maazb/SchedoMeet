@@ -28,6 +28,7 @@ class MeetingController extends GetxController {
     DateTime(2022, 3, 1, 0, 0, 0, 0, 0),
     DateTime(2022, 4, 1, 0, 0, 0, 0, 0),
   ];
+  RxList<int> selectedTimeSlots = RxList<int>();
 
   Rx<DateTime>? focusedDay = DateTime.now().obs;
   Rx<DateTime>? focusedDay1 = DateTime.now().obs;

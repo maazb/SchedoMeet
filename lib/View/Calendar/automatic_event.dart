@@ -1,5 +1,8 @@
 import 'package:bit_planner/Controller/calendar_controller.dart';
 import 'package:bit_planner/Controller/meeting_controller.dart';
+import 'package:bit_planner/View/Calendar/event_failure.dart';
+import 'package:bit_planner/View/Calendar/event_success.dart';
+import 'package:bit_planner/View/Meetings/meeting_success.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +15,14 @@ import 'package:intl/intl.dart';
 
 import '../../Helper/values.dart';
 
-class AddEvent extends StatefulWidget {
-  const AddEvent({Key? key}) : super(key: key);
+class AutomaticEvent extends StatefulWidget {
+  const AutomaticEvent({Key? key}) : super(key: key);
 
   @override
-  State<AddEvent> createState() => _AddEventState();
+  State<AutomaticEvent> createState() => _AutomaticEventState();
 }
 
-class _AddEventState extends State<AddEvent> {
+class _AutomaticEventState extends State<AutomaticEvent> {
   late double height;
   late double width;
   FocusNode titleFocus = FocusNode();
@@ -173,7 +176,7 @@ class _AddEventState extends State<AddEvent> {
                     //     borderSide:
                     //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
                     border: InputBorder.none
-                    // OutlineInputBorder(
+                    //  OutlineInputBorder(
                     //     borderRadius: BorderRadius.circular(width * 0.02),
                     //     borderSide: BorderSide(
                     //         color: grey.withOpacity(0.4), width: 1))
@@ -357,7 +360,7 @@ class _AddEventState extends State<AddEvent> {
                                       .add(Duration(days: 365))))!;
                         },
                         child: Container(
-                            width: width * 0.5,
+                            width: width * 0.45,
                             alignment: Alignment.center,
                             padding: EdgeInsets.symmetric(
                               horizontal: width * 0.04,
@@ -405,6 +408,139 @@ class _AddEventState extends State<AddEvent> {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: height * 0.03,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Preferred time slots',
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: textColor,
+                              height: 1.3,
+                              fontSize: height * 0.022,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      CupertinoButton(
+                        padding: const EdgeInsets.all(0.0),
+                        minSize: 0.0001,
+                        onPressed: null,
+                        child: Container(),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: height * 0.02),
+                Container(
+                  child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 4,
+                      itemBuilder: ((context, index) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: index == 0 ? 0 : height * 0.015,
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: width * 0.05),
+                              child: Expanded(
+                                child: CupertinoButton(
+                                  padding: EdgeInsets.all(0.0),
+                                  minSize: 0.0001,
+                                  onPressed: () {
+                                    if (_calendarController.selectedTimeSlots
+                                        .contains(index)) {
+                                      _calendarController.selectedTimeSlots
+                                          .remove(index);
+                                    } else {
+                                      _calendarController.selectedTimeSlots
+                                          .add(index);
+                                    }
+                                  },
+                                  child: Obx(
+                                    () => Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: width * 0.04,
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: _calendarController
+                                                    .selectedTimeSlots.value
+                                                    .contains(index)
+                                                ? primaryBlue
+                                                : white,
+                                            border: Border.all(
+                                                width: 1,
+                                                color: _calendarController
+                                                        .selectedTimeSlots.value
+                                                        .contains(index)
+                                                    ? primaryBlue
+                                                    : grey.withOpacity(0.4)),
+                                            borderRadius: BorderRadius.circular(
+                                                width * 0.02)),
+                                        height: height * 0.06,
+
+                                        //width: width,
+
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Obx(
+                                              () => Text(
+                                                _calendarController
+                                                        .startTime!.value
+                                                        .format(context)
+                                                        .toString() +
+                                                    " - " +
+                                                    _calendarController
+                                                        .endTime!.value
+                                                        .format(context)
+                                                        .toString(),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                      color: _calendarController
+                                                              .selectedTimeSlots
+                                                              .contains(index)
+                                                          ? white
+                                                          : textColor,
+                                                      height: 1.5,
+                                                      fontSize: height * 0.018,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                              ),
+                                            ),
+                                            Icon(
+                                              UniconsLine.clock,
+                                              color: _calendarController
+                                                      .selectedTimeSlots.value
+                                                      .contains(index)
+                                                  ? white
+                                                  : grey,
+                                              size: height * 0.03,
+                                            )
+                                          ],
+                                        )),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      })),
+                ),
                 SizedBox(height: height * 0.03),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: width * 0.05),
@@ -412,7 +548,7 @@ class _AddEventState extends State<AddEvent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Timing',
+                        'Duration (minutes)',
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                               color: textColor,
@@ -434,127 +570,44 @@ class _AddEventState extends State<AddEvent> {
                   height: height * 0.02,
                 ),
                 Container(
+                  alignment: Alignment.center,
+                  width: width,
+                  height: height * 0.06,
+                  decoration: BoxDecoration(
+                      border:
+                          Border.all(color: grey.withOpacity(0.4), width: 1),
+                      borderRadius: BorderRadius.circular(width * 0.02)),
                   margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CupertinoButton(
-                          padding: EdgeInsets.all(0.0),
-                          minSize: 0.0001,
-                          onPressed: () async {
-                            _calendarController.startTime!.value =
-                                (await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now()))!;
-                          },
-                          child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: width * 0.04,
-                              ),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1, color: grey.withOpacity(0.4)),
-                                  borderRadius:
-                                      BorderRadius.circular(width * 0.02)),
-                              height: height * 0.06,
-
-                              //width: width,
-                              margin: EdgeInsets.only(right: width * 0.02),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Obx(
-                                      () => Text(
-                                        _calendarController.startTime!.value
-                                            .format(context)
-                                            .toString(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              color: textColor,
-                                              height: 1.5,
-                                              fontSize: height * 0.018,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    UniconsLine.clock,
-                                    color: grey,
-                                    size: height * 0.03,
-                                  )
-                                ],
-                              )),
+                  child: TextField(
+                    focusNode: titleFocus,
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                          overflow: TextOverflow.fade,
+                          color: textColor,
+                          //height: 1.3,
+                          fontSize: height * 0.018,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    cursorColor: primaryBlue,
+                    decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: width * 0.04),
+                        // errorBorder: OutlineInputBorder(
+                        //     borderRadius: BorderRadius.circular(width * 0.02),
+                        //     borderSide: BorderSide(color: red, width: 1)),
+                        // focusedBorder: OutlineInputBorder(
+                        //     borderRadius: BorderRadius.circular(width * 0.02),
+                        //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                        // enabledBorder: OutlineInputBorder(
+                        //     borderRadius: BorderRadius.circular(width * 0.02),
+                        //     borderSide:
+                        //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                        border: InputBorder.none
+                        //  OutlineInputBorder(
+                        //     borderRadius: BorderRadius.circular(width * 0.02),
+                        //     borderSide: BorderSide(
+                        //         color: grey.withOpacity(0.4), width: 1))
                         ),
-                      ),
-                      Container(
-                        height: 1.5,
-                        width: 10,
-                        color: grey,
-                      ),
-                      Expanded(
-                        child: CupertinoButton(
-                          padding: EdgeInsets.all(0.0),
-                          minSize: 0.0001,
-                          onPressed: () async {
-                            _calendarController.endTime!.value =
-                                (await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now()))!;
-                          },
-                          child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: width * 0.04,
-                              ),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1, color: grey.withOpacity(0.4)),
-                                  borderRadius:
-                                      BorderRadius.circular(width * 0.02)),
-                              height: height * 0.06,
-
-                              //width: width,
-                              margin: EdgeInsets.only(left: width * 0.02),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Obx(
-                                      () => Text(
-                                        _calendarController.endTime!.value
-                                            .format(context)
-                                            .toString(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              color: textColor,
-                                              height: 1.5,
-                                              fontSize: height * 0.018,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    UniconsLine.clock,
-                                    color: grey,
-                                    size: height * 0.03,
-                                  )
-                                ],
-                              )),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],
@@ -653,7 +706,10 @@ class _AddEventState extends State<AddEvent> {
                   )
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: height * 0.2,
+            ),
           ],
         )),
       ),
@@ -683,7 +739,13 @@ class _AddEventState extends State<AddEvent> {
             CupertinoButton(
               padding: EdgeInsets.all(0.0),
               minSize: 0.0001,
-              onPressed: () {},
+              onPressed: () {
+                if (_calendarController.selectedTimeSlots.contains(3)) {
+                  Get.to(() => EventFailure());
+                } else {
+                  Get.to(() => EventSuccess());
+                }
+              },
               child: Container(
                 alignment: Alignment.center,
                 width: width * 0.9,

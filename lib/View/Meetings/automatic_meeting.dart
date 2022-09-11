@@ -1,4 +1,6 @@
 import 'package:bit_planner/Controller/meeting_controller.dart';
+import 'package:bit_planner/View/Meetings/meeting_failure.dart';
+import 'package:bit_planner/View/Meetings/meeting_success.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +13,14 @@ import 'package:intl/intl.dart';
 
 import '../../Helper/values.dart';
 
-class AddMeeting extends StatefulWidget {
-  const AddMeeting({Key? key}) : super(key: key);
+class AutomaticMeeting extends StatefulWidget {
+  const AutomaticMeeting({Key? key}) : super(key: key);
 
   @override
-  State<AddMeeting> createState() => _AddMeetingState();
+  State<AutomaticMeeting> createState() => _AutomaticMeetingState();
 }
 
-class _AddMeetingState extends State<AddMeeting> {
+class _AutomaticMeetingState extends State<AutomaticMeeting> {
   late double height;
   late double width;
   FocusNode titleFocus = FocusNode();
@@ -404,7 +406,7 @@ class _AddMeetingState extends State<AddMeeting> {
                                                 .add(Duration(days: 365))))!;
                                   },
                                   child: Container(
-                                      width: width * 0.5,
+                                      width: width * 0.45,
                                       alignment: Alignment.center,
                                       padding: EdgeInsets.symmetric(
                                         horizontal: width * 0.04,
@@ -457,6 +459,162 @@ class _AddMeetingState extends State<AddMeeting> {
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: height * 0.03,
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.symmetric(horizontal: width * 0.05),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Preferred time slots',
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        color: textColor,
+                                        height: 1.3,
+                                        fontSize: height * 0.022,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                CupertinoButton(
+                                  padding: const EdgeInsets.all(0.0),
+                                  minSize: 0.0001,
+                                  onPressed: null,
+                                  child: Container(),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: height * 0.02),
+                          Container(
+                            child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: 4,
+                                itemBuilder: ((context, index) {
+                                  return Column(
+                                    children: [
+                                      SizedBox(
+                                        height: index == 0 ? 0 : height * 0.015,
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: width * 0.05),
+                                        child: Expanded(
+                                          child: CupertinoButton(
+                                            padding: EdgeInsets.all(0.0),
+                                            minSize: 0.0001,
+                                            onPressed: () {
+                                              if (_meetingController
+                                                  .selectedTimeSlots
+                                                  .contains(index)) {
+                                                _meetingController
+                                                    .selectedTimeSlots
+                                                    .remove(index);
+                                              } else {
+                                                _meetingController
+                                                    .selectedTimeSlots
+                                                    .add(index);
+                                              }
+                                            },
+                                            child: Obx(
+                                              () => Container(
+                                                  alignment: Alignment.center,
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: width * 0.04,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                      color: _meetingController
+                                                              .selectedTimeSlots
+                                                              .value
+                                                              .contains(index)
+                                                          ? primaryBlue
+                                                          : white,
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: _meetingController
+                                                                  .selectedTimeSlots
+                                                                  .value
+                                                                  .contains(
+                                                                      index)
+                                                              ? primaryBlue
+                                                              : grey
+                                                                  .withOpacity(
+                                                                      0.4)),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              width * 0.02)),
+                                                  height: height * 0.06,
+
+                                                  //width: width,
+
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Obx(
+                                                        () => Text(
+                                                          _meetingController
+                                                                  .startTime!
+                                                                  .value
+                                                                  .format(
+                                                                      context)
+                                                                  .toString() +
+                                                              " - " +
+                                                              _meetingController
+                                                                  .endTime!
+                                                                  .value
+                                                                  .format(
+                                                                      context)
+                                                                  .toString(),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            textStyle: TextStyle(
+                                                                color: _meetingController
+                                                                        .selectedTimeSlots
+                                                                        .contains(
+                                                                            index)
+                                                                    ? white
+                                                                    : textColor,
+                                                                height: 1.5,
+                                                                fontSize:
+                                                                    height *
+                                                                        0.018,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Icon(
+                                                        UniconsLine.clock,
+                                                        color: _meetingController
+                                                                .selectedTimeSlots
+                                                                .value
+                                                                .contains(index)
+                                                            ? white
+                                                            : grey,
+                                                        size: height * 0.03,
+                                                      )
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                })),
+                          ),
                           SizedBox(height: height * 0.03),
                           Container(
                             margin:
@@ -465,7 +623,7 @@ class _AddMeetingState extends State<AddMeeting> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Timing',
+                                  'Duration (minutes)',
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         color: textColor,
@@ -487,142 +645,46 @@ class _AddMeetingState extends State<AddMeeting> {
                             height: height * 0.02,
                           ),
                           Container(
+                            alignment: Alignment.center,
+                            width: width,
+                            height: height * 0.06,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: grey.withOpacity(0.4), width: 1),
+                                borderRadius:
+                                    BorderRadius.circular(width * 0.02)),
                             margin:
                                 EdgeInsets.symmetric(horizontal: width * 0.05),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: CupertinoButton(
-                                    padding: EdgeInsets.all(0.0),
-                                    minSize: 0.0001,
-                                    onPressed: () async {
-                                      _meetingController.startTime!.value =
-                                          (await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now()))!;
-                                    },
-                                    child: Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: width * 0.04,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 1,
-                                                color: grey.withOpacity(0.4)),
-                                            borderRadius: BorderRadius.circular(
-                                                width * 0.02)),
-                                        height: height * 0.06,
-
-                                        //width: width,
-                                        margin: EdgeInsets.only(
-                                            right: width * 0.02),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Obx(
-                                                () => Text(
-                                                  _meetingController
-                                                      .startTime!.value
-                                                      .format(context)
-                                                      .toString(),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle: TextStyle(
-                                                        color: textColor,
-                                                        height: 1.5,
-                                                        fontSize:
-                                                            height * 0.018,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Icon(
-                                              UniconsLine.clock,
-                                              color: grey,
-                                              size: height * 0.03,
-                                            )
-                                          ],
-                                        )),
+                            child: TextField(
+                              focusNode: titleFocus,
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    overflow: TextOverflow.fade,
+                                    color: textColor,
+                                    //height: 1.3,
+                                    fontSize: height * 0.018,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              cursorColor: primaryBlue,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04),
+                                  // errorBorder: OutlineInputBorder(
+                                  //     borderRadius: BorderRadius.circular(width * 0.02),
+                                  //     borderSide: BorderSide(color: red, width: 1)),
+                                  // focusedBorder: OutlineInputBorder(
+                                  //     borderRadius: BorderRadius.circular(width * 0.02),
+                                  //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                                  // enabledBorder: OutlineInputBorder(
+                                  //     borderRadius: BorderRadius.circular(width * 0.02),
+                                  //     borderSide:
+                                  //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                                  border: InputBorder.none
+                                  //  OutlineInputBorder(
+                                  //     borderRadius: BorderRadius.circular(width * 0.02),
+                                  //     borderSide: BorderSide(
+                                  //         color: grey.withOpacity(0.4), width: 1))
                                   ),
-                                ),
-                                Container(
-                                  height: 1.5,
-                                  width: 10,
-                                  color: grey,
-                                ),
-                                Expanded(
-                                  child: CupertinoButton(
-                                    padding: EdgeInsets.all(0.0),
-                                    minSize: 0.0001,
-                                    onPressed: () async {
-                                      _meetingController.endTime!.value =
-                                          (await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now()))!;
-                                    },
-                                    child: Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: width * 0.04,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 1,
-                                                color: grey.withOpacity(0.4)),
-                                            borderRadius: BorderRadius.circular(
-                                                width * 0.02)),
-                                        height: height * 0.06,
-
-                                        //width: width,
-                                        margin:
-                                            EdgeInsets.only(left: width * 0.02),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Obx(
-                                                () => Text(
-                                                  _meetingController
-                                                      .endTime!.value
-                                                      .format(context)
-                                                      .toString(),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle: TextStyle(
-                                                        color: textColor,
-                                                        height: 1.5,
-                                                        fontSize:
-                                                            height * 0.018,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Icon(
-                                              UniconsLine.clock,
-                                              color: grey,
-                                              size: height * 0.03,
-                                            )
-                                          ],
-                                        )),
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
                         ],
@@ -636,7 +698,7 @@ class _AddMeetingState extends State<AddMeeting> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Dates',
+                                  'Preferred dates',
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         color: textColor,
@@ -805,7 +867,7 @@ class _AddMeetingState extends State<AddMeeting> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Timing',
+                                  'Duration',
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         color: textColor,
@@ -827,142 +889,46 @@ class _AddMeetingState extends State<AddMeeting> {
                             height: height * 0.02,
                           ),
                           Container(
+                            alignment: Alignment.center,
+                            width: width,
+                            height: height * 0.06,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: grey.withOpacity(0.4), width: 1),
+                                borderRadius:
+                                    BorderRadius.circular(width * 0.02)),
                             margin:
                                 EdgeInsets.symmetric(horizontal: width * 0.05),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: CupertinoButton(
-                                    padding: EdgeInsets.all(0.0),
-                                    minSize: 0.0001,
-                                    onPressed: () async {
-                                      _meetingController.startTime!.value =
-                                          (await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now()))!;
-                                    },
-                                    child: Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: width * 0.04,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 1,
-                                                color: grey.withOpacity(0.4)),
-                                            borderRadius: BorderRadius.circular(
-                                                width * 0.02)),
-                                        height: height * 0.06,
-
-                                        //width: width,
-                                        margin: EdgeInsets.only(
-                                            right: width * 0.02),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Obx(
-                                                () => Text(
-                                                  _meetingController
-                                                      .startTime!.value
-                                                      .format(context)
-                                                      .toString(),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle: TextStyle(
-                                                        color: textColor,
-                                                        height: 1.5,
-                                                        fontSize:
-                                                            height * 0.018,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Icon(
-                                              UniconsLine.clock,
-                                              color: grey,
-                                              size: height * 0.03,
-                                            )
-                                          ],
-                                        )),
+                            child: TextField(
+                              focusNode: titleFocus,
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    overflow: TextOverflow.fade,
+                                    color: textColor,
+                                    //height: 1.3,
+                                    fontSize: height * 0.018,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              cursorColor: primaryBlue,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04),
+                                  // errorBorder: OutlineInputBorder(
+                                  //     borderRadius: BorderRadius.circular(width * 0.02),
+                                  //     borderSide: BorderSide(color: red, width: 1)),
+                                  // focusedBorder: OutlineInputBorder(
+                                  //     borderRadius: BorderRadius.circular(width * 0.02),
+                                  //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                                  // enabledBorder: OutlineInputBorder(
+                                  //     borderRadius: BorderRadius.circular(width * 0.02),
+                                  //     borderSide:
+                                  //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                                  border: InputBorder.none
+                                  //  OutlineInputBorder(
+                                  //     borderRadius: BorderRadius.circular(width * 0.02),
+                                  //     borderSide: BorderSide(
+                                  //         color: grey.withOpacity(0.4), width: 1))
                                   ),
-                                ),
-                                Container(
-                                  height: 1.5,
-                                  width: 10,
-                                  color: grey,
-                                ),
-                                Expanded(
-                                  child: CupertinoButton(
-                                    padding: EdgeInsets.all(0.0),
-                                    minSize: 0.0001,
-                                    onPressed: () async {
-                                      _meetingController.endTime!.value =
-                                          (await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now()))!;
-                                    },
-                                    child: Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: width * 0.04,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 1,
-                                                color: grey.withOpacity(0.4)),
-                                            borderRadius: BorderRadius.circular(
-                                                width * 0.02)),
-                                        height: height * 0.06,
-
-                                        //width: width,
-                                        margin:
-                                            EdgeInsets.only(left: width * 0.02),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Obx(
-                                                () => Text(
-                                                  _meetingController
-                                                      .endTime!.value
-                                                      .format(context)
-                                                      .toString(),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle: TextStyle(
-                                                        color: textColor,
-                                                        height: 1.5,
-                                                        fontSize:
-                                                            height * 0.018,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Icon(
-                                              UniconsLine.clock,
-                                              color: grey,
-                                              size: height * 0.03,
-                                            )
-                                          ],
-                                        )),
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
                         ],
@@ -1063,7 +1029,10 @@ class _AddMeetingState extends State<AddMeeting> {
                   )
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: height * 0.2,
+            ),
           ],
         )),
       ),
@@ -1093,7 +1062,13 @@ class _AddMeetingState extends State<AddMeeting> {
             CupertinoButton(
               padding: EdgeInsets.all(0.0),
               minSize: 0.0001,
-              onPressed: () {},
+              onPressed: () {
+                if (_meetingController.selectedTimeSlots.contains(3)) {
+                  Get.to(() => MeetingFailure());
+                } else {
+                  Get.to(() => MeetingSuccess());
+                }
+              },
               child: Container(
                 alignment: Alignment.center,
                 width: width * 0.9,
