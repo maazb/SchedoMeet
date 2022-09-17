@@ -148,64 +148,61 @@ class _MeetingFailureState extends State<MeetingFailure> {
                           Container(
                             margin:
                                 EdgeInsets.symmetric(horizontal: width * 0.05),
-                            child: Expanded(
-                              child: CupertinoButton(
-                                padding: EdgeInsets.all(0.0),
-                                minSize: 0.0001,
-                                onPressed: () {
-                                  Get.to(MeetingSuccess());
-                                },
-                                child: Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: width * 0.04,
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: white,
-                                        border: Border.all(
-                                            width: 1,
-                                            color: grey.withOpacity(0.4)),
-                                        borderRadius: BorderRadius.circular(
-                                            width * 0.02)),
-                                    height: height * 0.06,
+                            child: CupertinoButton(
+                              padding: EdgeInsets.all(0.0),
+                              minSize: 0.0001,
+                              onPressed: () {
+                                Get.to(MeetingSuccess());
+                              },
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.04,
+                                  ),
+                                  decoration: BoxDecoration(
+                                      color: white,
+                                      border: Border.all(
+                                          width: 1,
+                                          color: grey.withOpacity(0.4)),
+                                      borderRadius:
+                                          BorderRadius.circular(width * 0.02)),
+                                  height: height * 0.06,
 
-                                    //width: width,
+                                  //width: width,
 
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Obx(
-                                          () => Text(
-                                            _meetingController.startTime!.value
-                                                    .format(context)
-                                                    .toString() +
-                                                " - " +
-                                                _meetingController
-                                                    .endTime!.value
-                                                    .format(context)
-                                                    .toString(),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  color: textColor,
-                                                  height: 1.5,
-                                                  fontSize: height * 0.018,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Obx(
+                                        () => Text(
+                                          _meetingController.startTime!.value
+                                                  .format(context)
+                                                  .toString() +
+                                              " - " +
+                                              _meetingController.endTime!.value
+                                                  .format(context)
+                                                  .toString(),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                                color: textColor,
+                                                height: 1.5,
+                                                fontSize: height * 0.018,
+                                                fontWeight: FontWeight.w400),
                                           ),
                                         ),
-                                        Icon(
-                                          UniconsLine.clock,
-                                          color: grey,
-                                          size: height * 0.03,
-                                        )
-                                      ],
-                                    )),
-                              ),
+                                      ),
+                                      Icon(
+                                        UniconsLine.clock,
+                                        color: grey,
+                                        size: height * 0.03,
+                                      )
+                                    ],
+                                  )),
                             ),
                           ),
                         ],

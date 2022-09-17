@@ -502,112 +502,103 @@ class _AutomaticMeetingState extends State<AutomaticMeeting> {
                                       Container(
                                         margin: EdgeInsets.symmetric(
                                             horizontal: width * 0.05),
-                                        child: Expanded(
-                                          child: CupertinoButton(
-                                            padding: EdgeInsets.all(0.0),
-                                            minSize: 0.0001,
-                                            onPressed: () {
-                                              if (_meetingController
+                                        child: CupertinoButton(
+                                          padding: EdgeInsets.all(0.0),
+                                          minSize: 0.0001,
+                                          onPressed: () {
+                                            if (_meetingController
+                                                .selectedTimeSlots
+                                                .contains(index)) {
+                                              _meetingController
                                                   .selectedTimeSlots
-                                                  .contains(index)) {
-                                                _meetingController
-                                                    .selectedTimeSlots
-                                                    .remove(index);
-                                              } else {
-                                                _meetingController
-                                                    .selectedTimeSlots
-                                                    .add(index);
-                                              }
-                                            },
-                                            child: Obx(
-                                              () => Container(
-                                                  alignment: Alignment.center,
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal: width * 0.04,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                      color: _meetingController
-                                                              .selectedTimeSlots
-                                                              .value
-                                                              .contains(index)
-                                                          ? primaryBlue
-                                                          : white,
-                                                      border: Border.all(
-                                                          width: 1,
-                                                          color: _meetingController
-                                                                  .selectedTimeSlots
-                                                                  .value
-                                                                  .contains(
-                                                                      index)
-                                                              ? primaryBlue
-                                                              : grey
-                                                                  .withOpacity(
-                                                                      0.4)),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              width * 0.02)),
-                                                  height: height * 0.06,
-
-                                                  //width: width,
-
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Obx(
-                                                        () => Text(
-                                                          _meetingController
-                                                                  .startTime!
-                                                                  .value
-                                                                  .format(
-                                                                      context)
-                                                                  .toString() +
-                                                              " - " +
-                                                              _meetingController
-                                                                  .endTime!
-                                                                  .value
-                                                                  .format(
-                                                                      context)
-                                                                  .toString(),
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            textStyle: TextStyle(
-                                                                color: _meetingController
-                                                                        .selectedTimeSlots
-                                                                        .contains(
-                                                                            index)
-                                                                    ? white
-                                                                    : textColor,
-                                                                height: 1.5,
-                                                                fontSize:
-                                                                    height *
-                                                                        0.018,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Icon(
-                                                        UniconsLine.clock,
+                                                  .remove(index);
+                                            } else {
+                                              _meetingController
+                                                  .selectedTimeSlots
+                                                  .add(index);
+                                            }
+                                          },
+                                          child: Obx(
+                                            () => Container(
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: width * 0.04,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    color: _meetingController
+                                                            .selectedTimeSlots
+                                                            .value
+                                                            .contains(index)
+                                                        ? primaryBlue
+                                                        : white,
+                                                    border: Border.all(
+                                                        width: 1,
                                                         color: _meetingController
                                                                 .selectedTimeSlots
                                                                 .value
                                                                 .contains(index)
-                                                            ? white
-                                                            : grey,
-                                                        size: height * 0.03,
-                                                      )
-                                                    ],
-                                                  )),
-                                            ),
+                                                            ? primaryBlue
+                                                            : grey.withOpacity(
+                                                                0.4)),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            width * 0.02)),
+                                                height: height * 0.06,
+
+                                                //width: width,
+
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Obx(
+                                                      () => Text(
+                                                        _meetingController
+                                                                .startTime!
+                                                                .value
+                                                                .format(context)
+                                                                .toString() +
+                                                            " - " +
+                                                            _meetingController
+                                                                .endTime!.value
+                                                                .format(context)
+                                                                .toString(),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          textStyle: TextStyle(
+                                                              color: _meetingController
+                                                                      .selectedTimeSlots
+                                                                      .contains(
+                                                                          index)
+                                                                  ? white
+                                                                  : textColor,
+                                                              height: 1.5,
+                                                              fontSize: height *
+                                                                  0.018,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Icon(
+                                                      UniconsLine.clock,
+                                                      color: _meetingController
+                                                              .selectedTimeSlots
+                                                              .value
+                                                              .contains(index)
+                                                          ? white
+                                                          : grey,
+                                                      size: height * 0.03,
+                                                    )
+                                                  ],
+                                                )),
                                           ),
                                         ),
                                       ),

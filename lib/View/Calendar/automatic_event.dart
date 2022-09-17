@@ -450,90 +450,88 @@ class _AutomaticEventState extends State<AutomaticEvent> {
                             Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: width * 0.05),
-                              child: Expanded(
-                                child: CupertinoButton(
-                                  padding: EdgeInsets.all(0.0),
-                                  minSize: 0.0001,
-                                  onPressed: () {
-                                    if (_calendarController.selectedTimeSlots
-                                        .contains(index)) {
-                                      _calendarController.selectedTimeSlots
-                                          .remove(index);
-                                    } else {
-                                      _calendarController.selectedTimeSlots
-                                          .add(index);
-                                    }
-                                  },
-                                  child: Obx(
-                                    () => Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: width * 0.04,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            color: _calendarController
-                                                    .selectedTimeSlots.value
-                                                    .contains(index)
-                                                ? primaryBlue
-                                                : white,
-                                            border: Border.all(
-                                                width: 1,
-                                                color: _calendarController
-                                                        .selectedTimeSlots.value
-                                                        .contains(index)
-                                                    ? primaryBlue
-                                                    : grey.withOpacity(0.4)),
-                                            borderRadius: BorderRadius.circular(
-                                                width * 0.02)),
-                                        height: height * 0.06,
-
-                                        //width: width,
-
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Obx(
-                                              () => Text(
-                                                _calendarController
-                                                        .startTime!.value
-                                                        .format(context)
-                                                        .toString() +
-                                                    " - " +
-                                                    _calendarController
-                                                        .endTime!.value
-                                                        .format(context)
-                                                        .toString(),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: GoogleFonts.poppins(
-                                                  textStyle: TextStyle(
-                                                      color: _calendarController
-                                                              .selectedTimeSlots
-                                                              .contains(index)
-                                                          ? white
-                                                          : textColor,
-                                                      height: 1.5,
-                                                      fontSize: height * 0.018,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                ),
-                                              ),
-                                            ),
-                                            Icon(
-                                              UniconsLine.clock,
+                              child: CupertinoButton(
+                                padding: EdgeInsets.all(0.0),
+                                minSize: 0.0001,
+                                onPressed: () {
+                                  if (_calendarController.selectedTimeSlots
+                                      .contains(index)) {
+                                    _calendarController.selectedTimeSlots
+                                        .remove(index);
+                                  } else {
+                                    _calendarController.selectedTimeSlots
+                                        .add(index);
+                                  }
+                                },
+                                child: Obx(
+                                  () => Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: width * 0.04,
+                                      ),
+                                      decoration: BoxDecoration(
+                                          color: _calendarController
+                                                  .selectedTimeSlots.value
+                                                  .contains(index)
+                                              ? primaryBlue
+                                              : white,
+                                          border: Border.all(
+                                              width: 1,
                                               color: _calendarController
                                                       .selectedTimeSlots.value
                                                       .contains(index)
-                                                  ? white
-                                                  : grey,
-                                              size: height * 0.03,
-                                            )
-                                          ],
-                                        )),
-                                  ),
+                                                  ? primaryBlue
+                                                  : grey.withOpacity(0.4)),
+                                          borderRadius: BorderRadius.circular(
+                                              width * 0.02)),
+                                      height: height * 0.06,
+
+                                      //width: width,
+
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Obx(
+                                            () => Text(
+                                              _calendarController
+                                                      .startTime!.value
+                                                      .format(context)
+                                                      .toString() +
+                                                  " - " +
+                                                  _calendarController
+                                                      .endTime!.value
+                                                      .format(context)
+                                                      .toString(),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.poppins(
+                                                textStyle: TextStyle(
+                                                    color: _calendarController
+                                                            .selectedTimeSlots
+                                                            .contains(index)
+                                                        ? white
+                                                        : textColor,
+                                                    height: 1.5,
+                                                    fontSize: height * 0.018,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                            ),
+                                          ),
+                                          Icon(
+                                            UniconsLine.clock,
+                                            color: _calendarController
+                                                    .selectedTimeSlots.value
+                                                    .contains(index)
+                                                ? white
+                                                : grey,
+                                            size: height * 0.03,
+                                          )
+                                        ],
+                                      )),
                                 ),
                               ),
                             ),
