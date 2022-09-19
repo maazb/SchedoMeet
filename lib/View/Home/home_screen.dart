@@ -296,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Maya Aly',
+                                              'John Marc',
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 1,
                                               style: GoogleFonts.poppins(

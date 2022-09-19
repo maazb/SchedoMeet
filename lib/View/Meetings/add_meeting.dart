@@ -1,4 +1,5 @@
 import 'package:bit_planner/Controller/meeting_controller.dart';
+import 'package:bit_planner/View/Meetings/select_members.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -1003,7 +1004,9 @@ class _AddMeetingState extends State<AddMeeting> {
                   CupertinoButton(
                       padding: const EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: null,
+                      onPressed: () {
+                        Get.to(() => SelectMembers());
+                      },
                       child: SizedBox(
                           width: width * 0.25,
                           height: height * 0.05,
@@ -1046,7 +1049,9 @@ class _AddMeetingState extends State<AddMeeting> {
                   CupertinoButton(
                     padding: EdgeInsets.all(0.0),
                     minSize: 0.0001,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => SelectMembers());
+                    },
                     child: Container(
                       height: width * 0.1,
                       width: width * 0.1,

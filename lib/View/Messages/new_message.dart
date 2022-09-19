@@ -255,7 +255,7 @@ class _NewMessageState extends State<NewMessage> {
                                                               children: [
                                                                 Expanded(
                                                                   child: Text(
-                                                                    "Maya Aly",
+                                                                    "John Marc",
                                                                     maxLines: 1,
                                                                     overflow:
                                                                         TextOverflow

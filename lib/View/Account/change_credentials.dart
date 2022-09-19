@@ -24,8 +24,8 @@ class _ChangeCredentialsState extends State<ChangeCredentials> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    txtName.text = "Zoey Ann";
-    txtEmail.text = "zoeyann@example.com";
+    txtName.text = "Micheal Shot";
+    txtEmail.text = "michealshot@example.com";
     txtPhone.text = "+923455432123";
   }
 

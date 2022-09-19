@@ -246,7 +246,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               //   ),
                               // ),
                               Text(
-                                'Maya Aly',
+                                'John Marc',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.poppins(

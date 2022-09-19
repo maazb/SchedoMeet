@@ -222,7 +222,7 @@ class _MessagesState extends State<Messages> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      "Maya Aly",
+                                                      "John Marc",
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.ellipsis,

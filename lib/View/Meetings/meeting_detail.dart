@@ -265,7 +265,7 @@ class _MeetingDetailState extends State<MeetingDetail> {
                                   SizedBox(width: width * 0.015),
                                   Flexible(
                                     child: Text(
-                                      'Maya Aly',
+                                      'John Marc',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.poppins(

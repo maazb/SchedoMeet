@@ -1,6 +1,7 @@
 import 'package:bit_planner/Controller/account_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Account/about_us.dart';
+import 'package:bit_planner/View/Account/all_contacts.dart';
 import 'package:bit_planner/View/Account/app_settings.dart';
 import 'package:bit_planner/View/Account/change_credentials.dart';
 import 'package:bit_planner/View/Account/change_password.dart';
@@ -158,7 +159,7 @@ class _AccountState extends State<Account> {
                         height: height * 0.008,
                       ),
                       Text(
-                        'Zoey Ann',
+                        'Micheal Shot',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
@@ -170,7 +171,7 @@ class _AccountState extends State<Account> {
                         ),
                       ),
                       Text(
-                        'zoeyann@example.com',
+                        'michealshot@example.com',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
@@ -275,7 +276,9 @@ class _AccountState extends State<Account> {
                     child: CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => AllContacts());
+                      },
                       child: Column(
                         children: [
                           Container(
