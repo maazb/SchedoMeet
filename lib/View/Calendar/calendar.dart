@@ -12,6 +12,7 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:unicons/unicons.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +35,7 @@ class _CalendarState extends State<Calendar> {
   NavigationController _navigationController = Get.find();
 
   getData() async {
-    await _calendarController.getEvents();
+    await _calendarController.loadEvents();
   }
 
   @override
@@ -372,13 +373,14 @@ class _CalendarState extends State<Calendar> {
                             return isSameDay(
                                 _calendarController.selectedDay!.value, day);
                           },
-                          onDaySelected: (selectedDay, focusedDay) {
+                          onDaySelected: (selectedDay, focusedDay) async {
                             setState(() {
                               _calendarController.selectedDay!.value =
                                   selectedDay;
                               _calendarController.focusedDay!.value =
                                   selectedDay;
                             });
+                            await _calendarController.loadEvents();
                             // update `_focusedDay` here as well
                           },
                           onCalendarCreated: (controller) =>
@@ -457,155 +459,220 @@ class _CalendarState extends State<Calendar> {
                   SizedBox(
                     height: height * 0.02,
                   ),
-                  ListView.builder(
-                      itemCount: _calendarController.eventList.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            CupertinoButton(
-                              padding: const EdgeInsets.all(0.0),
-                              minSize: 0.0001,
-                              onPressed: () {
-                                Get.to(() => EventDetail());
-                              },
-                              child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: width * 0.05),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      CupertinoButton(
-                                        padding: const EdgeInsets.all(0.0),
-                                        minSize: 0.0001,
-                                        onPressed: null,
-                                        child: Container(
-                                            padding:
-                                                EdgeInsets.all(width * 0.04),
-                                            decoration: BoxDecoration(
-                                                color: greyLight,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        width * 5)),
-                                            child: _calendarController
-                                                        .eventList[index]
-                                                        .type! ==
-                                                    "meeting"
-                                                ? SvgPicture.asset(
-                                                    "assets/icons/Video.svg",
-                                                    color: textColor,
-                                                    height: width * 0.06,
-                                                  )
-                                                : _calendarController
-                                                            .eventList[index]
-                                                            .type! ==
-                                                        "event"
-                                                    ? SvgPicture.asset(
-                                                        "assets/icons/Calendar.svg",
-                                                        color: textColor,
-                                                        height: width * 0.06,
-                                                      )
-                                                    : _calendarController
-                                                                .eventList[
-                                                                    index]
-                                                                .type! ==
-                                                            "task"
-                                                        ? SvgPicture.asset(
-                                                            "assets/icons/Clipboard-alt.svg",
-                                                            color: textColor,
-                                                            height:
-                                                                width * 0.06,
-                                                          )
-                                                        : SvgPicture.asset(
-                                                            "assets/icons/Calendar.svg",
-                                                            color: textColor,
-                                                            height:
-                                                                width * 0.06,
-                                                          )),
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.04,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              _calendarController
-                                                  .eventList[index].name!,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                    color: textColor,
-                                                    //height: 1.3,
-                                                    fontSize: height * 0.018,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                            Text(
-                                              _calendarController
-                                                  .eventList[index]
-                                                  .description!,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                    color: grey,
-                                                    //height: 1.3,
-                                                    fontSize: height * 0.016,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      CupertinoButton(
-                                        padding: const EdgeInsets.all(0.0),
-                                        minSize: 0.0001,
-                                        onPressed: null,
-                                        child: Container(
-                                          margin: EdgeInsets.only(
-                                              left: width * 0.02),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: width * 0.025,
-                                              vertical: height * 0.008),
-                                          decoration: BoxDecoration(
-                                              color: primaryLight,
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      width * 5)),
-                                          child: Text(
-                                            _calendarController
-                                                .eventList[index].time!,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  color: primaryBlue,
-                                                  //height: 1.3,
-                                                  fontSize: height * 0.015,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                            SizedBox(
-                              height: height * 0.022,
+                  Obx(
+                    () => Container(
+                      child: _calendarController.loadingEvents.value
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: width * 0.5,
+                                  width: width * 0.5,
+                                  child: LottieBuilder.asset(
+                                    "assets/animations/loading.json",
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: height * 0.2,
+                                ),
+                              ],
                             )
-                          ],
-                        );
-                      }),
+                          : Obx(
+                              () => ListView.builder(
+                                  itemCount:
+                                      _calendarController.eventsList.length,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(
+                                      children: [
+                                        CupertinoButton(
+                                          padding: const EdgeInsets.all(0.0),
+                                          minSize: width * 0.04,
+                                          onPressed: () {
+                                            Get.to(() => EventDetail(
+                                                  event: _calendarController
+                                                      .eventsList[index],
+                                                ));
+                                          },
+                                          child: Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: width * 0.05),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  CupertinoButton(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            0.0),
+                                                    minSize: 0.0001,
+                                                    onPressed: null,
+                                                    child: Container(
+                                                        padding: EdgeInsets.all(
+                                                            width * 0.035),
+                                                        decoration: BoxDecoration(
+                                                            color: greyLight,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        width *
+                                                                            5)),
+                                                        child: _calendarController
+                                                                    .eventsList[
+                                                                        index]
+                                                                    .eventType ==
+                                                                "event"
+                                                            ? SvgPicture.asset(
+                                                                "assets/icons/Calendar.svg",
+                                                                color:
+                                                                    textColor,
+                                                                height: width *
+                                                                    0.06,
+                                                              )
+                                                            : _calendarController
+                                                                        .eventsList[
+                                                                            index]
+                                                                        .eventType ==
+                                                                    "task"
+                                                                ? SvgPicture
+                                                                    .asset(
+                                                                    "assets/icons/Clipboard-alt.svg",
+                                                                    color:
+                                                                        textColor,
+                                                                    height:
+                                                                        width *
+                                                                            0.06,
+                                                                  )
+                                                                : SvgPicture
+                                                                    .asset(
+                                                                    "assets/icons/Calendar.svg",
+                                                                    color:
+                                                                        textColor,
+                                                                    height:
+                                                                        width *
+                                                                            0.06,
+                                                                  )),
+                                                  ),
+                                                  SizedBox(
+                                                    width: width * 0.04,
+                                                  ),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          _calendarController
+                                                              .eventsList[index]
+                                                              .title!,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            textStyle:
+                                                                TextStyle(
+                                                                    color:
+                                                                        textColor,
+                                                                    //height: 1.3,
+                                                                    fontSize:
+                                                                        height *
+                                                                            0.018,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          _calendarController
+                                                              .eventsList[index]
+                                                              .detail!,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            textStyle:
+                                                                TextStyle(
+                                                                    color: grey,
+                                                                    //height: 1.3,
+                                                                    fontSize:
+                                                                        height *
+                                                                            0.016,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  CupertinoButton(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            0.0),
+                                                    minSize: 0.0001,
+                                                    onPressed: null,
+                                                    child: Container(
+                                                      margin: EdgeInsets.only(
+                                                          left: width * 0.02),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  width * 0.025,
+                                                              vertical: height *
+                                                                  0.008),
+                                                      decoration: BoxDecoration(
+                                                          color: primaryLight,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      width *
+                                                                          5)),
+                                                      child: Text(
+                                                        DateFormat("hh:mm a")
+                                                            .format(
+                                                                _calendarController
+                                                                    .eventsList[
+                                                                        index]
+                                                                    .startTime!),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          textStyle: TextStyle(
+                                                              color:
+                                                                  primaryBlue,
+                                                              //height: 1.3,
+                                                              fontSize: height *
+                                                                  0.015,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                        ),
+                                        SizedBox(
+                                          height: height * 0.022,
+                                        )
+                                      ],
+                                    );
+                                  }),
+                            ),
+                    ),
+                  )
                   // SizedBox(height: height * 0.1)
                 ],
               ),

@@ -1,6 +1,28 @@
+import 'package:bit_planner/Controller/load_data_controller.dart';
 import 'package:flutter/material.dart';
 
-Color primaryBlue = const Color.fromRGBO(8, 15, 126, 1);
+//Values
+
+String checkInternetDomain = 'example.com';
+String baseURL = 'https://schedomeet.herokuapp.com';
+String tokenKey = '2ZWFmMjYiLCJleHAiOjE2MjI';
+String mapKey = 'AIzaSyD7jpVB_jaW4RJw21fuW19MqnvrPGIyB6M';
+const String oneSignalKey = 'ce39468c-285d-4478-b3e9-1e5cc1451dbd';
+
+String picPlaceHolder =
+    'https://dk0pm9zdlq16s.cloudfront.net/3af7cf37-c120-4ebd-9223-8962b95030af.jpg';
+
+String googleMapsKey = 'AIzaSyD7jpVB_jaW4RJw21fuW19MqnvrPGIyB6M';
+
+LoadDataController loadDataController = LoadDataController.instance;
+
+DateTime getDate(DateTime dt) {
+  return DateTime(dt.year, dt.month, dt.day, 0, 0, 0, 0, 0);
+}
+
+//Colors:
+
+Color primaryBlue = Color.fromRGBO(8, 15, 126, 1);
 Color white = const Color.fromRGBO(255, 255, 255, 1);
 Color red = const Color.fromRGBO(191, 36, 69, 1);
 Color textColor = const Color.fromRGBO(3, 6, 48, 1);

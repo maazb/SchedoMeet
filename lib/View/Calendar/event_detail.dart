@@ -1,3 +1,5 @@
+import 'package:bit_planner/Model/events_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +10,8 @@ import 'package:intl/intl.dart';
 import '../../Helper/values.dart';
 
 class EventDetail extends StatefulWidget {
-  const EventDetail({Key? key}) : super(key: key);
+  EventsModel event;
+  EventDetail({Key? key, required this.event}) : super(key: key);
 
   @override
   State<EventDetail> createState() => _EventDetailState();
@@ -102,7 +105,7 @@ class _EventDetailState extends State<EventDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Visit to design studio',
+                    widget.event.title!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: GoogleFonts.poppins(
@@ -115,7 +118,7 @@ class _EventDetailState extends State<EventDetail> {
                   ),
                   SizedBox(height: height * 0.015),
                   Text(
-                    'Quis consetetur ea diam kasd et no amet accusam consequat diam hendrerit ad justo kasd velit justo consetetur feugait. Qui lorem diam amet amet magna diam tempor dolore. Est in dolor nonumy ipsum rebum dolor nulla consequat nonumy diam in eos feugiat. Sit invidunt nonummy. Accusam invidunt ad et lorem vero amet. Justo nonumy erat praesent et eu dolore illum est est at in vel iusto gubergren diam et ipsum consetetur. Sea kasd est aliquyam. Clita augue accusam ullamcorper sadipscing ipsum dolore lorem sea. Nonumy et velit nonumy et elitr sit autem diam hendrerit eirmod clita dolores no invidunt stet enim facilisis justo. Sea dolores amet invidunt at ea gubergren at clita ipsum consetetur diam et assum et tempor feugiat.',
+                    widget.event.detail!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 4,
                     style: GoogleFonts.poppins(
@@ -253,13 +256,12 @@ class _EventDetailState extends State<EventDetail> {
                                     height: height * 0.03,
                                     width: height * 0.03,
                                     child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(width * 5),
-                                      child: Image.asset(
-                                        "assets/images/profile2.jpg",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                                        borderRadius:
+                                            BorderRadius.circular(width * 5),
+                                        child: CachedNetworkImage(
+                                          imageUrl: picPlaceHolder,
+                                          fit: BoxFit.cover,
+                                        )),
                                   ),
                                   SizedBox(width: width * 0.015),
                                   Flexible(
@@ -334,7 +336,7 @@ class _EventDetailState extends State<EventDetail> {
                           SizedBox(width: width * 0.05),
                           Flexible(
                             child: Text(
-                              '13',
+                              widget.event.attendees!.length.toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
@@ -381,7 +383,7 @@ class _EventDetailState extends State<EventDetail> {
                           Flexible(
                             child: Text(
                               DateFormat('dd MMM yyyy')
-                                  .format(DateTime.now())
+                                  .format(widget.event.date!)
                                   .toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -432,7 +434,9 @@ class _EventDetailState extends State<EventDetail> {
                           ),
                           Flexible(
                             child: Text(
-                              '12:00 PM',
+                              DateFormat('hh:mm a')
+                                  .format(widget.event.startTime!)
+                                  .toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(

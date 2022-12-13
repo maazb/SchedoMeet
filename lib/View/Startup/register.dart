@@ -1,3 +1,6 @@
+import 'package:bit_planner/Controller/login_register_controller.dart';
+import 'package:bit_planner/Helper/common_widgets/error_list.dart';
+import 'package:bit_planner/Helper/services.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +17,8 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  LoginRegisterController _loginRegisterController = Get.find();
+  RxBool obscurePass = true.obs;
   late double height;
   late double width;
   @override
@@ -153,26 +158,21 @@ class _RegisterState extends State<Register> {
                   ),
                   cursorColor: primaryBlue,
                   keyboardType: TextInputType.name,
+                  controller: _loginRegisterController.txtName,
+                  onChanged: (value) {
+                    if (_loginRegisterController.txtName.text.isEmpty) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.noName);
+                    } else {
+                      _loginRegisterController.errors
+                          .remove(_loginRegisterController.noName);
+                    }
+                  },
                   decoration: InputDecoration(
                       hintText: "Name",
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: width * 0.04),
-                      // errorBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(color: red, width: 1)),
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                      // enabledBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide:
-                      //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                      border: InputBorder.none
-                      //  OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(
-                      //         color: grey.withOpacity(0.4), width: 1))
-                      ),
+                      border: InputBorder.none),
                 ),
               ),
               SizedBox(
@@ -196,28 +196,23 @@ class _RegisterState extends State<Register> {
                         fontSize: height * 0.018,
                         fontWeight: FontWeight.w400),
                   ),
+                  onChanged: (value) {
+                    if (_loginRegisterController.txtEmail.text.isEmpty) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.noEmail);
+                    } else {
+                      _loginRegisterController.errors
+                          .remove(_loginRegisterController.noEmail);
+                    }
+                  },
                   cursorColor: primaryBlue,
                   keyboardType: TextInputType.emailAddress,
+                  controller: _loginRegisterController.txtEmail,
                   decoration: InputDecoration(
                       hintText: "Email address",
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: width * 0.04),
-                      // errorBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(color: red, width: 1)),
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                      // enabledBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide:
-                      //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                      border: InputBorder.none
-                      //  OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(
-                      //         color: grey.withOpacity(0.4), width: 1))
-                      ),
+                      border: InputBorder.none),
                 ),
               ),
               SizedBox(
@@ -232,38 +227,44 @@ class _RegisterState extends State<Register> {
                     //border: Border.all(color: grey.withOpacity(0.4), width: 1),
                     borderRadius: BorderRadius.circular(width * 0.02)),
                 margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-                child: TextField(
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                        overflow: TextOverflow.fade,
-                        color: textColor,
-                        //height: 1.3,
-                        fontSize: height * 0.018,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  cursorColor: primaryBlue,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                      hintText: "Contact no.",
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: width * 0.04),
-
-                      // errorBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(color: red, width: 1)),
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                      // enabledBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide:
-                      //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                      border: InputBorder.none
-                      //  OutlineInputBorder(
-                      //     borderRadius: BorderRadius.circular(width * 0.02),
-                      //     borderSide: BorderSide(
-                      //         color: grey.withOpacity(0.4), width: 1))
+                padding: EdgeInsets.only(top: height * 0.01),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: TextField(
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              overflow: TextOverflow.fade,
+                              color: textColor,
+                              //height: 1.3,
+                              fontSize: height * 0.018,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        cursorColor: primaryBlue,
+                        keyboardType: TextInputType.phone,
+                        controller: _loginRegisterController.txtContact,
+                        onChanged: (value) {
+                          if (_loginRegisterController
+                              .txtContact.text.isEmpty) {
+                            _loginRegisterController.errors
+                                .add(_loginRegisterController.noContact);
+                          } else {
+                            _loginRegisterController.errors
+                                .remove(_loginRegisterController.noContact);
+                          }
+                        },
+                        maxLength: 11,
+                        decoration: InputDecoration(
+                            isDense: true,
+                            counter: SizedBox.shrink(),
+                            hintText: "Contact no. (XXXX XXXXXXX)",
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: width * 0.04),
+                            border: InputBorder.none),
                       ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -281,44 +282,48 @@ class _RegisterState extends State<Register> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              overflow: TextOverflow.fade,
-                              color: textColor,
-                              //height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w400),
+                      child: Obx(
+                        () => TextField(
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                overflow: TextOverflow.fade,
+                                color: textColor,
+                                //height: 1.3,
+                                fontSize: height * 0.018,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          cursorColor: primaryBlue,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: obscurePass.value,
+                          controller: _loginRegisterController.txtPassword,
+                          onChanged: (value) {
+                            if (_loginRegisterController
+                                .txtPassword.text.isEmpty) {
+                              _loginRegisterController.errors
+                                  .add(_loginRegisterController.noPass);
+                            } else {
+                              _loginRegisterController.errors
+                                  .remove(_loginRegisterController.noPass);
+                            }
+                          },
+                          decoration: InputDecoration(
+                              hintText: "Password",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.04),
+                              border: InputBorder.none),
                         ),
-                        cursorColor: primaryBlue,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: "Password",
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: width * 0.04),
-                            // errorBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: red, width: 1)),
-                            // focusedBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                            // enabledBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide:
-                            //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                            border: InputBorder.none
-                            //  OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(
-                            //         color: grey.withOpacity(0.4), width: 1))
-                            ),
                       ),
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        if (obscurePass.value) {
+                          obscurePass.value = false;
+                        } else {
+                          obscurePass.value = true;
+                        }
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.04),
                         child: Icon(
@@ -331,39 +336,62 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
               ),
-              // SizedBox(
-              //   height: height * 0.03,
-              // ),
-              // CupertinoButton(
-              //   padding: EdgeInsets.all(0.0),
-              //   minSize: 0.0001,
-              //   onPressed: () {},
-              //   child: Container(
-              //       width: width,
-              //       margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-              //       child: Text(
-              //         'Password Recovery',
-              //         maxLines: 1,
-              //         overflow: TextOverflow.ellipsis,
-              //         textAlign: TextAlign.end,
-              //         style: GoogleFonts.poppins(
-              //           textStyle: TextStyle(
-              //               decoration: TextDecoration.none,
-              //               color: grey,
-              //               height: 1.3,
-              //               fontSize: height * 0.018,
-              //               fontWeight: FontWeight.w500),
-              //         ),
-              //       )),
-              // ),
               SizedBox(
-                height: height * 0.04,
+                height: height * 0.01,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: width * 0.04),
+                child: ErrorList(
+                    errors: _loginRegisterController.errors, darkMode: false),
+              ),
+              SizedBox(
+                height: height * 0.01,
               ),
               CupertinoButton(
                 padding: EdgeInsets.all(0.0),
                 minSize: 0.0001,
-                onPressed: () {
-                  Get.offAll(BottomNavigator());
+                onPressed: () async {
+                  _loginRegisterController.errors.clear();
+                  if (_loginRegisterController.txtName.text.isEmpty ||
+                      _loginRegisterController.txtEmail.text.isEmpty ||
+                      _loginRegisterController.txtContact.text.isEmpty ||
+                      _loginRegisterController.txtPassword.text.isEmpty ||
+                      _loginRegisterController.txtPassword.text.length < 6 ||
+                      !isEmail(_loginRegisterController.txtEmail.text) ||
+                      !isPhone(_loginRegisterController.txtContact.text)) {
+                    if (_loginRegisterController.txtName.text.isEmpty) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.noName);
+                    }
+                    if (_loginRegisterController.txtEmail.text.isEmpty) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.noEmail);
+                    } else if (!isEmail(
+                        _loginRegisterController.txtEmail.text)) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.invalidEmail);
+                    }
+                    if (_loginRegisterController.txtContact.text.isEmpty) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.noContact);
+                    } else if (!isPhone(
+                        _loginRegisterController.txtContact.text)) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.invalidContact);
+                    }
+
+                    if (_loginRegisterController.txtPassword.text.isEmpty) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.noPass);
+                    } else if (_loginRegisterController
+                            .txtPassword.text.length <
+                        6) {
+                      _loginRegisterController.errors
+                          .add(_loginRegisterController.shortPass);
+                    }
+                  } else {
+                    await _loginRegisterController.register();
+                  }
                 },
                 child: Container(
                     alignment: Alignment.center,
@@ -374,20 +402,31 @@ class _RegisterState extends State<Register> {
                         //border: Border.all(color: grey.withOpacity(0.4), width: 1),
                         borderRadius: BorderRadius.circular(width * 0.02)),
                     margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-                    child: Center(
-                      child: Text(
-                        'Sign up',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.end,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: white,
-                              height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w500),
-                        ),
+                    child: Obx(
+                      () => Center(
+                        child: _loginRegisterController.loadingRegister.value
+                            ? Container(
+                                height: height * 0.03,
+                                width: height * 0.03,
+                                child: CircularProgressIndicator(
+                                  color: white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                'Sign up',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.end,
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      color: white,
+                                      height: 1.3,
+                                      fontSize: height * 0.018,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
                       ),
                     )),
               ),
@@ -427,6 +466,7 @@ class _RegisterState extends State<Register> {
                         padding: EdgeInsets.all(0.0),
                         minSize: 0.0001,
                         onPressed: () {
+                          _loginRegisterController.errors.clear();
                           Get.back();
                         },
                         child: Text(

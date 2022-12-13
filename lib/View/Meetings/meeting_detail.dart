@@ -1,3 +1,5 @@
+import 'package:bit_planner/Model/meeting_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +11,8 @@ import 'package:intl/intl.dart';
 import '../../Helper/values.dart';
 
 class MeetingDetail extends StatefulWidget {
-  const MeetingDetail({Key? key}) : super(key: key);
+  MeetingModel meeting;
+  MeetingDetail({Key? key, required this.meeting}) : super(key: key);
 
   @override
   State<MeetingDetail> createState() => _MeetingDetailState();
@@ -103,7 +106,7 @@ class _MeetingDetailState extends State<MeetingDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Meeting with Dr. Merkel',
+                    widget.meeting.title!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: GoogleFonts.poppins(
@@ -116,7 +119,7 @@ class _MeetingDetailState extends State<MeetingDetail> {
                   ),
                   SizedBox(height: height * 0.015),
                   Text(
-                    'Quis consetetur ea diam kasd et no amet accusam consequat diam hendrerit ad justo kasd velit justo consetetur feugait. Qui lorem diam amet amet magna diam tempor dolore. Est in dolor nonumy ipsum rebum dolor nulla consequat nonumy diam in eos feugiat. Sit invidunt nonummy. Accusam invidunt ad et lorem vero amet. Justo nonumy erat praesent et eu dolore illum est est at in vel iusto gubergren diam et ipsum consetetur. Sea kasd est aliquyam. Clita augue accusam ullamcorper sadipscing ipsum dolore lorem sea. Nonumy et velit nonumy et elitr sit autem diam hendrerit eirmod clita dolores no invidunt stet enim facilisis justo. Sea dolores amet invidunt at ea gubergren at clita ipsum consetetur diam et assum et tempor feugiat.',
+                    widget.meeting.detail!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 4,
                     style: GoogleFonts.poppins(
@@ -163,7 +166,7 @@ class _MeetingDetailState extends State<MeetingDetail> {
                           SizedBox(width: width * 0.05),
                           Flexible(
                             child: Text(
-                              'Conference',
+                              widget.meeting.meetingType!.capitalizeFirst!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
@@ -256,8 +259,8 @@ class _MeetingDetailState extends State<MeetingDetail> {
                                     child: ClipRRect(
                                       borderRadius:
                                           BorderRadius.circular(width * 5),
-                                      child: Image.asset(
-                                        "assets/images/profile2.jpg",
+                                      child: CachedNetworkImage(
+                                        imageUrl: picPlaceHolder,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -335,7 +338,7 @@ class _MeetingDetailState extends State<MeetingDetail> {
                           SizedBox(width: width * 0.05),
                           Flexible(
                             child: Text(
-                              '13',
+                              widget.meeting.attendees!.length.toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
@@ -382,12 +385,11 @@ class _MeetingDetailState extends State<MeetingDetail> {
                           Flexible(
                             child: Text(
                               DateFormat('dd MMM yyyy')
-                                      .format(DateTime.now())
+                                      .format(widget.meeting.startDate!)
                                       .toString() +
                                   ' - ' +
                                   DateFormat('dd MMM yyyy')
-                                      .format(
-                                          DateTime.now().add(Duration(days: 7)))
+                                      .format(widget.meeting.endDate!)
                                       .toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -438,7 +440,13 @@ class _MeetingDetailState extends State<MeetingDetail> {
                           ),
                           Flexible(
                             child: Text(
-                              '9:00 - 11:00 AM',
+                              DateFormat('hh:mm a')
+                                      .format(widget.meeting.startTime!)
+                                      .toString() +
+                                  ' - ' +
+                                  DateFormat('hh:mm a')
+                                      .format(widget.meeting.endTime!)
+                                      .toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(

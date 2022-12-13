@@ -1,3 +1,8 @@
+
+#Gradle files
+**/android/.gradle
+
+
 # Miscellaneous
 *.class
 *.log
