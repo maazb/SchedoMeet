@@ -197,6 +197,8 @@ class _RegisterState extends State<Register> {
                         fontWeight: FontWeight.w400),
                   ),
                   onChanged: (value) {
+                    _loginRegisterController.errors
+                        .remove(_loginRegisterController.invalidEmail);
                     if (_loginRegisterController.txtEmail.text.isEmpty) {
                       _loginRegisterController.errors
                           .add(_loginRegisterController.noEmail);
@@ -245,6 +247,8 @@ class _RegisterState extends State<Register> {
                         keyboardType: TextInputType.phone,
                         controller: _loginRegisterController.txtContact,
                         onChanged: (value) {
+                          _loginRegisterController.errors
+                              .remove(_loginRegisterController.invalidContact);
                           if (_loginRegisterController
                               .txtContact.text.isEmpty) {
                             _loginRegisterController.errors

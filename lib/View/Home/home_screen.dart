@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   NavigationController _navigationController = Get.find();
 
   getData() async {
+    await _homeController.loadMeetings();
     await _homeController.loadEvents();
     print("length: " + _homeController.eventsList.length.toString());
     // await _messagesController
@@ -352,144 +353,263 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(color: white),
               child: Column(
                 children: [
-                  CupertinoButton(
-                    padding: const EdgeInsets.all(0.0),
-                    minSize: 0.0001,
-                    onPressed: () {
-                      // Get.to(() => MeetingDetail());
-                    },
-                    child: Container(
-                      //height: height * 0.15,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: width * 0.05, vertical: height * 0.03),
-                      decoration: BoxDecoration(
-                          color: yellowLight,
-                          borderRadius: BorderRadius.circular(width * 0.03)),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: width * 0.04,
-                                top: height * 0.015,
-                                bottom: height * 0.005,
-                                right: width * 0.04),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'New meeting arranged!',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        color: brown,
-                                        //height: 1.3,
-                                        fontSize: height * 0.02,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                CupertinoButton(
-                                  padding: const EdgeInsets.all(0.0),
-                                  minSize: width * 0.05,
-                                  onPressed: () {},
-                                  child: Icon(
-                                    CupertinoIcons.multiply,
-                                    size: height * 0.025,
-                                    color: grey,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: width * 0.04,
-                                vertical: height * 0.005),
-                            child: Text(
-                              'Design team - Finalize checkout flow and add cards with clients.',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                    color: grey,
-                                    height: 1.3,
-                                    fontSize: height * 0.017,
-                                    fontWeight: FontWeight.w400),
+                  // SizedBox(
+                  //   height: height * 0.02,
+                  // ),
+                  Obx(
+                    () => Container(
+                      child: _homeController.unseenMeetingsList.isEmpty
+                          ? Container(
+                              child: SizedBox(
+                                height: height * 0.02,
                               ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: width * 0.04,
-                                bottom: height * 0.015,
-                                top: height * 0.00,
-                                right: width * 0.04),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '4:15 - 5:00 PM',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        color: brown,
-                                        //height: 1.3,
-                                        fontSize: height * 0.019,
-                                        fontWeight: FontWeight.w500),
+                            )
+                          : Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: height * 0.02,
                                   ),
-                                ),
-                                CupertinoButton(
-                                    padding: const EdgeInsets.all(0.0),
-                                    minSize: 0.0001,
-                                    onPressed: null,
-                                    child: SizedBox(
-                                        width: width * 0.14,
-                                        height: height * 0.04,
-                                        child: ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: 3,
-                                            itemBuilder: (context, index) {
-                                              return Align(
-                                                widthFactor: 0.6,
-                                                child: CircleAvatar(
-                                                  radius: width * 0.032,
-                                                  backgroundColor: Colors.white,
-                                                  child: index == 2
-                                                      ? CircleAvatar(
-                                                          radius: width * 0.028,
-                                                          backgroundColor:
-                                                              primaryBlue,
-                                                          child: Text(
-                                                            '+4',
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                              textStyle:
-                                                                  TextStyle(
-                                                                      color:
-                                                                          white,
-                                                                      //height: 1.3,
-                                                                      fontSize:
+                                  Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: width * 0.05),
+                                    child: Text(
+                                      'Meetings today',
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                            color: textColor,
+                                            height: 1.3,
+                                            fontSize: height * 0.024,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                      height: height * 0.2,
+                                      child: Obx(
+                                        () =>
+                                            // _homeController.loadingNewMeetings.value
+                                            //     ? Column(
+                                            //         mainAxisAlignment: MainAxisAlignment.start,
+                                            //         crossAxisAlignment: CrossAxisAlignment.center,
+                                            //         children: [
+                                            //           SizedBox(
+                                            //             height: height * 0.02,
+                                            //           ),
+                                            //           Container(
+                                            //             height: height * 0.16,
+                                            //             child: LottieBuilder.asset(
+                                            //               "assets/animations/loading.json",
+                                            //             ),
+                                            //           ),
+                                            //         ],
+                                            //       )
+                                            // :
+                                            ListView.builder(
+                                                itemCount: _homeController
+                                                    .unseenMeetingsList.length,
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemBuilder: ((context, index) {
+                                                  return Container(
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: index == 0
+                                                              ? width * 0.05
+                                                              : 0,
+                                                        ),
+                                                        CupertinoButton(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(0.0),
+                                                          minSize: 0.0001,
+                                                          onPressed: () {
+                                                            // Get.to(() => MeetingDetail());
+                                                          },
+                                                          child: Container(
+                                                            height:
+                                                                height * 0.16,
+                                                            width: width * 0.7,
+                                                            //height: height * 0.15,
+                                                            // margin: EdgeInsets.symmetric(
+                                                            //     horizontal: width * 0.05, vertical: height * 0.03),
+                                                            decoration: BoxDecoration(
+                                                                color:
+                                                                    yellowLight,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(width *
+                                                                            0.03)),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Container(
+                                                                  margin: EdgeInsets.only(
+                                                                      left: width *
+                                                                          0.04,
+                                                                      top: height *
+                                                                          0.015,
+                                                                      bottom: height *
+                                                                          0.005,
+                                                                      right: width *
+                                                                          0.04),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        '${_homeController.unseenMeetingsList[index].title}',
+                                                                        style: GoogleFonts
+                                                                            .poppins(
+                                                                          textStyle: TextStyle(
+                                                                              color: brown,
+                                                                              //height: 1.3,
+                                                                              fontSize: height * 0.02,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        ),
+                                                                      ),
+                                                                      // CupertinoButton(
+                                                                      //   padding:
+                                                                      //       const EdgeInsets.all(0.0),
+                                                                      //   minSize:
+                                                                      //       width *
+                                                                      //           0.05,
+                                                                      //   onPressed:
+                                                                      //       () {},
+                                                                      //   child:
+                                                                      //       Icon(
+                                                                      //     CupertinoIcons
+                                                                      //         .multiply,
+                                                                      //     size: height *
+                                                                      //         0.025,
+                                                                      //     color:
+                                                                      //         grey,
+                                                                      //   ),
+                                                                      // )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  margin: EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          width *
+                                                                              0.04,
+                                                                      vertical:
                                                                           height *
-                                                                              0.014,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400),
+                                                                              0.005),
+                                                                  child: Text(
+                                                                    '${_homeController.unseenMeetingsList[index].detail}',
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    maxLines: 2,
+                                                                    style: GoogleFonts
+                                                                        .poppins(
+                                                                      textStyle: TextStyle(
+                                                                          color:
+                                                                              grey,
+                                                                          height:
+                                                                              1.3,
+                                                                          fontSize: height *
+                                                                              0.017,
+                                                                          fontWeight:
+                                                                              FontWeight.w400),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  margin: EdgeInsets.only(
+                                                                      left: width *
+                                                                          0.04,
+                                                                      bottom: height *
+                                                                          0.015,
+                                                                      top: height *
+                                                                          0.00,
+                                                                      right: width *
+                                                                          0.04),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                        DateFormat("hh:mm a").format(_homeController.unseenMeetingsList[index].startTime!) +
+                                                                            " - " +
+                                                                            DateFormat("hh:mm a").format(_homeController.unseenMeetingsList[index].endTime!),
+                                                                        style: GoogleFonts
+                                                                            .poppins(
+                                                                          textStyle: TextStyle(
+                                                                              color: brown,
+                                                                              //height: 1.3,
+                                                                              fontSize: height * 0.019,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        ),
+                                                                      ),
+                                                                      CupertinoButton(
+                                                                          padding: const EdgeInsets.all(
+                                                                              0.0),
+                                                                          minSize:
+                                                                              0.0001,
+                                                                          onPressed:
+                                                                              null,
+                                                                          child: SizedBox(
+                                                                              width: width * 0.14,
+                                                                              height: height * 0.04,
+                                                                              child: ListView.builder(
+                                                                                  scrollDirection: Axis.horizontal,
+                                                                                  itemCount: _homeController.unseenMeetingsList[index].attendees!.length < 3 ? _homeController.unseenMeetingsList[index].attendees!.length : 3,
+                                                                                  itemBuilder: (context, index) {
+                                                                                    return Align(
+                                                                                      widthFactor: 0.6,
+                                                                                      child: CircleAvatar(
+                                                                                        radius: width * 0.032,
+                                                                                        backgroundColor: Colors.white,
+                                                                                        child: index == 2
+                                                                                            ? CircleAvatar(
+                                                                                                radius: width * 0.028,
+                                                                                                backgroundColor: primaryBlue,
+                                                                                                child: Text(
+                                                                                                  '+' + (_homeController.unseenMeetingsList[index].attendees!.length - 2).toString(),
+                                                                                                  style: GoogleFonts.poppins(
+                                                                                                    textStyle: TextStyle(
+                                                                                                        color: white,
+                                                                                                        //height: 1.3,
+                                                                                                        fontSize: height * 0.014,
+                                                                                                        fontWeight: FontWeight.w400),
+                                                                                                  ),
+                                                                                                ),
+                                                                                              )
+                                                                                            : CircleAvatar(
+                                                                                                radius: width * 0.028,
+
+                                                                                                backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _homeController.unseenMeetingsList[index].attendees!.contains(e.id)).toList()[index].image! == "" ? picPlaceHolder : loadDataController.userNameList.value.where((e) => _homeController.unseenMeetingsList[index].attendees!.contains(e.id)).toList()[index].image!).image, // Provide your custom image
+                                                                                              ),
+                                                                                      ),
+                                                                                    );
+                                                                                  })))
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ),
-                                                        )
-                                                      : CircleAvatar(
-                                                          radius: width * 0.028,
-
-                                                          backgroundImage: Image
-                                                                  .asset(
-                                                                      "assets/images/profile2.jpg")
-                                                              .image, // Provide your custom image
                                                         ),
-                                                ),
-                                              );
-                                            })))
-                              ],
+                                                        SizedBox(
+                                                          width: width * 0.03,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                })),
+                                      )),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                   Container(
@@ -538,77 +658,79 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ],
                             )
-                          : Obx(
-                              () => ListView.builder(
-                                  itemCount: _homeController.eventsList.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Column(
-                                      children: [
-                                        CupertinoButton(
-                                          padding: const EdgeInsets.all(0.0),
-                                          minSize: width * 0.04,
-                                          onPressed: () {
-                                            Get.to(() => EventDetail(
-                                                  event: _homeController
-                                                      .eventsList[index],
-                                                ));
-                                          },
-                                          child: Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: width * 0.05),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  CupertinoButton(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            0.0),
-                                                    minSize: 0.0001,
-                                                    onPressed: null,
-                                                    child: Container(
-                                                        padding: EdgeInsets.all(
-                                                            width * 0.035),
-                                                        decoration: BoxDecoration(
-                                                            color: greyLight,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        width *
-                                                                            5)),
-                                                        child: _homeController
-                                                                    .eventsList[
-                                                                        index]
-                                                                    .eventType ==
-                                                                "event"
-                                                            ? SvgPicture.asset(
-                                                                "assets/icons/Calendar.svg",
+                          : _homeController.eventsList.isEmpty
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: width * 0.4,
+                                      width: width * 0.4,
+                                      child: LottieBuilder.asset(
+                                        "assets/animations/empty.json",
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: height * 0.2,
+                                    ),
+                                  ],
+                                )
+                              : Obx(
+                                  () => ListView.builder(
+                                      itemCount:
+                                          _homeController.eventsList.length,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Column(
+                                          children: [
+                                            CupertinoButton(
+                                              padding:
+                                                  const EdgeInsets.all(0.0),
+                                              minSize: width * 0.04,
+                                              onPressed: () {
+                                                Get.to(() => EventDetail(
+                                                      event: _homeController
+                                                          .eventsList[index],
+                                                    ));
+                                              },
+                                              child: Container(
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: width * 0.05),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      CupertinoButton(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(0.0),
+                                                        minSize: 0.0001,
+                                                        onPressed: null,
+                                                        child: Container(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    width *
+                                                                        0.035),
+                                                            decoration: BoxDecoration(
                                                                 color:
-                                                                    textColor,
-                                                                height: width *
-                                                                    0.06,
-                                                              )
-                                                            : _homeController
+                                                                    greyLight,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(width *
+                                                                            5)),
+                                                            child: _homeController
                                                                         .eventsList[
                                                                             index]
                                                                         .eventType ==
-                                                                    "task"
+                                                                    "event"
                                                                 ? SvgPicture
-                                                                    .asset(
-                                                                    "assets/icons/Clipboard-alt.svg",
-                                                                    color:
-                                                                        textColor,
-                                                                    height:
-                                                                        width *
-                                                                            0.06,
-                                                                  )
-                                                                : SvgPicture
                                                                     .asset(
                                                                     "assets/icons/Calendar.svg",
                                                                     color:
@@ -616,120 +738,152 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     height:
                                                                         width *
                                                                             0.06,
-                                                                  )),
-                                                  ),
-                                                  SizedBox(
-                                                    width: width * 0.04,
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          _homeController
-                                                              .eventsList[index]
-                                                              .title!,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            textStyle:
-                                                                TextStyle(
-                                                                    color:
-                                                                        textColor,
-                                                                    //height: 1.3,
-                                                                    fontSize:
-                                                                        height *
-                                                                            0.018,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                          ),
+                                                                  )
+                                                                : _homeController
+                                                                            .eventsList[
+                                                                                index]
+                                                                            .eventType ==
+                                                                        "task"
+                                                                    ? SvgPicture
+                                                                        .asset(
+                                                                        "assets/icons/Clipboard-alt.svg",
+                                                                        color:
+                                                                            textColor,
+                                                                        height: width *
+                                                                            0.06,
+                                                                      )
+                                                                    : SvgPicture
+                                                                        .asset(
+                                                                        "assets/icons/Calendar.svg",
+                                                                        color:
+                                                                            textColor,
+                                                                        height: width *
+                                                                            0.06,
+                                                                      )),
+                                                      ),
+                                                      SizedBox(
+                                                        width: width * 0.04,
+                                                      ),
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              _homeController
+                                                                  .eventsList[
+                                                                      index]
+                                                                  .title!,
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                textStyle:
+                                                                    TextStyle(
+                                                                        color:
+                                                                            textColor,
+                                                                        //height: 1.3,
+                                                                        fontSize:
+                                                                            height *
+                                                                                0.018,
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _homeController
+                                                                  .eventsList[
+                                                                      index]
+                                                                  .detail!,
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                textStyle:
+                                                                    TextStyle(
+                                                                        color:
+                                                                            grey,
+                                                                        //height: 1.3,
+                                                                        fontSize:
+                                                                            height *
+                                                                                0.016,
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                        Text(
-                                                          _homeController
-                                                              .eventsList[index]
-                                                              .detail!,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            textStyle:
-                                                                TextStyle(
-                                                                    color: grey,
-                                                                    //height: 1.3,
-                                                                    fontSize:
-                                                                        height *
-                                                                            0.016,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  CupertinoButton(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            0.0),
-                                                    minSize: 0.0001,
-                                                    onPressed: null,
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: width * 0.02),
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  width * 0.025,
-                                                              vertical: height *
-                                                                  0.008),
-                                                      decoration: BoxDecoration(
-                                                          color: primaryLight,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
+                                                      ),
+                                                      CupertinoButton(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(0.0),
+                                                        minSize: 0.0001,
+                                                        onPressed: null,
+                                                        child: Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: width *
+                                                                      0.02),
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
                                                                       width *
-                                                                          5)),
-                                                      child: Text(
-                                                        DateFormat("hh:mm a")
-                                                            .format(
-                                                                _homeController
+                                                                          0.025,
+                                                                  vertical:
+                                                                      height *
+                                                                          0.008),
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  primaryLight,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          width *
+                                                                              5)),
+                                                          child: Text(
+                                                            DateFormat(
+                                                                    "hh:mm a")
+                                                                .format(_homeController
                                                                     .eventsList[
                                                                         index]
                                                                     .startTime!),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          textStyle: TextStyle(
-                                                              color:
-                                                                  primaryBlue,
-                                                              //height: 1.3,
-                                                              fontSize: height *
-                                                                  0.015,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              textStyle:
+                                                                  TextStyle(
+                                                                      color:
+                                                                          primaryBlue,
+                                                                      //height: 1.3,
+                                                                      fontSize:
+                                                                          height *
+                                                                              0.015,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              )),
-                                        ),
-                                        SizedBox(
-                                          height: height * 0.022,
-                                        )
-                                      ],
-                                    );
-                                  }),
-                            ),
+                                                      )
+                                                    ],
+                                                  )),
+                                            ),
+                                            SizedBox(
+                                              height: height * 0.022,
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                ),
                     ),
                   )
                 ],

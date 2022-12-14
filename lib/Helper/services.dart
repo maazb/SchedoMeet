@@ -67,7 +67,7 @@ class ApiRequest {
     }
   }
 
-  static Future<dynamic> uploadImages(List<String> images) async {
+  static Future<dynamic> uploadImages(String image) async {
     dynamic returnVal = null;
     try {
       print('checking internet');
@@ -75,37 +75,34 @@ class ApiRequest {
       final result = await InternetAddress.lookup(checkInternetDomain);
       print('checked internet');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        if (images.length > 0) {
-          try {
-            var request = http.MultipartRequest(
-                'POST', Uri.parse('https://upload.appick.io'));
+        try {
+          var request = http.MultipartRequest(
+              'POST', Uri.parse('https://upload.appick.io'));
 
-            for (var i = 0; i < images.length; i++) {
-              request.files
-                  .add(await http.MultipartFile.fromPath('file', images[i]));
-            }
-            http.StreamedResponse response = await request.send();
-            print('Uploading Image');
-            if (response.statusCode == 200) {
-              await response.stream.bytesToString().then((value) {
-                dynamic myImgs = jsonDecode(value.toString());
-                if (myImgs != null) {
-                  returnVal = myImgs['myresp'].toList();
-                } else {
-                  print('Error0 Caught');
-                }
-              });
-            } else if (response.statusCode == 401) {
-              return 'Unauthorized';
-            } else {
-              print('Error1 Caught');
-              showSnackbarError('Error', 'Something went wrong');
-            }
-          } catch (e) {
-            print('Error Caught: $e');
+          request.files.add(await http.MultipartFile.fromPath("image", image));
+
+          var response = await request.send();
+          print("res:  $response");
+          print('Uploading Image');
+          if (response.statusCode == 200) {
+            await response.stream.bytesToString().then((value) {
+              dynamic myImgs = jsonDecode(value.toString());
+              if (myImgs != null) {
+                returnVal = myImgs['myresp'].toList();
+              } else {
+                print('Error0 Caught');
+              }
+            });
+          } else if (response.statusCode == 401) {
+            return 'Unauthorized';
+          } else {
+            print('Error1 Caught');
             showSnackbarError('Error', 'Something went wrong');
           }
-        } else {}
+        } catch (e) {
+          print('Error Caught: $e');
+          showSnackbarError('Error', 'Something went wrong');
+        }
       } else {
         print('WIFI ON NO INTERNET');
       }

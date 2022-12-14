@@ -1,3 +1,5 @@
+import 'package:bit_planner/Controller/login_register_controller.dart';
+import 'package:bit_planner/Helper/common_widgets/error_list.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Startup/register.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
@@ -15,6 +17,11 @@ class NewPassword extends StatefulWidget {
 }
 
 class _NewPasswordState extends State<NewPassword> {
+  RxList<String> errors = RxList<String>();
+  RxBool obscureNewPassword = true.obs;
+  RxBool obscureConfirmPassword = true.obs;
+  LoginRegisterController _loginRegisterController =
+      Get.put(LoginRegisterController());
   late double height;
   late double width;
   @override
@@ -191,44 +198,61 @@ class _NewPasswordState extends State<NewPassword> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              overflow: TextOverflow.fade,
-                              color: textColor,
-                              //height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w400),
+                      child: Obx(
+                        () => TextField(
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                overflow: TextOverflow.fade,
+                                color: textColor,
+                                //height: 1.3,
+                                fontSize: height * 0.018,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          cursorColor: primaryBlue,
+                          keyboardType: TextInputType.visiblePassword,
+                          controller: _loginRegisterController.txtNewPassword,
+                          onChanged: (value) {
+                            if (_loginRegisterController
+                                .txtNewPassword.text.isEmpty) {
+                              errors.add(_loginRegisterController.noPass);
+                            } else {
+                              errors.clear();
+                            }
+                          },
+                          obscureText: obscureNewPassword.value,
+                          decoration: InputDecoration(
+                              hintText: "New Password",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.04),
+                              // errorBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: red, width: 1)),
+                              // focusedBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                              // enabledBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide:
+                              //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                              border: InputBorder.none
+                              //  OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(
+                              //         color: grey.withOpacity(0.4), width: 1))
+                              ),
                         ),
-                        cursorColor: primaryBlue,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: "New Password",
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: width * 0.04),
-                            // errorBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: red, width: 1)),
-                            // focusedBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                            // enabledBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide:
-                            //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                            border: InputBorder.none
-                            //  OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(
-                            //         color: grey.withOpacity(0.4), width: 1))
-                            ),
                       ),
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        if (obscureNewPassword.value) {
+                          obscureNewPassword.value = false;
+                        } else {
+                          obscureNewPassword.value = true;
+                        }
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.04),
                         child: Icon(
@@ -256,44 +280,55 @@ class _NewPasswordState extends State<NewPassword> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              overflow: TextOverflow.fade,
-                              color: textColor,
-                              //height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w400),
+                      child: Obx(
+                        () => TextField(
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                overflow: TextOverflow.fade,
+                                color: textColor,
+                                //height: 1.3,
+                                fontSize: height * 0.018,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          cursorColor: primaryBlue,
+                          keyboardType: TextInputType.visiblePassword,
+                          controller:
+                              _loginRegisterController.txtConfirmPassword,
+                          onChanged: ((value) {}),
+                          obscureText: obscureConfirmPassword.value,
+                          decoration: InputDecoration(
+                              hintText: "Confirm Password",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.04),
+                              // errorBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: red, width: 1)),
+                              // focusedBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                              // enabledBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide:
+                              //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                              border: InputBorder.none
+                              //  OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(
+                              //         color: grey.withOpacity(0.4), width: 1))
+                              ),
                         ),
-                        cursorColor: primaryBlue,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: "Confirm Password",
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: width * 0.04),
-                            // errorBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: red, width: 1)),
-                            // focusedBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                            // enabledBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide:
-                            //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                            border: InputBorder.none
-                            //  OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(
-                            //         color: grey.withOpacity(0.4), width: 1))
-                            ),
                       ),
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        if (obscureConfirmPassword.value) {
+                          obscureConfirmPassword.value = false;
+                        } else {
+                          obscureConfirmPassword.value = true;
+                        }
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.04),
                         child: Icon(
@@ -332,13 +367,38 @@ class _NewPasswordState extends State<NewPassword> {
               //       )),
               // ),
               SizedBox(
-                height: height * 0.04,
+                height: height * 0.01,
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+                  child: ErrorList(errors: errors, darkMode: false)),
+              SizedBox(
+                height: height * 0.01,
               ),
               CupertinoButton(
                 padding: EdgeInsets.all(0.0),
                 minSize: 0.0001,
-                onPressed: () {
-                  Get.offAll(BottomNavigator());
+                onPressed: () async {
+                  errors.clear();
+                  if (_loginRegisterController.txtNewPassword.text.isEmpty ||
+                      _loginRegisterController.txtNewPassword.text !=
+                          _loginRegisterController.txtConfirmPassword.text ||
+                      _loginRegisterController.txtNewPassword.text.length < 6) {
+                    if (_loginRegisterController.txtNewPassword.text.isEmpty) {
+                      errors.add(_loginRegisterController.noPass);
+                    } else if (_loginRegisterController.txtNewPassword.text !=
+                        _loginRegisterController.txtConfirmPassword.text) {
+                      errors.add(_loginRegisterController.noPassMatch);
+                    }
+
+                    if (_loginRegisterController.txtNewPassword.text.length <
+                        6) {
+                      errors.add(_loginRegisterController.shortPass);
+                    }
+                  } else {
+                    errors.clear();
+                    await _loginRegisterController.newPassword();
+                  }
                 },
                 child: Container(
                     alignment: Alignment.center,
@@ -349,20 +409,31 @@ class _NewPasswordState extends State<NewPassword> {
                         //border: Border.all(color: grey.withOpacity(0.4), width: 1),
                         borderRadius: BorderRadius.circular(width * 0.02)),
                     margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-                    child: Center(
-                      child: Text(
-                        'Continue',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.end,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: white,
-                              height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w500),
-                        ),
+                    child: Obx(
+                      () => Center(
+                        child: _loginRegisterController.loadingNewPassword.value
+                            ? Container(
+                                height: height * 0.03,
+                                width: height * 0.03,
+                                child: CircularProgressIndicator(
+                                  color: white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                'Continue',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.end,
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      color: white,
+                                      height: 1.3,
+                                      fontSize: height * 0.018,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
                       ),
                     )),
               ),

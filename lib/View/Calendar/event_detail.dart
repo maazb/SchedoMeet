@@ -1,4 +1,5 @@
 import 'package:bit_planner/Model/events_model.dart';
+import 'package:bit_planner/Model/user_name_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,20 @@ class EventDetail extends StatefulWidget {
 class _EventDetailState extends State<EventDetail> {
   late double height;
   late double width;
+  RxList<UserNameModel> attendeesAll = RxList<UserNameModel>();
+  getData() {
+    attendeesAll.value = loadDataController.userNameList.value
+        .where((e) => widget.event.attendees!.contains(e.id))
+        .toList();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -259,22 +274,51 @@ class _EventDetailState extends State<EventDetail> {
                                         borderRadius:
                                             BorderRadius.circular(width * 5),
                                         child: CachedNetworkImage(
-                                          imageUrl: picPlaceHolder,
+                                          imageUrl: loadDataController
+                                                          .userNameList
+                                                          .firstWhere(
+                                                              (element) =>
+                                                                  element.id ==
+                                                                  widget.event
+                                                                      .createdBy)
+                                                          .image ==
+                                                      "" ||
+                                                  loadDataController
+                                                          .userNameList
+                                                          .firstWhere(
+                                                              (element) =>
+                                                                  element.id ==
+                                                                  widget.event
+                                                                      .createdBy)
+                                                          .image ==
+                                                      null
+                                              ? picPlaceHolder
+                                              : loadDataController.userNameList
+                                                  .firstWhere((element) =>
+                                                      element.id ==
+                                                      widget.event.createdBy)
+                                                  .image!,
                                           fit: BoxFit.cover,
                                         )),
                                   ),
                                   SizedBox(width: width * 0.015),
                                   Flexible(
-                                    child: Text(
-                                      'John Marc',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                            color: textColor,
-                                            //height: 1.3,
-                                            fontSize: height * 0.018,
-                                            fontWeight: FontWeight.w500),
+                                    child: Obx(
+                                      () => Text(
+                                        loadDataController.userNameList
+                                            .firstWhere((element) =>
+                                                element.id ==
+                                                widget.event.createdBy)
+                                            .name!,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                              color: textColor,
+                                              //height: 1.3,
+                                              fontSize: height * 0.018,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -521,116 +565,125 @@ class _EventDetailState extends State<EventDetail> {
                   SizedBox(
                     height: height * 0.02,
                   ),
-                  ListView.builder(
-                      itemCount: 13,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            CupertinoButton(
-                              padding: const EdgeInsets.all(0.0),
-                              minSize: 0.0001,
-                              onPressed: () {},
-                              child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: width * 0.05),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: width * 0.13,
-                                        width: width * 0.13,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(width * 5),
-                                          child: Image.asset(
-                                            "assets/images/profile4.jpg",
-                                            fit: BoxFit.cover,
-                                            height: height * 0.05,
-                                            width: height * 0.05,
+                  Obx(
+                    () => ListView.builder(
+                        itemCount: attendeesAll.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              CupertinoButton(
+                                padding: const EdgeInsets.all(0.0),
+                                minSize: 0.0001,
+                                onPressed: () {},
+                                child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: width * 0.05),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: width * 0.13,
+                                          width: width * 0.13,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                width * 5),
+                                            child: CachedNetworkImage(
+                                              imageUrl: attendeesAll[index]
+                                                              .image ==
+                                                          "" ||
+                                                      attendeesAll[index]
+                                                              .image ==
+                                                          null
+                                                  ? picPlaceHolder
+                                                  : attendeesAll[index].image!,
+                                              fit: BoxFit.cover,
+                                              height: height * 0.05,
+                                              width: height * 0.05,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.04,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Zara Munro",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                    color: textColor,
-                                                    //height: 1.3,
-                                                    fontSize: height * 0.02,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                            Text(
-                                              "Marketing manager",
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                    color: grey,
-                                                    //height: 1.3,
-                                                    fontSize: height * 0.016,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                          ],
+                                        SizedBox(
+                                          width: width * 0.04,
                                         ),
-                                      ),
-                                      // CupertinoButton(
-                                      //   padding: const EdgeInsets.all(0.0),
-                                      //   minSize: 0.0001,
-                                      //   onPressed: null,
-                                      //   child: Container(
-                                      //     margin: EdgeInsets.only(
-                                      //         left: width * 0.02),
-                                      //     padding: EdgeInsets.symmetric(
-                                      //         horizontal: width * 0.025,
-                                      //         vertical: height * 0.008),
-                                      //     decoration: BoxDecoration(
-                                      //         color: primaryLight,
-                                      //         borderRadius:
-                                      //             BorderRadius.circular(
-                                      //                 width * 5)),
-                                      //     child: Text(
-                                      //       _calendarController
-                                      //           .eventList[index].time!,
-                                      //       maxLines: 1,
-                                      //       overflow: TextOverflow.ellipsis,
-                                      //       style: GoogleFonts.poppins(
-                                      //         textStyle: TextStyle(
-                                      //             color: primaryBlue,
-                                      //             //height: 1.3,
-                                      //             fontSize: height * 0.015,
-                                      //             fontWeight: FontWeight.w500),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // )
-                                    ],
-                                  )),
-                            ),
-                            SizedBox(
-                              height: height * 0.022,
-                            )
-                          ],
-                        );
-                      }),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                attendeesAll[index].name!,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                      color: textColor,
+                                                      //height: 1.3,
+                                                      fontSize: height * 0.02,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                              Text(
+                                                attendeesAll[index].email!,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                      color: grey,
+                                                      //height: 1.3,
+                                                      fontSize: height * 0.016,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // CupertinoButton(
+                                        //   padding: const EdgeInsets.all(0.0),
+                                        //   minSize: 0.0001,
+                                        //   onPressed: null,
+                                        //   child: Container(
+                                        //     margin: EdgeInsets.only(
+                                        //         left: width * 0.02),
+                                        //     padding: EdgeInsets.symmetric(
+                                        //         horizontal: width * 0.025,
+                                        //         vertical: height * 0.008),
+                                        //     decoration: BoxDecoration(
+                                        //         color: primaryLight,
+                                        //         borderRadius:
+                                        //             BorderRadius.circular(
+                                        //                 width * 5)),
+                                        //     child: Text(
+                                        //       _calendarController
+                                        //           .eventList[index].time!,
+                                        //       maxLines: 1,
+                                        //       overflow: TextOverflow.ellipsis,
+                                        //       style: GoogleFonts.poppins(
+                                        //         textStyle: TextStyle(
+                                        //             color: primaryBlue,
+                                        //             //height: 1.3,
+                                        //             fontSize: height * 0.015,
+                                        //             fontWeight: FontWeight.w500),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // )
+                                      ],
+                                    )),
+                              ),
+                              SizedBox(
+                                height: height * 0.022,
+                              )
+                            ],
+                          );
+                        }),
+                  ),
                   SizedBox(height: height * 0.05)
                 ],
               ),

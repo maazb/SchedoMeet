@@ -20,6 +20,7 @@ class MeetingModel {
     this.startTime,
     this.endTime,
     this.createdBy,
+    this.link,
     this.attendees,
     this.seen,
     this.id,
@@ -33,6 +34,7 @@ class MeetingModel {
   DateTime? startTime;
   DateTime? endTime;
   int? createdBy;
+  String? link;
   List<int>? attendees;
   bool? seen;
   int? id;
@@ -46,6 +48,7 @@ class MeetingModel {
         startTime: DateTime.parse(json["start_time"]),
         endTime: DateTime.parse(json["end_time"]),
         createdBy: json["createdBy"],
+        link: json["link"],
         attendees: List<int>.from(json["attendees"].map((x) => x)),
         seen: json["seen"],
         id: json["id"],
@@ -62,6 +65,7 @@ class MeetingModel {
         "start_time": startTime!.toIso8601String(),
         "end_time": endTime!.toIso8601String(),
         "createdBy": createdBy,
+        "link": link,
         "attendees": List<dynamic>.from(attendees!.map((x) => x)),
         "seen": seen,
         "id": id,

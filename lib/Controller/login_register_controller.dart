@@ -1,7 +1,12 @@
 import 'package:bit_planner/Helper/common_widgets/snackbar_error.dart';
+import 'package:bit_planner/Helper/common_widgets/snackbar_success.dart';
 import 'package:bit_planner/Helper/services.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/Model/user_model.dart';
+import 'package:bit_planner/Model/user_name_model.dart';
+import 'package:bit_planner/View/Startup/login.dart';
+import 'package:bit_planner/View/Startup/otp.dart';
+import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,9 +20,17 @@ class LoginRegisterController extends GetxController {
   TextEditingController txtContact = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
 
+  TextEditingController txtEmailForgot = TextEditingController();
+
+  TextEditingController txtOTP = TextEditingController();
+
+  TextEditingController txtNewPassword = TextEditingController();
+  TextEditingController txtConfirmPassword = TextEditingController();
+
   RxList<String> errors = RxList<String>();
 
   String noPass = "Password cannot be empty";
+  String noPassMatch = "Passwords do not match";
   String shortPass = "Password cannot be shorter than 6 characters ";
   String noEmail = "Email cannot be empty";
   String invalidEmail = "Invalid email address";
@@ -25,13 +38,17 @@ class LoginRegisterController extends GetxController {
   String noContact = "Contact number cannot be empty";
   String noName = "Name cannot be empty";
 
-  RxList<String> errorsOTP = RxList<String>();
+  RxString receivedOTP = "0000000000".obs;
 
   String invalidPin = "Invalid pin code";
   String noPin = "Pin code cannot be empty";
 
   RxBool loading = false.obs;
+  RxBool loadingUsers = false.obs;
   RxBool loadingRegister = false.obs;
+  RxBool loadingForgotPassword = false.obs;
+  RxBool loadingOTP = false.obs;
+  RxBool loadingNewPassword = false.obs;
 
   Future<void> login(String? username, String? password) async {
     if (!loading.value) {
@@ -66,6 +83,8 @@ class LoginRegisterController extends GetxController {
                 loadDataController.userModel.value =
                     userModelFromJson(value['detail']);
                 await loadDataController.setUserDetails();
+                await getUsers();
+                print("users: ${loadDataController.userNameList.length}");
 
                 // loadDataController.userData.value =
                 //     userDataFromJson(value['data']);
@@ -77,6 +96,109 @@ class LoginRegisterController extends GetxController {
       } catch (e) {
       } finally {
         loading.value = false;
+      }
+    }
+  }
+
+  Future<void> getUsers() async {
+    if (!loadingUsers.value) {
+      try {
+        loadingUsers.value = true;
+
+        // var body = {
+        //   "username": loadDataController.email,
+        //   "password": txtPassword.text,
+        //   "newPassword": txtNewPassword.text
+        // };
+
+        await ApiRequest.getRequest(baseURL + '/users/Names', () {})
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              loadDataController.userNameList.value =
+                  userNameModelFromJson(value);
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingUsers.value = false;
+      }
+    }
+  }
+
+  Future<void> sendOTP() async {
+    if (!loadingForgotPassword.value) {
+      try {
+        loadingForgotPassword.value = true;
+
+        var body = {
+          // "username": username ?? txtEmailLogin.text,
+          // "password": password ?? txtPasswordLogin.text
+        };
+
+        await ApiRequest.postRequest(
+                baseURL + '/users/SendOTP?email=${txtEmailForgot.text}', body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() ==
+                  "Incorrect username or password") {
+                showSnackbarError('Invalid Credentials',
+                    'Please enter valid email to continue');
+              } else {
+                if (value["otp"] != null) {
+                  receivedOTP.value = value["otp"].toString();
+                  Get.to(() => OTP());
+                }
+              }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingForgotPassword.value = false;
+      }
+    }
+  }
+
+  Future<void> newPassword() async {
+    if (!loadingNewPassword.value) {
+      try {
+        loadingNewPassword.value = true;
+
+        var body = {
+          // "username": username ?? txtEmailLogin.text,
+          // "password": password ?? txtPasswordLogin.text
+        };
+
+        await ApiRequest.postRequest(
+                baseURL +
+                    '/users/NewPassword?email=${loadDataController.email}&newPassword=${txtNewPassword.text}',
+                body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() ==
+                  "Incorrect username or password") {
+                showSnackbarError('Invalid Credentials',
+                    'Please enter valid email to continue');
+              } else {
+                Get.offAll(() => Welcome());
+                showSnackbarSuccess("Success", "Password updated successfully");
+              }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingNewPassword.value = false;
       }
     }
   }

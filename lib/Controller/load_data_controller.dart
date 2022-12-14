@@ -1,4 +1,5 @@
 import 'package:bit_planner/Model/user_model.dart';
+import 'package:bit_planner/Model/user_name_model.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoadDataController extends GetxController {
   static LoadDataController instance = LoadDataController();
   Rx<UserModel> userModel = UserModel().obs;
+  RxList<UserNameModel> userNameList = RxList<UserNameModel>();
+  String email = "";
 
   setUserDetails() async {
     SharedPreferences pref = await SharedPreferences.getInstance();

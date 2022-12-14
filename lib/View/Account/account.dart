@@ -8,6 +8,7 @@ import 'package:bit_planner/View/Account/change_password.dart';
 import 'package:bit_planner/View/Account/notification_settings.dart';
 import 'package:bit_planner/View/Account/privacy_policy.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -83,7 +84,7 @@ class _AccountState extends State<Account> {
                   padding: const EdgeInsets.all(0.0),
                   minSize: 0.0001,
                   onPressed: () {
-                    Get.back();
+                    _navigationController.persistentTabController.jumpToTab(0);
                   },
                   child: Container(
                     padding: EdgeInsets.all(width * 0.028),
@@ -147,8 +148,14 @@ class _AccountState extends State<Account> {
                         width: width * 0.25,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(width * 5),
-                          child: Image.asset(
-                            "assets/images/profile3.jpg",
+                          child: CachedNetworkImage(
+                            imageUrl: loadDataController
+                                            .userModel.value.image ==
+                                        "" ||
+                                    loadDataController.userModel.value.image ==
+                                        null
+                                ? picPlaceHolder
+                                : loadDataController.userModel.value.image!,
                             fit: BoxFit.cover,
                             height: height * 0.05,
                             width: height * 0.05,
@@ -159,7 +166,7 @@ class _AccountState extends State<Account> {
                         height: height * 0.008,
                       ),
                       Text(
-                        'Micheal Shot',
+                        loadDataController.userModel.value.name!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
@@ -171,7 +178,7 @@ class _AccountState extends State<Account> {
                         ),
                       ),
                       Text(
-                        'michealshot@example.com',
+                        loadDataController.userModel.value.email!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(

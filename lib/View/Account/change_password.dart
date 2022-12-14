@@ -1,3 +1,5 @@
+import 'package:bit_planner/Controller/account_controller.dart';
+import 'package:bit_planner/Helper/common_widgets/error_list.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Startup/register.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
@@ -15,8 +17,13 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
+  AccountController _accountController = Get.find();
   late double height;
   late double width;
+  RxBool obscureOldPassword = true.obs;
+  RxBool obscureNewPassword = true.obs;
+  RxBool obscureConfirmPassword = true.obs;
+  RxList<String> errors = RxList<String>();
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -191,44 +198,60 @@ class _ChangePasswordState extends State<ChangePassword> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              overflow: TextOverflow.fade,
-                              color: textColor,
-                              //height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w400),
+                      child: Obx(
+                        () => TextField(
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                overflow: TextOverflow.fade,
+                                color: textColor,
+                                //height: 1.3,
+                                fontSize: height * 0.018,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          cursorColor: primaryBlue,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: obscureOldPassword.value,
+                          controller: _accountController.txtPassword,
+                          onChanged: (value) {
+                            if (_accountController.txtPassword.text.isEmpty) {
+                              errors.add(_accountController.noOldPass);
+                            } else {
+                              errors.remove(_accountController.noOldPass);
+                            }
+                          },
+                          decoration: InputDecoration(
+                              hintText: "Current Password",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.04),
+                              // errorBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: red, width: 1)),
+                              // focusedBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                              // enabledBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide:
+                              //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                              border: InputBorder.none
+                              //  OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(
+                              //         color: grey.withOpacity(0.4), width: 1))
+                              ),
                         ),
-                        cursorColor: primaryBlue,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: "Current Password",
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: width * 0.04),
-                            // errorBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: red, width: 1)),
-                            // focusedBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                            // enabledBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide:
-                            //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                            border: InputBorder.none
-                            //  OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(
-                            //         color: grey.withOpacity(0.4), width: 1))
-                            ),
                       ),
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        if (obscureOldPassword.value) {
+                          obscureOldPassword.value = false;
+                        } else {
+                          obscureOldPassword.value = true;
+                        }
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.04),
                         child: Icon(
@@ -256,44 +279,61 @@ class _ChangePasswordState extends State<ChangePassword> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              overflow: TextOverflow.fade,
-                              color: textColor,
-                              //height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w400),
+                      child: Obx(
+                        () => TextField(
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                overflow: TextOverflow.fade,
+                                color: textColor,
+                                //height: 1.3,
+                                fontSize: height * 0.018,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          cursorColor: primaryBlue,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: obscureNewPassword.value,
+                          controller: _accountController.txtNewPassword,
+                          onChanged: (value) {
+                            if (_accountController
+                                .txtNewPassword.text.isEmpty) {
+                              errors.add(_accountController.noNewPass);
+                            } else {
+                              errors.remove(_accountController.noNewPass);
+                            }
+                          },
+                          decoration: InputDecoration(
+                              hintText: "New Password",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.04),
+                              // errorBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: red, width: 1)),
+                              // focusedBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                              // enabledBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide:
+                              //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                              border: InputBorder.none
+                              //  OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(
+                              //         color: grey.withOpacity(0.4), width: 1))
+                              ),
                         ),
-                        cursorColor: primaryBlue,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: "New Password",
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: width * 0.04),
-                            // errorBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: red, width: 1)),
-                            // focusedBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                            // enabledBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide:
-                            //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                            border: InputBorder.none
-                            //  OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(
-                            //         color: grey.withOpacity(0.4), width: 1))
-                            ),
                       ),
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        if (obscureNewPassword.value) {
+                          obscureNewPassword.value = false;
+                        } else {
+                          obscureNewPassword.value = true;
+                        }
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.04),
                         child: Icon(
@@ -321,44 +361,56 @@ class _ChangePasswordState extends State<ChangePassword> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              overflow: TextOverflow.fade,
-                              color: textColor,
-                              //height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w400),
+                      child: Obx(
+                        () => TextField(
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                overflow: TextOverflow.fade,
+                                color: textColor,
+                                //height: 1.3,
+                                fontSize: height * 0.018,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          cursorColor: primaryBlue,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: obscureConfirmPassword.value,
+                          controller: _accountController.txtConfirmPassword,
+                          onChanged: (value) {
+                            errors.clear();
+                          },
+                          decoration: InputDecoration(
+                              hintText: "Confirm Password",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.04),
+                              // errorBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: red, width: 1)),
+                              // focusedBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(color: primaryBlue, width: 1)),
+                              // enabledBorder: OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide:
+                              //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
+                              border: InputBorder.none
+                              //  OutlineInputBorder(
+                              //     borderRadius: BorderRadius.circular(width * 0.02),
+                              //     borderSide: BorderSide(
+                              //         color: grey.withOpacity(0.4), width: 1))
+                              ),
                         ),
-                        cursorColor: primaryBlue,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: "Confirm Password",
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: width * 0.04),
-                            // errorBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: red, width: 1)),
-                            // focusedBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(color: primaryBlue, width: 1)),
-                            // enabledBorder: OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide:
-                            //         BorderSide(color: grey.withOpacity(0.4), width: 1)),
-                            border: InputBorder.none
-                            //  OutlineInputBorder(
-                            //     borderRadius: BorderRadius.circular(width * 0.02),
-                            //     borderSide: BorderSide(
-                            //         color: grey.withOpacity(0.4), width: 1))
-                            ),
                       ),
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
-                      onPressed: () {},
+                      onPressed: () {
+                        if (obscureConfirmPassword.value) {
+                          obscureConfirmPassword.value = false;
+                        } else {
+                          obscureConfirmPassword.value = true;
+                        }
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.04),
                         child: Icon(
@@ -397,13 +449,45 @@ class _ChangePasswordState extends State<ChangePassword> {
               //       )),
               // ),
               SizedBox(
-                height: height * 0.04,
+                height: height * 0.01,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+                child: ErrorList(
+                  errors: errors,
+                  darkMode: false,
+                ),
+              ),
+              SizedBox(
+                height: height * 0.01,
               ),
               CupertinoButton(
                 padding: EdgeInsets.all(0.0),
                 minSize: 0.0001,
-                onPressed: () {
-                  Get.back();
+                onPressed: () async {
+                  errors.clear();
+                  if (_accountController.txtPassword.text.isEmpty ||
+                      _accountController.txtNewPassword.text.isEmpty ||
+                      _accountController.txtNewPassword.text !=
+                          _accountController.txtConfirmPassword.text ||
+                      _accountController.txtNewPassword.text.length < 6) {
+                    if (_accountController.txtPassword.text.isEmpty) {
+                      errors.add(_accountController.noOldPass);
+                    }
+                    if (_accountController.txtNewPassword.text.isEmpty) {
+                      errors.add(_accountController.noNewPass);
+                    } else if (_accountController.txtNewPassword.text !=
+                        _accountController.txtConfirmPassword.text) {
+                      errors.add(_accountController.noPassMatch);
+                    }
+
+                    if (_accountController.txtNewPassword.text.length < 6) {
+                      errors.add(_accountController.shortPass);
+                    }
+                  } else {
+                    errors.clear();
+                    await _accountController.updatePassowrd();
+                  }
                 },
                 child: Container(
                     alignment: Alignment.center,
@@ -414,21 +498,33 @@ class _ChangePasswordState extends State<ChangePassword> {
                         //border: Border.all(color: grey.withOpacity(0.4), width: 1),
                         borderRadius: BorderRadius.circular(width * 0.02)),
                     margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-                    child: Center(
-                      child: Text(
-                        'Continue',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.end,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: white,
-                              height: 1.3,
-                              fontSize: height * 0.018,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
+                    child: Obx(
+                      (() => Center(
+                            child:
+                                _accountController.loadingUpdatePassword.value
+                                    ? Container(
+                                        height: height * 0.03,
+                                        width: height * 0.03,
+                                        child: CircularProgressIndicator(
+                                          color: white,
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Continue',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.end,
+                                        style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              color: white,
+                                              height: 1.3,
+                                              fontSize: height * 0.018,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                          )),
                     )),
               ),
             ],
