@@ -97,6 +97,13 @@ class LoadDataController extends GetxController {
     Get.offAll(() => BottomNavigator());
   }
 
+  setUserDetails2() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setInt("userId", userModel.value.id!);
+    pref.setString("email", userModel.value.email!);
+    pref.setString("name", userModel.value.name!);
+  }
+
   Future<void> logout() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.clear();

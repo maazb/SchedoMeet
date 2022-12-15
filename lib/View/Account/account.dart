@@ -1,7 +1,7 @@
 import 'package:bit_planner/Controller/account_controller.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Account/about_us.dart';
-import 'package:bit_planner/View/Account/all_contacts.dart';
+import 'package:bit_planner/View/Account/people.dart';
 import 'package:bit_planner/View/Account/app_settings.dart';
 import 'package:bit_planner/View/Account/change_credentials.dart';
 import 'package:bit_planner/View/Account/change_password.dart';
@@ -284,7 +284,7 @@ class _AccountState extends State<Account> {
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
                       onPressed: () {
-                        Get.to(() => AllContacts());
+                        Get.to(() => People());
                       },
                       child: Column(
                         children: [
@@ -302,7 +302,7 @@ class _AccountState extends State<Account> {
                           ),
                           SizedBox(height: height * 0.005),
                           Text(
-                            'Contacts',
+                            'People',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
