@@ -3,6 +3,7 @@ import 'package:bit_planner/Model/user_name_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
@@ -47,34 +48,42 @@ class _EventDetailState extends State<EventDetail> {
         titleSpacing: 0.0,
         backgroundColor: greyLight,
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   statusBarBrightness: Brightness.light,
-        //   statusBarColor: white,
-        //   statusBarIconBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+          statusBarColor: greyLight,
+          statusBarIconBrightness: Brightness.dark,
+        ),
         title: Container(
             margin: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CupertinoButton(
-                  padding: const EdgeInsets.all(0.0),
-                  minSize: 0.0001,
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(width * 0.028),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: grey.withOpacity(0.4), width: 1),
-                        borderRadius: BorderRadius.circular(width * 5)),
-                    child: Icon(
-                      UniconsLine.arrow_left,
-                      color: textColor,
-                      size: height * 0.032,
-                    ),
+                Container(
+                  width: width * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CupertinoButton(
+                        padding: const EdgeInsets.all(0.0),
+                        minSize: 0.0001,
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(width * 0.028),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: grey.withOpacity(0.4), width: 1),
+                              borderRadius: BorderRadius.circular(width * 5)),
+                          child: Icon(
+                            UniconsLine.arrow_left,
+                            color: textColor,
+                            size: height * 0.032,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Text(
@@ -89,21 +98,53 @@ class _EventDetailState extends State<EventDetail> {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                CupertinoButton(
-                  padding: const EdgeInsets.all(0.0),
-                  minSize: 0.0001,
-                  onPressed: () {},
-                  child: Container(
-                    padding: EdgeInsets.all(width * 0.028),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: grey.withOpacity(0.4), width: 1),
-                        borderRadius: BorderRadius.circular(width * 5)),
-                    child: Icon(
-                      Icons.more_horiz_outlined,
-                      color: textColor,
-                      size: height * 0.032,
-                    ),
+                Container(
+                  width: width * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Obx(
+                        () => Container(
+                          child: loadDataController.userModel.value.id !=
+                                  widget.event.createdBy
+                              ? Container()
+                              : CupertinoButton(
+                                  padding: const EdgeInsets.all(0.0),
+                                  minSize: 0.0001,
+                                  onPressed: () async {
+                                    await loadDataController
+                                        .deleteEvent(widget.event.id!);
+                                  },
+                                  child: Obx(
+                                    () => Container(
+                                      padding: EdgeInsets.all(width * 0.028),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: grey.withOpacity(0.4),
+                                              width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(width * 5)),
+                                      child: loadDataController
+                                              .loadingDelete.value
+                                          ? Container(
+                                              height: height * 0.032,
+                                              width: height * 0.032,
+                                              child: CircularProgressIndicator(
+                                                color: textColor,
+                                                strokeWidth: 2,
+                                              ),
+                                            )
+                                          : Icon(
+                                              UniconsLine.trash,
+                                              color: textColor,
+                                              size: height * 0.032,
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               ],

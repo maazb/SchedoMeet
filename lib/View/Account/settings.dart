@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 
-class NotificationSettings extends StatefulWidget {
-  const NotificationSettings({Key? key}) : super(key: key);
+class Settings extends StatefulWidget {
+  const Settings({Key? key}) : super(key: key);
 
   @override
-  State<NotificationSettings> createState() => _NotificationSettingsState();
+  State<Settings> createState() => _SettingsState();
 }
 
-class _NotificationSettingsState extends State<NotificationSettings> {
+class _SettingsState extends State<Settings> {
   late double height;
   late double width;
   RxInt calendarMeetings = 0.obs;
@@ -64,7 +64,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                   ),
                 ),
                 Text(
-                  'Notification Settings',
+                  'Settings',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.poppins(

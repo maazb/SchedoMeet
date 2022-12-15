@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bit_planner/Controller/calendar_controller.dart';
 import 'package:bit_planner/Controller/meeting_controller.dart';
 import 'package:bit_planner/Controller/messages_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,17 +17,17 @@ import 'package:unicons/unicons.dart';
 
 import '../../Helper/values.dart';
 
-class SelectMembers extends StatefulWidget {
-  const SelectMembers({Key? key}) : super(key: key);
+class SelectEventMembers extends StatefulWidget {
+  const SelectEventMembers({Key? key}) : super(key: key);
 
   @override
-  State<SelectMembers> createState() => _SelectMembersState();
+  State<SelectEventMembers> createState() => _SelectEventMembersState();
 }
 
-class _SelectMembersState extends State<SelectMembers> {
+class _SelectEventMembersState extends State<SelectEventMembers> {
   late double height;
   late double width;
-  MeetingController _meetingController = Get.find();
+  CalendarController _calendarController = Get.find();
   ScrollController sc = ScrollController();
   ScrollController sc1 = ScrollController();
   RxBool showSearch = false.obs;
@@ -188,7 +189,7 @@ class _SelectMembersState extends State<SelectMembers> {
                             child: Obx(
                               () => ListView.builder(
                                   itemCount:
-                                      _meetingController.addedUsers.length,
+                                      _calendarController.addedUsers.length,
                                   // shrinkWrap: true,
                                   // physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder:
@@ -204,18 +205,18 @@ class _SelectMembersState extends State<SelectMembers> {
                                           padding: const EdgeInsets.all(0.0),
                                           minSize: 0.0001,
                                           onPressed: () {
-                                            if (_meetingController
+                                            if (_calendarController
                                                 .selectedAttendees
-                                                .contains(_meetingController
+                                                .contains(_calendarController
                                                     .addedUsers[index])) {
-                                              _meetingController
+                                              _calendarController
                                                   .selectedAttendees
-                                                  .remove(_meetingController
+                                                  .remove(_calendarController
                                                       .addedUsers[index]);
                                             } else {
-                                              _meetingController
+                                              _calendarController
                                                   .selectedAttendees
-                                                  .add(_meetingController
+                                                  .add(_calendarController
                                                       .addedUsers[index]);
                                             }
                                             // if (_messagesController
@@ -243,18 +244,18 @@ class _SelectMembersState extends State<SelectMembers> {
                                                           BorderRadius.circular(
                                                               width * 5),
                                                       child: CachedNetworkImage(
-                                                        imageUrl: _meetingController
+                                                        imageUrl: _calendarController
                                                                         .addedUsers[
                                                                             index]
                                                                         .image ==
                                                                     "" ||
-                                                                _meetingController
+                                                                _calendarController
                                                                         .addedUsers[
                                                                             index]
                                                                         .image ==
                                                                     null
                                                             ? picPlaceHolder
-                                                            : _meetingController
+                                                            : _calendarController
                                                                 .addedUsers[
                                                                     index]
                                                                 .image!,
@@ -282,7 +283,7 @@ class _SelectMembersState extends State<SelectMembers> {
                                                                         .start,
                                                                 children: [
                                                                   Text(
-                                                                    _meetingController
+                                                                    _calendarController
                                                                         .addedUsers[
                                                                             index]
                                                                         .name!,
@@ -300,7 +301,7 @@ class _SelectMembersState extends State<SelectMembers> {
                                                                     ),
                                                                   ),
                                                                   Text(
-                                                                    _meetingController
+                                                                    _calendarController
                                                                         .addedUsers[
                                                                             index]
                                                                         .email!,
@@ -322,9 +323,9 @@ class _SelectMembersState extends State<SelectMembers> {
                                                             ),
                                                             Obx(
                                                               () => Container(
-                                                                  child: _meetingController
+                                                                  child: _calendarController
                                                                           .selectedAttendees
-                                                                          .contains(_meetingController.addedUsers[
+                                                                          .contains(_calendarController.addedUsers[
                                                                               index])
                                                                       ? Container(
                                                                           margin: EdgeInsets.only(

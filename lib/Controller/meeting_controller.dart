@@ -1,15 +1,24 @@
 import 'package:bit_planner/Helper/common_widgets/snackbar_error.dart';
+import 'package:bit_planner/Helper/common_widgets/snackbar_success.dart';
 import 'package:bit_planner/Helper/services.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/Model/events_model.dart';
 import 'package:bit_planner/Model/meeting_model.dart';
+import 'package:bit_planner/Model/user_name_model.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class MeetingController extends GetxController {
-  Rx<DateTime>? startDate = DateTime.now().obs;
+  TextEditingController txtAddTitle = TextEditingController();
+  TextEditingController txtAddDetail = TextEditingController();
+  TextEditingController txtAddLink = TextEditingController();
+
+  RxList<UserNameModel> addedUsers = RxList<UserNameModel>();
+  RxList<UserNameModel> selectedAttendees = RxList<UserNameModel>();
+  RxString selectedCategory = "meeting".obs;
+
   Rx<DateTime>? endDate = DateTime.now().obs;
   Rx<TimeOfDay>? startTime = TimeOfDay.now().obs;
   Rx<TimeOfDay>? endTime = TimeOfDay.now().obs;
@@ -48,6 +57,81 @@ class MeetingController extends GetxController {
   RxBool loadingMeetings = false.obs;
   RxBool loadingNewMeetings = false.obs;
   RxBool loadingMessages = false.obs;
+
+  RxBool loadingAddMeeting = false.obs;
+
+  Future<void> addMeeting() async {
+    if (!loadingAddMeeting.value) {
+      try {
+        loadingAddMeeting.value = true;
+
+        int uId = loadDataController.userModel.value.id!;
+        String sdate = selectedDay!.value.toIso8601String().substring(0, 10);
+        String edate = endDate!.value.toIso8601String().substring(0, 10);
+
+        String startT = DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day,
+                    startTime!.value.hour,
+                    startTime!.value.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        String endT = DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day,
+                    endTime!.value.hour,
+                    endTime!.value.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        var body = {
+          "title": txtAddTitle.text,
+          "detail": txtAddDetail.text,
+          "meeting_type": selectedCategory.value,
+          "start_date": sdate,
+          "end_date": edate,
+          "start_time": startT,
+          "end_time": endT,
+          "createdBy": uId,
+          "link": txtAddLink.text,
+          "attendees": [
+            uId,
+            for (int i = 0; i < selectedAttendees.length; i++)
+              selectedAttendees[i].id,
+          ],
+          "seen": false
+        };
+
+        await ApiRequest.postRequest(baseURL + '/meeting/CreateMeeting', body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() == "Not authenticated") {
+                Get.to(() => Welcome);
+                showSnackbarError(
+                    'Access expired', 'Please login again to continue');
+              } else {
+                Get.back();
+                Get.back();
+                showSnackbarSuccess("Success", "Meeting added.");
+                loadingMeetings();
+              }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingAddMeeting.value = false;
+      }
+    }
+  }
 
   Future<void> loadMeetings() async {
     if (!loadingMeetings.value) {

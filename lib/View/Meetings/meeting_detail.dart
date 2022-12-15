@@ -59,23 +59,31 @@ class _MeetingDetailState extends State<MeetingDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CupertinoButton(
-                  padding: const EdgeInsets.all(0.0),
-                  minSize: 0.0001,
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(width * 0.028),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: grey.withOpacity(0.4), width: 1),
-                        borderRadius: BorderRadius.circular(width * 5)),
-                    child: Icon(
-                      UniconsLine.arrow_left,
-                      color: textColor,
-                      size: height * 0.032,
-                    ),
+                Container(
+                  width: width * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CupertinoButton(
+                        padding: const EdgeInsets.all(0.0),
+                        minSize: 0.0001,
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(width * 0.028),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: grey.withOpacity(0.4), width: 1),
+                              borderRadius: BorderRadius.circular(width * 5)),
+                          child: Icon(
+                            UniconsLine.arrow_left,
+                            color: textColor,
+                            size: height * 0.032,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Text(
@@ -90,21 +98,53 @@ class _MeetingDetailState extends State<MeetingDetail> {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                CupertinoButton(
-                  padding: const EdgeInsets.all(0.0),
-                  minSize: 0.0001,
-                  onPressed: () {},
-                  child: Container(
-                    padding: EdgeInsets.all(width * 0.028),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: grey.withOpacity(0.4), width: 1),
-                        borderRadius: BorderRadius.circular(width * 5)),
-                    child: Icon(
-                      Icons.more_horiz_outlined,
-                      color: textColor,
-                      size: height * 0.032,
-                    ),
+                Container(
+                  width: width * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Obx(
+                        () => Container(
+                          child: loadDataController.userModel.value.id !=
+                                  widget.meeting.createdBy
+                              ? Container()
+                              : CupertinoButton(
+                                  padding: const EdgeInsets.all(0.0),
+                                  minSize: 0.0001,
+                                  onPressed: () async {
+                                    await loadDataController
+                                        .deleteMeeting(widget.meeting.id!);
+                                  },
+                                  child: Obx(
+                                    () => Container(
+                                      padding: EdgeInsets.all(width * 0.028),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: grey.withOpacity(0.4),
+                                              width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(width * 5)),
+                                      child: loadDataController
+                                              .loadingDelete.value
+                                          ? Container(
+                                              height: height * 0.032,
+                                              width: height * 0.032,
+                                              child: CircularProgressIndicator(
+                                                color: textColor,
+                                                strokeWidth: 2,
+                                              ),
+                                            )
+                                          : Icon(
+                                              UniconsLine.trash,
+                                              color: textColor,
+                                              size: height * 0.032,
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               ],
@@ -701,57 +741,59 @@ class _MeetingDetailState extends State<MeetingDetail> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        alignment: Alignment.center,
-        height: height * 0.12,
-        decoration: BoxDecoration(
-            color: white,
-            gradient: LinearGradient(colors: [
-              white,
-              white,
-              white,
-              white,
-              white,
-              white,
-              white,
-              white,
-              white.withOpacity(0.7),
-              white.withOpacity(0.4),
-              white.withOpacity(0)
-            ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: height * 0.03),
-            CupertinoButton(
-              padding: EdgeInsets.all(0.0),
-              minSize: 0.0001,
-              onPressed: () {},
-              child: Container(
-                alignment: Alignment.center,
-                width: width * 0.9,
-                height: height * 0.07,
-                padding: EdgeInsets.symmetric(vertical: height * 0.005),
-                decoration: BoxDecoration(
-                    color: primaryBlue,
-                    borderRadius: BorderRadius.circular(width * 5)),
-                child: Text(
-                  "Join Meeting",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                        color: white,
-                        //height: 1.3,
-                        fontSize: height * 0.018,
-                        fontWeight: FontWeight.w500),
+      floatingActionButton: widget.meeting.link!.isEmpty
+          ? null
+          : Container(
+              alignment: Alignment.center,
+              height: height * 0.12,
+              decoration: BoxDecoration(
+                  color: white,
+                  gradient: LinearGradient(colors: [
+                    white,
+                    white,
+                    white,
+                    white,
+                    white,
+                    white,
+                    white,
+                    white,
+                    white.withOpacity(0.7),
+                    white.withOpacity(0.4),
+                    white.withOpacity(0)
+                  ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: height * 0.03),
+                  CupertinoButton(
+                    padding: EdgeInsets.all(0.0),
+                    minSize: 0.0001,
+                    onPressed: () {},
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: width * 0.9,
+                      height: height * 0.07,
+                      padding: EdgeInsets.symmetric(vertical: height * 0.005),
+                      decoration: BoxDecoration(
+                          color: primaryBlue,
+                          borderRadius: BorderRadius.circular(width * 5)),
+                      child: Text(
+                        "Join Meeting",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: white,
+                              //height: 1.3,
+                              fontSize: height * 0.018,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

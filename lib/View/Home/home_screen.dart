@@ -426,7 +426,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   .all(0.0),
                                                           minSize: 0.0001,
                                                           onPressed: () {
-                                                            // Get.to(() => MeetingDetail());
+                                                            Get.to(() =>
+                                                                    MeetingDetail(
+                                                                      meeting: _homeController
+                                                                              .unseenMeetingsList[
+                                                                          index],
+                                                                    ))!
+                                                                .then((value) =>
+                                                                    {
+                                                                      _homeController
+                                                                          .loadMeetings()
+                                                                    });
                                                           },
                                                           child: Container(
                                                             height:
@@ -556,30 +566,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           minSize:
                                                                               0.0001,
                                                                           onPressed:
-                                                                              null,
+                                                                              () {},
                                                                           child: SizedBox(
                                                                               width: width * 0.14,
                                                                               height: height * 0.04,
                                                                               child: ListView.builder(
                                                                                   scrollDirection: Axis.horizontal,
-                                                                                  itemCount: _homeController.unseenMeetingsList[index].attendees!.length < 3 ? _homeController.unseenMeetingsList[index].attendees!.length : 3,
-                                                                                  itemBuilder: (context, index) {
+                                                                                  itemCount: _homeController.meetingsList[index].attendees!.length < 3 ? _homeController.meetingsList[index].attendees!.length : 3,
+                                                                                  itemBuilder: (context, ind) {
                                                                                     return Align(
                                                                                       widthFactor: 0.6,
                                                                                       child: CircleAvatar(
                                                                                         radius: width * 0.032,
                                                                                         backgroundColor: Colors.white,
-                                                                                        child: index == 2
+                                                                                        child: ind == 2
                                                                                             ? CircleAvatar(
                                                                                                 radius: width * 0.028,
                                                                                                 backgroundColor: primaryBlue,
                                                                                                 child: Text(
-                                                                                                  '+' + (_homeController.unseenMeetingsList[index].attendees!.length - 2).toString(),
+                                                                                                  '+' + (_homeController.meetingsList[index].attendees!.length - 2).toString(),
                                                                                                   style: GoogleFonts.poppins(
                                                                                                     textStyle: TextStyle(
                                                                                                         color: white,
                                                                                                         //height: 1.3,
-                                                                                                        fontSize: height * 0.014,
+                                                                                                        fontSize: height * 0.012,
                                                                                                         fontWeight: FontWeight.w400),
                                                                                                   ),
                                                                                                 ),
@@ -587,7 +597,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                                             : CircleAvatar(
                                                                                                 radius: width * 0.028,
 
-                                                                                                backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _homeController.unseenMeetingsList[index].attendees!.contains(e.id)).toList()[index].image! == "" ? picPlaceHolder : loadDataController.userNameList.value.where((e) => _homeController.unseenMeetingsList[index].attendees!.contains(e.id)).toList()[index].image!).image, // Provide your custom image
+                                                                                                backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _homeController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image! == "" ? picPlaceHolder : loadDataController.userNameList.value.where((e) => _homeController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image!).image, // Provide your custom image
                                                                                               ),
                                                                                       ),
                                                                                     );
@@ -692,9 +702,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                               minSize: width * 0.04,
                                               onPressed: () {
                                                 Get.to(() => EventDetail(
-                                                      event: _homeController
-                                                          .eventsList[index],
-                                                    ));
+                                                          event: _homeController
+                                                                  .eventsList[
+                                                              index],
+                                                        ))!
+                                                    .then((value) =>
+                                                        _homeController
+                                                            .loadEvents());
                                               },
                                               child: Container(
                                                   margin: EdgeInsets.symmetric(

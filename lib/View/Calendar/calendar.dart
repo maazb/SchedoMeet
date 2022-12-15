@@ -522,9 +522,14 @@ class _CalendarState extends State<Calendar> {
                                               minSize: width * 0.04,
                                               onPressed: () {
                                                 Get.to(() => EventDetail(
-                                                      event: _calendarController
-                                                          .eventsList[index],
-                                                    ));
+                                                          event:
+                                                              _calendarController
+                                                                      .eventsList[
+                                                                  index],
+                                                        ))!
+                                                    .then((value) =>
+                                                        _calendarController
+                                                            .loadEvents());
                                               },
                                               child: Container(
                                                   margin: EdgeInsets.symmetric(

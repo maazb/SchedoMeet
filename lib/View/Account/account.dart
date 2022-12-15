@@ -5,7 +5,7 @@ import 'package:bit_planner/View/Account/all_contacts.dart';
 import 'package:bit_planner/View/Account/app_settings.dart';
 import 'package:bit_planner/View/Account/change_credentials.dart';
 import 'package:bit_planner/View/Account/change_password.dart';
-import 'package:bit_planner/View/Account/notification_settings.dart';
+import 'package:bit_planner/View/Account/settings.dart';
 import 'package:bit_planner/View/Account/privacy_policy.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -323,7 +323,7 @@ class _AccountState extends State<Account> {
                       padding: EdgeInsets.all(0.0),
                       minSize: 0.0001,
                       onPressed: () {
-                        Get.to(() => NotificationSettings());
+                        Get.to(() => Settings());
                       },
                       child: Column(
                         children: [
@@ -334,14 +334,14 @@ class _AccountState extends State<Account> {
                                     color: grey.withOpacity(0.4), width: 1),
                                 borderRadius: BorderRadius.circular(width * 5)),
                             child: Icon(
-                              UniconsLine.bell,
+                              UniconsLine.setting,
                               color: textColor,
                               size: width * 0.064,
                             ),
                           ),
                           SizedBox(height: height * 0.005),
                           Text(
-                            'Notifications',
+                            'Settings',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
@@ -397,30 +397,30 @@ class _AccountState extends State<Account> {
                   // SizedBox(
                   //   height: height * 0.02,
                   // ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Settings',
-                          style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                color: textColor,
-                                height: 1.3,
-                                fontSize: height * 0.024,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        CupertinoButton(
-                          padding: const EdgeInsets.all(0.0),
-                          minSize: 0.0001,
-                          onPressed: null,
-                          child: Container(),
-                        )
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Text(
+                  //         'Settings',
+                  //         style: GoogleFonts.poppins(
+                  //           textStyle: TextStyle(
+                  //               color: textColor,
+                  //               height: 1.3,
+                  //               fontSize: height * 0.024,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //       ),
+                  //       CupertinoButton(
+                  //         padding: const EdgeInsets.all(0.0),
+                  //         minSize: 0.0001,
+                  //         onPressed: null,
+                  //         child: Container(),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   SizedBox(
                     height: height * 0.02,
                   ),
@@ -436,15 +436,12 @@ class _AccountState extends State<Account> {
                               minSize: 0.0001,
                               onPressed: () {
                                 if (index == 0) {
-                                  Get.to(() => AppSettings());
-                                }
-                                if (index == 1) {
                                   Get.to(() => PrivacyPolicy());
                                 }
-                                if (index == 2) {
+                                if (index == 1) {
                                   Get.to(() => AboutUs());
                                 }
-                                if (index == 3) {
+                                if (index == 2) {
                                   Get.offAll(() => Welcome());
                                 }
                               },

@@ -352,7 +352,7 @@ class _AutomaticEventState extends State<AutomaticEvent> {
                         padding: EdgeInsets.all(0.0),
                         minSize: 0.0001,
                         onPressed: () async {
-                          _calendarController.startDate!.value =
+                          _calendarController.selectedDay!.value =
                               (await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
@@ -384,7 +384,7 @@ class _AutomaticEventState extends State<AutomaticEvent> {
                                     () => Text(
                                       DateFormat('dd MMM yyyy')
                                           .format(_calendarController
-                                              .startDate!.value)
+                                              .selectedDay!.value)
                                           .toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,

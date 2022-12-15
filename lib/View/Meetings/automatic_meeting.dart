@@ -398,7 +398,7 @@ class _AutomaticMeetingState extends State<AutomaticMeeting> {
                                   padding: EdgeInsets.all(0.0),
                                   minSize: 0.0001,
                                   onPressed: () async {
-                                    _meetingController.startDate!.value =
+                                    _meetingController.selectedDay!.value =
                                         (await showDatePicker(
                                             context: context,
                                             initialDate: DateTime.now(),
@@ -434,7 +434,7 @@ class _AutomaticMeetingState extends State<AutomaticMeeting> {
                                               () => Text(
                                                 DateFormat('dd MMM yyyy')
                                                     .format(_meetingController
-                                                        .startDate!.value)
+                                                        .selectedDay!.value)
                                                     .toString(),
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
@@ -719,7 +719,7 @@ class _AutomaticMeetingState extends State<AutomaticMeeting> {
                                     padding: EdgeInsets.all(0.0),
                                     minSize: 0.0001,
                                     onPressed: () async {
-                                      _meetingController.startDate!.value =
+                                      _meetingController.selectedDay!.value =
                                           (await showDatePicker(
                                               context: context,
                                               initialDate: DateTime.now(),
@@ -754,7 +754,7 @@ class _AutomaticMeetingState extends State<AutomaticMeeting> {
                                                 () => Text(
                                                   DateFormat('dd MMM yyyy')
                                                       .format(_meetingController
-                                                          .startDate!.value)
+                                                          .selectedDay!.value)
                                                       .toString(),
                                                   maxLines: 1,
                                                   overflow:

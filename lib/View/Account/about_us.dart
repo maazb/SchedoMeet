@@ -58,7 +58,7 @@ class _AboutUsState extends State<AboutUs> {
                   ),
                 ),
                 Text(
-                  'Privacy Policy',
+                  'About Us',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.poppins(

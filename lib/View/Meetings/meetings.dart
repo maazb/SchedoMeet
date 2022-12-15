@@ -474,11 +474,14 @@ class _MeetingsState extends State<Meetings> {
                                               minSize: 0.0001,
                                               onPressed: () {
                                                 Get.to(() => MeetingDetail(
-                                                      meeting:
-                                                          _meetingController
-                                                                  .meetingList[
-                                                              index],
-                                                    ));
+                                                          meeting:
+                                                              _meetingController
+                                                                      .meetingList[
+                                                                  index],
+                                                        ))!
+                                                    .then((value) =>
+                                                        _meetingController
+                                                            .loadMeetings());
                                               },
                                               child: Container(
                                                 //height: height * 0.15,
@@ -491,6 +494,8 @@ class _MeetingsState extends State<Meetings> {
                                                         BorderRadius.circular(
                                                             width * 0.03)),
                                                 child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Container(
                                                       margin: EdgeInsets.only(
@@ -633,6 +638,8 @@ class _MeetingsState extends State<Meetings> {
                                                             .detail!,
                                                         overflow: TextOverflow
                                                             .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.left,
                                                         maxLines: 2,
                                                         style:
                                                             GoogleFonts.poppins(
@@ -706,13 +713,13 @@ class _MeetingsState extends State<Meetings> {
                                                                           itemCount: _meetingController.meetingList[index].attendees!.length < 3
                                                                               ? _meetingController.meetingList[index].attendees!.length
                                                                               : 3,
-                                                                          itemBuilder: (context, index) {
+                                                                          itemBuilder: (context, ind) {
                                                                             return Align(
                                                                               widthFactor: 0.6,
                                                                               child: CircleAvatar(
                                                                                 radius: width * 0.032,
                                                                                 backgroundColor: Colors.white,
-                                                                                child: index == 2
+                                                                                child: ind == 2
                                                                                     ? CircleAvatar(
                                                                                         radius: width * 0.028,
                                                                                         backgroundColor: primaryBlue,
@@ -730,7 +737,7 @@ class _MeetingsState extends State<Meetings> {
                                                                                     : CircleAvatar(
                                                                                         radius: width * 0.028,
 
-                                                                                        backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _meetingController.meetingList[index].attendees!.contains(e.id)).toList()[index].image! == "" ? picPlaceHolder : loadDataController.userNameList.value.where((e) => _meetingController.meetingList[index].attendees!.contains(e.id)).toList()[index].image!).image, // Provide your custom image
+                                                                                        backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _meetingController.meetingList[index].attendees!.contains(e.id)).toList()[ind].image! == "" ? picPlaceHolder : loadDataController.userNameList.value.where((e) => _meetingController.meetingList[index].attendees!.contains(e.id)).toList()[ind].image!).image, // Provide your custom image
                                                                                       ),
                                                                               ),
                                                                             );

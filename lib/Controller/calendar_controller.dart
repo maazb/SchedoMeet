@@ -1,15 +1,24 @@
 import 'package:bit_planner/Helper/common_widgets/snackbar_error.dart';
+import 'package:bit_planner/Helper/common_widgets/snackbar_success.dart';
 import 'package:bit_planner/Helper/services.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/Model/event_model.dart';
 import 'package:bit_planner/Model/events_model.dart';
+import 'package:bit_planner/Model/user_name_model.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CalendarController extends GetxController {
-  Rx<DateTime>? startDate = DateTime.now().obs;
+  TextEditingController txtAddTitle = TextEditingController();
+  TextEditingController txtAddDetail = TextEditingController();
+  TextEditingController txtAddLink = TextEditingController();
+
+  RxList<UserNameModel> addedUsers = RxList<UserNameModel>();
+  RxList<UserNameModel> selectedAttendees = RxList<UserNameModel>();
+  RxString selectedCategory = "event".obs;
+  Rx<DateTime>? selectedDay = DateTime.now().obs;
   Rx<DateTime>? endDate = DateTime.now().obs;
   Rx<TimeOfDay>? startTime = TimeOfDay.now().obs;
   Rx<TimeOfDay>? endTime = TimeOfDay.now().obs;
@@ -38,7 +47,6 @@ class CalendarController extends GetxController {
 
   Rx<DateTime>? focusedDay = DateTime.now().obs;
   Rx<DateTime>? focusedDay1 = DateTime.now().obs;
-  Rx<DateTime>? selectedDay = DateTime.now().obs;
 
   RxList<EventModel> eventList = RxList<EventModel>();
 
@@ -46,6 +54,77 @@ class CalendarController extends GetxController {
   RxBool loadingEvents = false.obs;
   RxBool loadingNewMeetings = false.obs;
   RxBool loadingMessages = false.obs;
+
+  RxBool loadingAddEvent = false.obs;
+
+  Future<void> addEvent() async {
+    if (!loadingAddEvent.value) {
+      try {
+        loadingAddEvent.value = true;
+
+        int uId = loadDataController.userModel.value.id!;
+        String date = selectedDay!.value.toIso8601String().substring(0, 10);
+
+        String startT = DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day,
+                    startTime!.value.hour,
+                    startTime!.value.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        String endT = DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day,
+                    endTime!.value.hour,
+                    endTime!.value.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        var body = {
+          "title": txtAddTitle.text,
+          "detail": txtAddDetail.text,
+          "event_type": selectedCategory.value,
+          "date": date,
+          "start_time": startT,
+          "end_time": endT,
+          "createdBy": uId,
+          "attendees": [
+            uId,
+            for (int i = 0; i < selectedAttendees.length; i++)
+              selectedAttendees[i].id,
+          ]
+        };
+
+        await ApiRequest.postRequest(baseURL + '/event/CreateEvent', body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() == "Not authenticated") {
+                Get.to(() => Welcome);
+                showSnackbarError(
+                    'Access expired', 'Please login again to continue');
+              } else {
+                Get.back();
+                Get.back();
+                showSnackbarSuccess("Success", "Event added.");
+                loadEvents();
+              }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingAddEvent.value = false;
+      }
+    }
+  }
 
   Future<void> loadEvents() async {
     if (!loadingEvents.value) {

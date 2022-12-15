@@ -172,9 +172,6 @@ class AccountController extends GetxController {
 
   getEvents() {
     settingsList.add(
-        SettingModel(name: "App settings", icon: "assets/icons/Settings.svg"));
-
-    settingsList.add(
         SettingModel(name: "Privacy policy", icon: "assets/icons/Shield.svg"));
 
     settingsList.add(
