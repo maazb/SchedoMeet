@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bit_planner/Helper/common_widgets/snackbar_error.dart';
 import 'package:bit_planner/Helper/common_widgets/snackbar_success.dart';
 import 'package:bit_planner/Helper/services.dart';
@@ -9,11 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AccountController extends GetxController {
   RxList<SettingModel> settingsList = RxList<SettingModel>();
   RxList<UserNameModel> requestList = RxList<UserNameModel>();
   RxList<UserNameModel> searchPeopleList = RxList<UserNameModel>();
+
+  final storage = FirebaseStorage.instance;
 
   // RxList<UserNameModel> requestList = RxList<UserNameModel>();
   String noOldPass = "Current password cannot be empty";
@@ -629,30 +634,45 @@ class AccountController extends GetxController {
     if (!loadingUpdateInfo.value) {
       try {
         loadingUpdateInfo.value = true;
+        String imageUrl = "";
+
+        final storageRef = FirebaseStorage.instance.ref();
+
+// Create a reference to "mountains.jpg"
+        final imagesRef =
+            storageRef.child("images/${selectedImage.value.name}");
+        File file = File(selectedImage.value.path);
+        try {
+          print("Uploading to Firebase");
+          await imagesRef.putFile(file);
+          imageUrl = await imagesRef.getDownloadURL();
+        } on FirebaseException catch (e) {
+          print("firebase exception: $e");
+        }
 
         //Upload Images
-        List<String> imagesString = [];
-        imagesString.add(selectedImage.value.path);
-        print("inagestring: $imagesString");
+        // List<String> imagesString = [];
+        // imagesString.add(selectedImage.value.path);
+        // print("inagestring: $imagesString");
 
-        String profilePic = '';
+        // String profilePic = '';
 
-        if (imagesString.isNotEmpty) {
-          await ApiRequest.uploadImages(selectedImage.value.path).then(
-            (value) {
-              if (value != null) {
-                profilePic = value[0]['path'].toString();
-              }
-            },
-          );
-        }
+        // if (imagesString.isNotEmpty) {
+        //   await ApiRequest.uploadImages(selectedImage.value.path).then(
+        //     (value) {
+        //       if (value != null) {
+        //         profilePic = value[0]['path'].toString();
+        //       }
+        //     },
+        //   );
+        // }
 
         var body = {
           "name": txtNameInfo.text,
           "email": txtEmailInfo.text,
           "contact": txtPhoneInfo.text,
-          "image": profilePic != ""
-              ? profilePic
+          "image": imageUrl != ""
+              ? imageUrl
               : loadDataController.userModel.value.image,
           "meetingCal": loadDataController.userModel.value.meetingCal,
           "eventCal": loadDataController.userModel.value.eventCal,
@@ -693,7 +713,7 @@ class AccountController extends GetxController {
                     'Please enter valid current passowrd to continue');
               } else {
                 loadDataController.userModel.value = userModelFromJson(value);
-                await loadDataController.setUserDetails();
+                await loadDataController.setUserDetails2();
                 Get.back();
                 showSnackbarSuccess("Success", "Profile updated successfully");
               }
@@ -701,6 +721,7 @@ class AccountController extends GetxController {
           }
         });
       } catch (e) {
+        print("exception: $e");
       } finally {
         loadingUpdateInfo.value = false;
       }

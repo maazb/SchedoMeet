@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "784260625960",
+    "project_id": "schedomeet",
+    "storage_bucket": "schedomeet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784260625960:android:010d1d44baf9a2d124e71d",
+        "android_client_info": {
+          "package_name": "com.example.bit_planner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784260625960-7ukapjbofb8k8m190fnvsp8voiqjbd9v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhXbkdzOS4qdRd5CqLhpi88OdZV8kIHis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784260625960-7ukapjbofb8k8m190fnvsp8voiqjbd9v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "784260625960-tkalpq1hv4fs4un1f9vis995dll8uuo2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bitPlanner"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

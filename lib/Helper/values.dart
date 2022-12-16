@@ -10,7 +10,7 @@ String mapKey = 'AIzaSyD7jpVB_jaW4RJw21fuW19MqnvrPGIyB6M';
 const String oneSignalKey = 'ce39468c-285d-4478-b3e9-1e5cc1451dbd';
 
 String picPlaceHolder =
-    'https://dk0pm9zdlq16s.cloudfront.net/3af7cf37-c120-4ebd-9223-8962b95030af.jpg';
+    'https://firebasestorage.googleapis.com/v0/b/schedomeet.appspot.com/o/images%2FprofilePlaceholder.jpg?alt=media&token=8b936f03-1e54-4227-b2c6-1473dd632ff0';
 
 String googleMapsKey = 'AIzaSyD7jpVB_jaW4RJw21fuW19MqnvrPGIyB6M';
 

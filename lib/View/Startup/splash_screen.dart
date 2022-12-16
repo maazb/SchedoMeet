@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> loadData() async {
     Future.delayed(Duration(milliseconds: 4000)).then((value) async {
-      Get.offAll(Welcome());
+      Get.offAll(() => Welcome());
       // logoWidth.value = width * 0.8;
       // SharedPreferences pref = await SharedPreferences.getInstance();
       // if (pref.getBool('isLoggedIn') ?? false) {

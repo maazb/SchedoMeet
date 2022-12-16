@@ -4,6 +4,7 @@
 
 
 # Miscellaneous
+*.exe
 *.class
 *.log
 *.pyc
@@ -13,6 +14,11 @@
 .buildlog/
 .history
 .svn/
+
+firebase-tools-instant-win.exe
+firebase.exe
+
+
 
 # IntelliJ related
 *.iml
