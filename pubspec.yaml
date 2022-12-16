@@ -66,6 +66,8 @@ dependencies:
   dotted_border: ^2.0.0+2
   firebase_core: ^2.4.0
   firebase_storage: ^11.0.8
+  firebase_messaging: ^14.1.4
+  flutter_local_notifications: ^12.0.4
 
 dev_dependencies:
   flutter_test:

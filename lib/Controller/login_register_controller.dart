@@ -7,6 +7,7 @@ import 'package:bit_planner/Model/user_name_model.dart';
 import 'package:bit_planner/View/Startup/login.dart';
 import 'package:bit_planner/View/Startup/otp.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,12 +56,16 @@ class LoginRegisterController extends GetxController {
       try {
         loading.value = true;
 
+        final fcmToken = await FirebaseMessaging.instance.getToken();
+
         SharedPreferences pref = await SharedPreferences.getInstance();
 
         var body = {
           "username": username ?? txtEmailLogin.text,
           "password": password ?? txtPasswordLogin.text
         };
+
+        var body2 = {};
 
         await ApiRequest.postRequest(baseURL + '/token', body)
             .then((value) async {
@@ -79,16 +84,43 @@ class LoginRegisterController extends GetxController {
                       await SharedPreferences.getInstance();
                   pref.setString('token', value["access_token"]);
                 }
-
                 loadDataController.userModel.value =
                     userModelFromJson(value['detail']);
-                await loadDataController.setUserDetails();
-                await getUsers();
-                print("users: ${loadDataController.userNameList.length}");
+                await loadDataController.setUserDetails2();
+                await ApiRequest.putRequest(
+                        baseURL +
+                            '/users/UpdateFcm?fcmId=${fcmToken}&id=${loadDataController.userModel.value.id}',
+                        body2)
+                    .then((value) async {
+                  if (value != null) {
+                    print(value);
 
-                // loadDataController.userData.value =
-                //     userDataFromJson(value['data']);
-                // await loadDataController.setUserDetails(true);
+                    if (value != null) {
+                      if (value['detail'].toString() ==
+                          "Incorrect username or password") {
+                        showSnackbarError('Invalid Credentials',
+                            'Please enter valid email and password to continue');
+                      } else {
+                        loadDataController.userModel.value =
+                            userModelFromJson(value);
+                        await loadDataController.setUserDetails();
+                        await getUsers();
+                        print(
+                            "users: ${loadDataController.userNameList.length}");
+                      }
+                    }
+                  }
+                });
+
+                // loadDataController.userModel.value =
+                //     userModelFromJson(value['detail']);
+                // await loadDataController.setUserDetails();
+                // await getUsers();
+                // print("users: ${loadDataController.userNameList.length}");
+
+                // // loadDataController.userData.value =
+                // //     userDataFromJson(value['data']);
+                // // await loadDataController.setUserDetails(true);
               }
             }
           }
@@ -207,6 +239,7 @@ class LoginRegisterController extends GetxController {
     if (!loadingRegister.value) {
       try {
         loadingRegister.value = true;
+        final fcmToken = await FirebaseMessaging.instance.getToken();
 
         SharedPreferences pref = await SharedPreferences.getInstance();
 
@@ -214,6 +247,8 @@ class LoginRegisterController extends GetxController {
           "name": txtName.text,
           "email": txtEmail.text,
           "contact": txtContact.text,
+          "image": "",
+          "fcmId": fcmToken,
           "meetingCal": "weekly",
           "eventCal": "monthly",
           "newMeetingsOnHome": true,

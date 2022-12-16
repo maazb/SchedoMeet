@@ -15,6 +15,7 @@ class UserModel {
     this.email,
     this.contact,
     this.image,
+    this.fcmId,
     this.meetingCal,
     this.eventCal,
     this.newMeetingsOnHome,
@@ -31,6 +32,7 @@ class UserModel {
   String? email;
   String? contact;
   String? image;
+  String? fcmId;
   String? meetingCal;
   String? eventCal;
   bool? newMeetingsOnHome;
@@ -47,6 +49,7 @@ class UserModel {
         email: json["email"],
         contact: json["contact"],
         image: json["image"],
+        fcmId: json["fcmId"],
         meetingCal: json["meetingCal"],
         eventCal: json["eventCal"],
         newMeetingsOnHome: json["newMeetingsOnHome"],
@@ -64,6 +67,7 @@ class UserModel {
         "email": email,
         "contact": contact,
         "image": image,
+        "fcmId": fcmId,
         "meetingCal": meetingCal,
         "eventCal": eventCal,
         "newMeetingsOnHome": newMeetingsOnHome,
