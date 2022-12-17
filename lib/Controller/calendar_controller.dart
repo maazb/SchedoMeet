@@ -4,7 +4,9 @@ import 'package:bit_planner/Helper/services.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/Model/event_model.dart';
 import 'package:bit_planner/Model/events_model.dart';
+import 'package:bit_planner/Model/recomendation_model.dart';
 import 'package:bit_planner/Model/user_name_model.dart';
+import 'package:bit_planner/View/Calendar/event_failure.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +16,9 @@ class CalendarController extends GetxController {
   TextEditingController txtAddTitle = TextEditingController();
   TextEditingController txtAddDetail = TextEditingController();
   TextEditingController txtAddLink = TextEditingController();
+  TextEditingController txtDuration = TextEditingController();
+
+  RxList<List<DateTime>> recomendationList = RxList<List<DateTime>>();
 
   RxList<UserNameModel> addedUsers = RxList<UserNameModel>();
   RxList<UserNameModel> selectedAttendees = RxList<UserNameModel>();
@@ -66,9 +71,9 @@ class CalendarController extends GetxController {
         String date = selectedDay!.value.toIso8601String().substring(0, 10);
 
         String startT = DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                    DateTime.now().day,
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
                     startTime!.value.hour,
                     startTime!.value.minute)
                 .toIso8601String()
@@ -76,9 +81,9 @@ class CalendarController extends GetxController {
             "Z";
 
         String endT = DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                    DateTime.now().day,
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
                     endTime!.value.hour,
                     endTime!.value.minute)
                 .toIso8601String()
@@ -115,6 +120,155 @@ class CalendarController extends GetxController {
                 Get.back();
                 showSnackbarSuccess("Success", "Event added.");
                 loadEvents();
+              }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingAddEvent.value = false;
+      }
+    }
+  }
+
+  Future<void> addEventOnCommend(DateTime st, DateTime et) async {
+    if (!loadingAddEvent.value) {
+      try {
+        loadingAddEvent.value = true;
+
+        int uId = loadDataController.userModel.value.id!;
+        String date = selectedDay!.value.toIso8601String().substring(0, 10);
+
+        String startT = DateTime(
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
+                    st.hour,
+                    st.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        String endT = DateTime(
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
+                    et.hour,
+                    et.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        var body = {
+          "title": txtAddTitle.text,
+          "detail": txtAddDetail.text,
+          "event_type": selectedCategory.value,
+          "date": date,
+          "start_time": startT,
+          "end_time": endT,
+          "createdBy": uId,
+          "attendees": [
+            uId,
+            for (int i = 0; i < selectedAttendees.length; i++)
+              selectedAttendees[i].id,
+          ]
+        };
+
+        await ApiRequest.postRequest(baseURL + '/event/CreateEvent', body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() == "Not authenticated") {
+                Get.to(() => Welcome);
+                showSnackbarError(
+                    'Access expired', 'Please login again to continue');
+              } else {
+                Get.back();
+                Get.back();
+                Get.back();
+                showSnackbarSuccess("Success", "Event added.");
+                loadEvents();
+              }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingAddEvent.value = false;
+      }
+    }
+  }
+
+  Future<void> addEventAuto() async {
+    if (!loadingAddEvent.value) {
+      try {
+        loadingAddEvent.value = true;
+
+        int uId = loadDataController.userModel.value.id!;
+        String date = selectedDay!.value.toIso8601String().substring(0, 10);
+
+        String startT = DateTime(
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
+                    startTime!.value.hour,
+                    startTime!.value.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        String endT = DateTime(
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
+                    endTime!.value.hour,
+                    endTime!.value.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        int min = int.parse(txtDuration.text);
+
+        var body = {
+          "title": txtAddTitle.text,
+          "detail": txtAddDetail.text,
+          "event_type": selectedCategory.value,
+          "date": date,
+          "start_time": startT,
+          "end_time": endT,
+          "createdBy": uId,
+          "attendees": [
+            uId,
+            for (int i = 0; i < selectedAttendees.length; i++)
+              selectedAttendees[i].id,
+          ]
+        };
+
+        await ApiRequest.postRequest(
+                baseURL + '/event/CreateEventAuto?duration=$min', body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() == "Not authenticated") {
+                Get.to(() => Welcome);
+                showSnackbarError(
+                    'Access expired', 'Please login again to continue');
+              } else {
+                if (value["status"] == true) {
+                  showSnackbarSuccess("Success", "Event added.");
+                  Get.back();
+                  Get.back();
+
+                  await loadEvents();
+                } else {
+                  recomendationList.value =
+                      recomendationModelFromJson(value["recomended"]);
+                  Get.to(() => EventFailure());
+                }
               }
             }
           }

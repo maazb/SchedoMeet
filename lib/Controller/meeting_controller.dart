@@ -4,7 +4,9 @@ import 'package:bit_planner/Helper/services.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/Model/events_model.dart';
 import 'package:bit_planner/Model/meeting_model.dart';
+import 'package:bit_planner/Model/recomendation_model.dart';
 import 'package:bit_planner/Model/user_name_model.dart';
+import 'package:bit_planner/View/Meetings/meeting_failure.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +16,7 @@ class MeetingController extends GetxController {
   TextEditingController txtAddTitle = TextEditingController();
   TextEditingController txtAddDetail = TextEditingController();
   TextEditingController txtAddLink = TextEditingController();
+  TextEditingController txtDuration = TextEditingController();
 
   RxList<UserNameModel> addedUsers = RxList<UserNameModel>();
   RxList<UserNameModel> selectedAttendees = RxList<UserNameModel>();
@@ -30,6 +33,7 @@ class MeetingController extends GetxController {
 
   RxBool loading = false.obs;
   RxInt selectedMonthIndex = 7.obs;
+  RxList<List<DateTime>> recomendationList = RxList<List<DateTime>>();
   RxString selectedMonth =
       DateFormat('MMM yyyy').format(DateTime.now()).toString().obs;
   List<DateTime> monthList = [
@@ -70,9 +74,9 @@ class MeetingController extends GetxController {
         String edate = endDate!.value.toIso8601String().substring(0, 10);
 
         String startT = DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                    DateTime.now().day,
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
                     startTime!.value.hour,
                     startTime!.value.minute)
                 .toIso8601String()
@@ -80,9 +84,9 @@ class MeetingController extends GetxController {
             "Z";
 
         String endT = DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                    DateTime.now().day,
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
                     endTime!.value.hour,
                     endTime!.value.minute)
                 .toIso8601String()
@@ -123,6 +127,147 @@ class MeetingController extends GetxController {
                 showSnackbarSuccess("Success", "Meeting added.");
                 loadingMeetings();
               }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingAddMeeting.value = false;
+      }
+    }
+  }
+
+  Future<void> addMeetingOnCommand(DateTime st, DateTime et) async {
+    if (!loadingAddMeeting.value) {
+      try {
+        loadingAddMeeting.value = true;
+
+        int uId = loadDataController.userModel.value.id!;
+        String sdate = selectedDay!.value.toIso8601String().substring(0, 10);
+        String edate = endDate!.value.toIso8601String().substring(0, 10);
+
+        String startT = DateTime(DateTime.now().year, DateTime.now().month,
+                    DateTime.now().day, st.hour, st.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        String endT = DateTime(DateTime.now().year, DateTime.now().month,
+                    DateTime.now().day, et.hour, et.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        var body = {
+          "title": txtAddTitle.text,
+          "detail": txtAddDetail.text,
+          "meeting_type": selectedCategory.value,
+          "start_date": sdate,
+          "end_date": edate,
+          "start_time": startT,
+          "end_time": endT,
+          "createdBy": uId,
+          "link": txtAddLink.text,
+          "attendees": [
+            uId,
+            for (int i = 0; i < selectedAttendees.length; i++)
+              selectedAttendees[i].id,
+          ],
+          "seen": false
+        };
+
+        await ApiRequest.postRequest(baseURL + '/meeting/CreateMeeting', body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() == "Not authenticated") {
+                Get.to(() => Welcome);
+                showSnackbarError(
+                    'Access expired', 'Please login again to continue');
+              } else {
+                Get.back();
+                Get.back();
+                Get.back();
+                showSnackbarSuccess("Success", "Meeting added.");
+                loadMeetings();
+              }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingAddMeeting.value = false;
+      }
+    }
+  }
+
+  Future<void> addMeetingAuto() async {
+    if (!loadingAddMeeting.value) {
+      try {
+        loadingAddMeeting.value = true;
+
+        int uId = loadDataController.userModel.value.id!;
+        String sdate = selectedDay!.value.toIso8601String().substring(0, 10);
+        String edate = endDate!.value.toIso8601String().substring(0, 10);
+
+        String startT = DateTime(
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
+                    startTime!.value.hour,
+                    startTime!.value.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        String endT = DateTime(
+                    selectedDay!.value.year,
+                    selectedDay!.value.month,
+                    selectedDay!.value.day,
+                    endTime!.value.hour,
+                    endTime!.value.minute)
+                .toIso8601String()
+                .substring(0, 19) +
+            "Z";
+
+        var body = {
+          "title": txtAddTitle.text,
+          "detail": txtAddDetail.text,
+          "meeting_type": selectedCategory.value,
+          "start_date": sdate,
+          "end_date": edate,
+          "start_time": startT,
+          "end_time": endT,
+          "createdBy": uId,
+          "link": txtAddLink.text,
+          "attendees": [
+            uId,
+            for (int i = 0; i < selectedAttendees.length; i++)
+              selectedAttendees[i].id,
+          ],
+          "seen": false
+        };
+
+        int min = int.parse(txtDuration.text);
+
+        await ApiRequest.postRequest(
+                baseURL + '/meeting/CreateMeetingAuto?duration=$min', body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value["status"].toString() == "false") {
+              recomendationList.value =
+                  recomendationModelFromJson(value["recomended"]);
+              print("here");
+              Get.to(() => MeetingFailure());
+            } else {
+              await loadMeetings();
+
+              Get.back();
+              Get.back();
             }
           }
         });

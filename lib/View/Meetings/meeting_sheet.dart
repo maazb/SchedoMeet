@@ -58,8 +58,7 @@ class MeetingSheet extends StatelessWidget {
                     padding: EdgeInsets.all(0.0),
                     minSize: 0.0001,
                     onPressed: () {
-                      Get.to(() => AutomaticMeeting())!
-                          .then((value) => Get.back());
+                      Get.to(() => AutomaticMeeting());
                     },
                     child: Container(
                       width: width,
@@ -104,7 +103,7 @@ class MeetingSheet extends StatelessWidget {
                     padding: EdgeInsets.all(0.0),
                     minSize: 0.0001,
                     onPressed: () {
-                      Get.to(() => AddMeeting())!.then((value) => Get.back());
+                      Get.to(() => AddMeeting());
                     },
                     child: Container(
                       width: width,

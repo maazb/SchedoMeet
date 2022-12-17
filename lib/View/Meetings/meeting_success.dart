@@ -27,7 +27,10 @@ class _MeetingSuccessState extends State<MeetingSuccess> {
 
   Future<void> loadData() async {
     await Future.delayed(Duration(seconds: 3)).then((value) {
-      Get.offAll(BottomNavigator());
+      Get.back();
+      Get.back();
+      Get.back();
+      Get.back();
     });
   }
 

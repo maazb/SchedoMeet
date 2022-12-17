@@ -29,7 +29,6 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       const HomeScreen(),
       const Meetings(),
       const Calendar(),
-      const Messages(),
       const Account()
     ];
   }
@@ -87,19 +86,19 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           activeColorPrimary: primaryBlue,
           inactiveColorPrimary: grey,
         ),
-        PersistentBottomNavBarItem(
-          icon: const Icon(UniconsLine.comment_alt_lines),
-          title: ("Messages"),
-          textStyle: GoogleFonts.poppins(
-            textStyle: TextStyle(
-                //color: grey,
-                height: 1,
-                fontSize: width * 0.03,
-                fontWeight: FontWeight.w400),
-          ),
-          activeColorPrimary: primaryBlue,
-          inactiveColorPrimary: grey,
-        ),
+        // PersistentBottomNavBarItem(
+        //   icon: const Icon(UniconsLine.comment_alt_lines),
+        //   title: ("Messages"),
+        //   textStyle: GoogleFonts.poppins(
+        //     textStyle: TextStyle(
+        //         //color: grey,
+        //         height: 1,
+        //         fontSize: width * 0.03,
+        //         fontWeight: FontWeight.w400),
+        //   ),
+        //   activeColorPrimary: primaryBlue,
+        //   inactiveColorPrimary: grey,
+        // ),
         PersistentBottomNavBarItem(
           icon: const Icon(UniconsLine.user),
           title: ("Account"),

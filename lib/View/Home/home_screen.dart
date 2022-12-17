@@ -152,27 +152,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           size: height * 0.032,
                         ),
                       ),
-                      Positioned(
-                          right: 0,
-                          top: 0,
-                          child: Container(
-                            height: height * 0.024,
-                            width: height * 0.024,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: red,
-                                borderRadius: BorderRadius.circular(width * 5)),
-                            child: Text(
-                              '2',
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                    color: white,
-                                    //height: 1.3,
-                                    fontSize: height * 0.014,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ))
+                      // Positioned(
+                      //     right: 0,
+                      //     top: 0,
+                      //     child: Container(
+                      //       height: height * 0.024,
+                      //       width: height * 0.024,
+                      //       alignment: Alignment.center,
+                      //       decoration: BoxDecoration(
+                      //           color: red,
+                      //           borderRadius: BorderRadius.circular(width * 5)),
+                      //       child: Text(
+                      //         '2',
+                      //         style: GoogleFonts.poppins(
+                      //           textStyle: TextStyle(
+                      //               color: white,
+                      //               //height: 1.3,
+                      //               fontSize: height * 0.014,
+                      //               fontWeight: FontWeight.w500),
+                      //         ),
+                      //       ),
+                      //     ))
                     ],
                   ),
                 )
@@ -182,171 +182,171 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: height * 0.01),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Unread messages',
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: grey,
-                          //height: 1.3,
-                          fontSize: height * 0.022,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  CupertinoButton(
-                    padding: const EdgeInsets.all(0.0),
-                    minSize: width * 0.05,
-                    onPressed: () {},
-                    child: Icon(
-                      CupertinoIcons.multiply,
-                      size: height * 0.025,
-                      color: grey,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: height * 0.015),
-            SizedBox(
-              height: height * 0.17,
-              child: ListView.builder(
-                  itemCount: 5,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      children: [
-                        SizedBox(
-                          width: width * 0.05,
-                        ),
-                        CupertinoButton(
-                          padding: const EdgeInsets.all(0.0),
-                          minSize: 0.0001,
-                          onPressed: () {
-                            Get.to(() => ChatScreen());
-                          },
-                          child: Container(
-                            width: width * 0.6,
-                            //height: height * 0.2,
-                            decoration: BoxDecoration(
-                                color: white,
-                                borderRadius:
-                                    BorderRadius.circular(width * 0.03)),
-                            child: Column(
-                              children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.only(
-                                      left: width * 0.04,
-                                      right: width * 0.04,
-                                      top: height * 0.02),
-                                  height: height * 0.08,
-                                  width: width,
-                                  decoration: BoxDecoration(
-                                      color: primaryLight,
-                                      borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(
-                                            width * 0.03,
-                                          ),
-                                          topLeft: Radius.circular(
-                                            width * 0.03,
-                                          ),
-                                          topRight: Radius.circular(
-                                            width * 0.03,
-                                          ))),
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: width * 0.03,
-                                        vertical: height * 0.01),
-                                    child: Text(
-                                      'I have sent you a summary of today\'s completed tasks on your email.',
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                            color: primaryBlue,
-                                            height: 1.3,
-                                            fontSize: height * 0.017,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: width * 0.04,
-                                      vertical: height * 0.012),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        height: width * 0.09,
-                                        width: width * 0.09,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(width * 5),
-                                          child: Image.asset(
-                                            "assets/images/profile2.jpg",
-                                            fit: BoxFit.cover,
-                                            height: height * 0.05,
-                                            width: height * 0.05,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.02,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'John Marc',
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                    color: textColor,
-                                                    height: 1.3,
-                                                    fontSize: height * 0.019,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                            Text(
-                                              '2h ago',
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                    color: textColor
-                                                        .withOpacity(0.4),
-                                                    height: 1.3,
-                                                    fontSize: height * 0.015,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: index == 4 ? width * 0.04 : 0)
-                      ],
-                    );
-                  }),
-            ),
-            SizedBox(height: height * 0.03),
+            // SizedBox(height: height * 0.01),
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         'Unread messages',
+            //         style: GoogleFonts.poppins(
+            //           textStyle: TextStyle(
+            //               color: grey,
+            //               //height: 1.3,
+            //               fontSize: height * 0.022,
+            //               fontWeight: FontWeight.w400),
+            //         ),
+            //       ),
+            //       CupertinoButton(
+            //         padding: const EdgeInsets.all(0.0),
+            //         minSize: width * 0.05,
+            //         onPressed: () {},
+            //         child: Icon(
+            //           CupertinoIcons.multiply,
+            //           size: height * 0.025,
+            //           color: grey,
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(height: height * 0.015),
+            // SizedBox(
+            //   height: height * 0.17,
+            //   child: ListView.builder(
+            //       itemCount: 5,
+            //       scrollDirection: Axis.horizontal,
+            //       itemBuilder: (BuildContext context, int index) {
+            //         return Row(
+            //           children: [
+            //             SizedBox(
+            //               width: width * 0.05,
+            //             ),
+            //             CupertinoButton(
+            //               padding: const EdgeInsets.all(0.0),
+            //               minSize: 0.0001,
+            //               onPressed: () {
+            //                 Get.to(() => ChatScreen());
+            //               },
+            //               child: Container(
+            //                 width: width * 0.6,
+            //                 //height: height * 0.2,
+            //                 decoration: BoxDecoration(
+            //                     color: white,
+            //                     borderRadius:
+            //                         BorderRadius.circular(width * 0.03)),
+            //                 child: Column(
+            //                   children: [
+            //                     Container(
+            //                       alignment: Alignment.center,
+            //                       margin: EdgeInsets.only(
+            //                           left: width * 0.04,
+            //                           right: width * 0.04,
+            //                           top: height * 0.02),
+            //                       height: height * 0.08,
+            //                       width: width,
+            //                       decoration: BoxDecoration(
+            //                           color: primaryLight,
+            //                           borderRadius: BorderRadius.only(
+            //                               bottomRight: Radius.circular(
+            //                                 width * 0.03,
+            //                               ),
+            //                               topLeft: Radius.circular(
+            //                                 width * 0.03,
+            //                               ),
+            //                               topRight: Radius.circular(
+            //                                 width * 0.03,
+            //                               ))),
+            //                       child: Container(
+            //                         margin: EdgeInsets.symmetric(
+            //                             horizontal: width * 0.03,
+            //                             vertical: height * 0.01),
+            //                         child: Text(
+            //                           'I have sent you a summary of today\'s completed tasks on your email.',
+            //                           overflow: TextOverflow.ellipsis,
+            //                           maxLines: 2,
+            //                           style: GoogleFonts.poppins(
+            //                             textStyle: TextStyle(
+            //                                 color: primaryBlue,
+            //                                 height: 1.3,
+            //                                 fontSize: height * 0.017,
+            //                                 fontWeight: FontWeight.w400),
+            //                           ),
+            //                         ),
+            //                       ),
+            //                     ),
+            //                     Container(
+            //                       margin: EdgeInsets.symmetric(
+            //                           horizontal: width * 0.04,
+            //                           vertical: height * 0.012),
+            //                       child: Row(
+            //                         children: [
+            //                           SizedBox(
+            //                             height: width * 0.09,
+            //                             width: width * 0.09,
+            //                             child: ClipRRect(
+            //                               borderRadius:
+            //                                   BorderRadius.circular(width * 5),
+            //                               child: Image.asset(
+            //                                 "assets/images/profile2.jpg",
+            //                                 fit: BoxFit.cover,
+            //                                 height: height * 0.05,
+            //                                 width: height * 0.05,
+            //                               ),
+            //                             ),
+            //                           ),
+            //                           SizedBox(
+            //                             width: width * 0.02,
+            //                           ),
+            //                           Expanded(
+            //                             child: Column(
+            //                               crossAxisAlignment:
+            //                                   CrossAxisAlignment.start,
+            //                               children: [
+            //                                 Text(
+            //                                   'John Marc',
+            //                                   overflow: TextOverflow.ellipsis,
+            //                                   maxLines: 1,
+            //                                   style: GoogleFonts.poppins(
+            //                                     textStyle: TextStyle(
+            //                                         color: textColor,
+            //                                         height: 1.3,
+            //                                         fontSize: height * 0.019,
+            //                                         fontWeight:
+            //                                             FontWeight.w500),
+            //                                   ),
+            //                                 ),
+            //                                 Text(
+            //                                   '2h ago',
+            //                                   overflow: TextOverflow.ellipsis,
+            //                                   maxLines: 1,
+            //                                   style: GoogleFonts.poppins(
+            //                                     textStyle: TextStyle(
+            //                                         color: textColor
+            //                                             .withOpacity(0.4),
+            //                                         height: 1.3,
+            //                                         fontSize: height * 0.015,
+            //                                         fontWeight:
+            //                                             FontWeight.w500),
+            //                                   ),
+            //                                 ),
+            //                               ],
+            //                             ),
+            //                           )
+            //                         ],
+            //                       ),
+            //                     )
+            //                   ],
+            //                 ),
+            //               ),
+            //             ),
+            //             SizedBox(width: index == 4 ? width * 0.04 : 0)
+            //           ],
+            //         );
+            //       }),
+            // ),
+            // SizedBox(height: height * 0.03),
             Container(
               width: width,
               //height: height,
