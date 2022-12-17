@@ -46,9 +46,9 @@ class LoadDataController extends GetxController {
   }
 
   Future<void> loadData() async {
-    if (!loading.value) {
+    if (!loadingUser.value) {
       try {
-        loading.value = true;
+        loadingUser.value = true;
 
         final fcmToken = await FirebaseMessaging.instance.getToken();
 
@@ -118,7 +118,7 @@ class LoadDataController extends GetxController {
         });
       } catch (e) {
       } finally {
-        loading.value = false;
+        loadingUser.value = false;
       }
     }
   }
