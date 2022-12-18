@@ -31,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final HomeController _homeController = Get.put(HomeController());
   NavigationController _navigationController = Get.find();
 
+  initMsg() {}
+
   getData() async {
     await _homeController.loadMeetings();
     await _homeController.loadEvents();

@@ -77,6 +77,7 @@ class LoginRegisterController extends GetxController {
                   "Incorrect username or password") {
                 showSnackbarError('Invalid Credentials',
                     'Please enter valid email and password to continue');
+                txtPasswordLogin.clear();
               } else {
                 if (value["access_token"] != null) {
                   tokenKey = value["access_token"];

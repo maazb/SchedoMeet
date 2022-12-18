@@ -414,7 +414,9 @@ class _OTPState extends State<OTP> {
               SizedBox(
                 height: height * 0.01,
               ),
-              ErrorList(errors: errorsOTP, darkMode: false),
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+                  child: ErrorList(errors: errorsOTP, darkMode: false)),
               SizedBox(
                 height: height * 0.01,
               ),

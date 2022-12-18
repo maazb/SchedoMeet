@@ -38,6 +38,8 @@ class _PeopleState extends State<People> {
 
   getData() async {
     _accountController.getRequests();
+    loadDataController.loadUser();
+    setState(() {});
     // () => _messagesController.searchList.value =
     //     _messagesController.chatList.where((p0) => true).toList();
   }

@@ -64,7 +64,7 @@ class LoadDataController extends GetxController {
 
         var body2 = {};
 
-        await ApiRequest.getRequest(baseURL + '/users/1', () {})
+        await ApiRequest.getRequest(baseURL + '/users/$uid', () {})
             .then((value) async {
           if (value != null) {
             print(value);
@@ -112,6 +112,51 @@ class LoadDataController extends GetxController {
                 // // loadDataController.userData.value =
                 // //     userDataFromJson(value['data']);
                 // // await loadDataController.setUserDetails(true);
+              }
+            }
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingUser.value = false;
+      }
+    }
+  }
+
+  Future<void> loadUser() async {
+    if (!loadingUser.value) {
+      try {
+        loadingUser.value = true;
+
+        // final fcmToken = await FirebaseMessaging.instance.getToken();
+
+        // SharedPreferences pref = await SharedPreferences.getInstance();
+
+        // tokenKey = pref.getString("access_token")!;
+        // int uid = pref.getInt("userId")!;
+
+        var body = {
+          // "username": username ?? txtEmailLogin.text,
+          // "password": password ?? txtPasswordLogin.text
+        };
+
+        var body2 = {};
+
+        await ApiRequest.getRequest(
+                baseURL + '/users/${loadDataController.userModel.value.id}',
+                () {})
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() ==
+                  "Incorrect username or password") {
+                showSnackbarError('Invalid Credentials',
+                    'Please enter valid email and password to continue');
+              } else {
+                loadDataController.userModel.value = userModelFromJson(value);
+                await loadDataController.setUserDetails2();
               }
             }
           }

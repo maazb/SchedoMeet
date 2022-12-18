@@ -7,6 +7,7 @@ import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/Model/setting_model.dart';
 import 'package:bit_planner/Model/user_model.dart';
 import 'package:bit_planner/Model/user_name_model.dart';
+import 'package:bit_planner/View/Startup/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -160,9 +161,7 @@ class AccountController extends GetxController {
                             'Please enter valid current passowrd to continue');
                       } else {
                         await getRequests();
-                        loadDataController.userModel.value =
-                            userModelFromJson(value);
-                        await loadDataController.setUserDetails2();
+                        loadDataController.loadUser();
 
                         showSnackbarSuccess(
                             "Success", "Request accepted successfully");
@@ -272,9 +271,7 @@ class AccountController extends GetxController {
                             'Please enter valid current passowrd to continue');
                       } else {
                         await getRequests();
-                        loadDataController.userModel.value =
-                            userModelFromJson(value);
-                        await loadDataController.setUserDetails2();
+                        loadDataController.loadUser();
 
                         showSnackbarSuccess(
                             "Success", "User removed successfully");
@@ -371,8 +368,8 @@ class AccountController extends GetxController {
                     'Please enter valid current passowrd to continue');
               } else {
                 await getRequests();
-                loadDataController.userModel.value = userModelFromJson(value);
-                await loadDataController.setUserDetails2();
+                //loadDataController.userModel.value = userModelFromJson(value);
+                loadDataController.loadUser();
 
                 showSnackbarSuccess("Success", "Request denied successfully");
               }
@@ -465,8 +462,7 @@ class AccountController extends GetxController {
                     'Please enter valid current passowrd to continue');
               } else {
                 await getRequests();
-                loadDataController.userModel.value = userModelFromJson(value);
-                await loadDataController.setUserDetails2();
+                loadDataController.loadUser();
 
                 showSnackbarSuccess("Success", "Request added successfully");
               }
@@ -559,8 +555,7 @@ class AccountController extends GetxController {
                     'Please enter valid current passowrd to continue');
               } else {
                 await getRequests();
-                loadDataController.userModel.value = userModelFromJson(value);
-                await loadDataController.setUserDetails2();
+                loadDataController.loadUser();
 
                 showSnackbarSuccess("Success", "Request removed successfully");
               }
@@ -724,6 +719,101 @@ class AccountController extends GetxController {
                 await loadDataController.setUserDetails2();
                 Get.back();
                 showSnackbarSuccess("Success", "Profile updated successfully");
+              }
+            }
+          }
+        });
+      } catch (e) {
+        print("exception: $e");
+      } finally {
+        loadingUpdateInfo.value = false;
+      }
+    }
+  }
+
+  Future<void> logOut() async {
+    if (!loadingUpdateInfo.value) {
+      try {
+        loadingUpdateInfo.value = true;
+        String imageUrl = "";
+
+        final storageRef = FirebaseStorage.instance.ref();
+
+// Create a reference to "mountains.jpg"
+        final imagesRef =
+            storageRef.child("images/${selectedImage.value.name}");
+        File file = File(selectedImage.value.path);
+        try {
+          print("Uploading to Firebase");
+          await imagesRef.putFile(file);
+          imageUrl = await imagesRef.getDownloadURL();
+        } on FirebaseException catch (e) {
+          print("firebase exception: $e");
+        }
+
+        //Upload Images
+        // List<String> imagesString = [];
+        // imagesString.add(selectedImage.value.path);
+        // print("inagestring: $imagesString");
+
+        // String profilePic = '';
+
+        // if (imagesString.isNotEmpty) {
+        //   await ApiRequest.uploadImages(selectedImage.value.path).then(
+        //     (value) {
+        //       if (value != null) {
+        //         profilePic = value[0]['path'].toString();
+        //       }
+        //     },
+        //   );
+        // }
+
+        var body = {
+          "name": loadDataController.userModel.value.name,
+          "email": loadDataController.userModel.value.email,
+          "contact": loadDataController.userModel.value.contact,
+          "image": loadDataController.userModel.value.image,
+          "fcmId": "",
+          "meetingCal": loadDataController.userModel.value.meetingCal,
+          "eventCal": loadDataController.userModel.value.eventCal,
+          "newMeetingsOnHome":
+              loadDataController.userModel.value.newMeetingsOnHome,
+          "newMessagesOnHome":
+              loadDataController.userModel.value.newMessagesOnHome,
+          "newMessageNotifications":
+              loadDataController.userModel.value.newMessageNotifications,
+          "newMeetingNotifications":
+              loadDataController.userModel.value.newMeetingNotifications,
+          "requested": [
+            for (int i = 0;
+                i < loadDataController.userModel.value.requested!.length;
+                i++)
+              loadDataController.userModel.value.requested![i],
+          ],
+          "added": [
+            for (int i = 0;
+                i < loadDataController.userModel.value.added!.length;
+                i++)
+              loadDataController.userModel.value.added![i],
+          ]
+        };
+
+        await ApiRequest.putRequest(
+                baseURL +
+                    '/users/EditUser?id=${loadDataController.userModel.value.id}',
+                body)
+            .then((value) async {
+          if (value != null) {
+            print(value);
+
+            if (value != null) {
+              if (value['detail'].toString() ==
+                  "Incorrect username or password") {
+                showSnackbarError('Invalid Credentials',
+                    'Please enter valid current passowrd to continue');
+              } else {
+                Get.offAll(() => Welcome());
+                showSnackbarSuccess("Success", "Logged out successfully");
               }
             }
           }

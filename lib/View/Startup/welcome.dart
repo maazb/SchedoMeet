@@ -1,5 +1,6 @@
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Startup/login.dart';
+import 'package:bit_planner/View/Startup/register.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -314,19 +315,16 @@ class _WelcomeState extends State<Welcome> {
                                       width: width * 0.05,
                                     ),
                                     Container(
-                                      child: SvgPicture.asset(
-                                        "assets/icons/envelope.svg",
-                                        color: white,
-                                        fit: BoxFit.cover,
-                                        height: height * 0.03,
-                                        width: height * 0.03,
-                                      ),
-                                    ),
+                                        child: Icon(
+                                      CupertinoIcons.square_arrow_right,
+                                      color: white,
+                                      size: height * 0.03,
+                                    )),
                                     SizedBox(
                                       width: width * 0.04,
                                     ),
                                     Text(
-                                      'Continue with Email',
+                                      'Login',
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.poppins(
@@ -347,7 +345,9 @@ class _WelcomeState extends State<Welcome> {
                             CupertinoButton(
                               padding: EdgeInsets.all(0.0),
                               minSize: 0.0001,
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => Register());
+                              },
                               child: Container(
                                 height: height * 0.07,
                                 width: width,
@@ -365,19 +365,16 @@ class _WelcomeState extends State<Welcome> {
                                       width: width * 0.05,
                                     ),
                                     Container(
-                                      child: SvgPicture.asset(
-                                        "assets/icons/google.svg",
-                                        color: primaryBlue,
-                                        fit: BoxFit.cover,
-                                        height: height * 0.03,
-                                        width: height * 0.03,
-                                      ),
-                                    ),
+                                        child: Icon(
+                                      CupertinoIcons.person_add_solid,
+                                      color: primaryBlue,
+                                      size: height * 0.03,
+                                    )),
                                     SizedBox(
                                       width: width * 0.04,
                                     ),
                                     Text(
-                                      'Continue with Google',
+                                      'Sign up',
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.poppins(
@@ -385,7 +382,7 @@ class _WelcomeState extends State<Welcome> {
                                             color: grey,
                                             height: 1.3,
                                             fontSize: height * 0.018,
-                                            fontWeight: FontWeight.w400),
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                   ],

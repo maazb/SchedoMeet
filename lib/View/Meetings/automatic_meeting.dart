@@ -1439,7 +1439,7 @@ class _AutomaticMeetingState extends State<AutomaticMeeting> {
                 onPressed: () async {
                   if (_meetingController.txtAddTitle.text.isEmpty ||
                       _meetingController.txtAddDetail.text.isEmpty ||
-                      // _meetingController.selectedAttendees.isEmpty ||
+                      _meetingController.selectedAttendees.isEmpty ||
                       _meetingController.txtDuration.text.isEmpty) {
                     await showSnackbarError("Incomplete data",
                         "Title, Detail, Duration and Attendees must be entered.");

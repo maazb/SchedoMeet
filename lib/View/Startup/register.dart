@@ -2,6 +2,7 @@ import 'package:bit_planner/Controller/login_register_controller.dart';
 import 'package:bit_planner/Helper/common_widgets/error_list.dart';
 import 'package:bit_planner/Helper/services.dart';
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/View/Startup/login.dart';
 import 'package:bit_planner/View/bottom_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  LoginRegisterController _loginRegisterController = Get.find();
+  LoginRegisterController _loginRegisterController =
+      Get.put(LoginRegisterController());
   RxBool obscurePass = true.obs;
   late double height;
   late double width;
@@ -471,7 +473,7 @@ class _RegisterState extends State<Register> {
                         minSize: 0.0001,
                         onPressed: () {
                           _loginRegisterController.errors.clear();
-                          Get.back();
+                          Get.to(() => Login());
                         },
                         child: Text(
                           'Login',

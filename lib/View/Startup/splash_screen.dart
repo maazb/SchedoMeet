@@ -1,6 +1,7 @@
 import 'package:animated_card/animated_card.dart';
 import 'package:bit_planner/Helper/values.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
     ));
     loadData();
   }
+
+  reqPer() {}
 
   Future<void> loadData() async {
     Future.delayed(Duration(milliseconds: 4000)).then((value) async {

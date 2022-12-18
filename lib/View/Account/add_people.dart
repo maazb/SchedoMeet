@@ -297,128 +297,87 @@ class _AddPeopleState extends State<AddPeople> {
                                                                       ? height *
                                                                           0.02
                                                                       : 0),
-                                                              CupertinoButton(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        0.0),
-                                                                minSize: 0.0001,
-                                                                onPressed:
-                                                                    () {},
-                                                                child:
-                                                                    Container(
-                                                                        margin: EdgeInsets.symmetric(
-                                                                            horizontal: width *
-                                                                                0.05),
-                                                                        child:
-                                                                            Row(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          children: [
-                                                                            SizedBox(
-                                                                              height: width * 0.13,
-                                                                              width: width * 0.13,
-                                                                              child: ClipRRect(
-                                                                                borderRadius: BorderRadius.circular(width * 5),
-                                                                                child: CachedNetworkImage(
-                                                                                  imageUrl: _accountController.searchPeopleList[index].image == "" || _accountController.searchPeopleList[index].image == null ? picPlaceHolder : _accountController.searchPeopleList[index].image!,
-                                                                                  fit: BoxFit.cover,
-                                                                                  height: height * 0.05,
-                                                                                  width: height * 0.05,
+                                                              Obx(
+                                                                () => _accountController
+                                                                            .searchPeopleList[
+                                                                                index]
+                                                                            .id ==
+                                                                        loadDataController
+                                                                            .userModel
+                                                                            .value
+                                                                            .id
+                                                                    ? Container()
+                                                                    : CupertinoButton(
+                                                                        padding:
+                                                                            const EdgeInsets.all(0.0),
+                                                                        minSize:
+                                                                            0.0001,
+                                                                        onPressed:
+                                                                            () {},
+                                                                        child: Container(
+                                                                            margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+                                                                            child: Row(
+                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                SizedBox(
+                                                                                  height: width * 0.13,
+                                                                                  width: width * 0.13,
+                                                                                  child: ClipRRect(
+                                                                                    borderRadius: BorderRadius.circular(width * 5),
+                                                                                    child: CachedNetworkImage(
+                                                                                      imageUrl: _accountController.searchPeopleList[index].image == "" || _accountController.searchPeopleList[index].image == null ? picPlaceHolder : _accountController.searchPeopleList[index].image!,
+                                                                                      fit: BoxFit.cover,
+                                                                                      height: height * 0.05,
+                                                                                      width: height * 0.05,
+                                                                                    ),
+                                                                                  ),
                                                                                 ),
-                                                                              ),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width: width * 0.03,
-                                                                            ),
-                                                                            Expanded(
-                                                                              child: Column(
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  Row(
+                                                                                SizedBox(
+                                                                                  width: width * 0.03,
+                                                                                ),
+                                                                                Expanded(
+                                                                                  child: Column(
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                                                     children: [
-                                                                                      Expanded(
-                                                                                        child: Column(
-                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                          children: [
-                                                                                            Text(
-                                                                                              _accountController.searchPeopleList[index].name!,
-                                                                                              maxLines: 1,
-                                                                                              overflow: TextOverflow.ellipsis,
-                                                                                              style: GoogleFonts.poppins(
-                                                                                                textStyle: TextStyle(
-                                                                                                    color: textColor,
-                                                                                                    //height: 1.3,
-                                                                                                    fontSize: height * 0.018,
-                                                                                                    fontWeight: FontWeight.w500),
-                                                                                              ),
+                                                                                      Row(
+                                                                                        children: [
+                                                                                          Expanded(
+                                                                                            child: Column(
+                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                              children: [
+                                                                                                Text(
+                                                                                                  _accountController.searchPeopleList[index].name!,
+                                                                                                  maxLines: 1,
+                                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                                  style: GoogleFonts.poppins(
+                                                                                                    textStyle: TextStyle(
+                                                                                                        color: textColor,
+                                                                                                        //height: 1.3,
+                                                                                                        fontSize: height * 0.018,
+                                                                                                        fontWeight: FontWeight.w500),
+                                                                                                  ),
+                                                                                                ),
+                                                                                                Text(
+                                                                                                  _accountController.searchPeopleList[index].email!,
+                                                                                                  maxLines: 1,
+                                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                                  style: GoogleFonts.poppins(
+                                                                                                    textStyle: TextStyle(
+                                                                                                        color: grey,
+                                                                                                        //height: 1.3,
+                                                                                                        fontSize: height * 0.016,
+                                                                                                        fontWeight: FontWeight.w500),
+                                                                                                  ),
+                                                                                                ),
+                                                                                              ],
                                                                                             ),
-                                                                                            Text(
-                                                                                              _accountController.searchPeopleList[index].email!,
-                                                                                              maxLines: 1,
-                                                                                              overflow: TextOverflow.ellipsis,
-                                                                                              style: GoogleFonts.poppins(
-                                                                                                textStyle: TextStyle(
-                                                                                                    color: grey,
-                                                                                                    //height: 1.3,
-                                                                                                    fontSize: height * 0.016,
-                                                                                                    fontWeight: FontWeight.w500),
-                                                                                              ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
+                                                                                          ),
+                                                                                        ],
                                                                                       ),
                                                                                     ],
                                                                                   ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                            _accountController.requestList.any((element) => element.id == _accountController.searchPeopleList[index].id)
-                                                                                ? Row(
-                                                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                    children: [
-                                                                                      CupertinoButton(
-                                                                                        padding: EdgeInsets.all(0.0),
-                                                                                        minSize: 0.0001,
-                                                                                        onPressed: () {
-                                                                                          _accountController.denyRequest(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
-                                                                                        },
-                                                                                        child: Container(
-                                                                                          decoration: BoxDecoration(
-                                                                                            borderRadius: BorderRadius.circular(width * 0.02),
-                                                                                            color: greyMedium,
-                                                                                          ),
-                                                                                          padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.005),
-                                                                                          child: Text(
-                                                                                            "Deny",
-                                                                                            style: GoogleFonts.poppins(color: textColor, fontSize: height * 0.015, fontWeight: FontWeight.w400),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                      SizedBox(
-                                                                                        width: width * 0.03,
-                                                                                      ),
-                                                                                      CupertinoButton(
-                                                                                        padding: EdgeInsets.all(0.0),
-                                                                                        minSize: 0.0001,
-                                                                                        onPressed: () {
-                                                                                          _accountController.acceptRequest(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
-                                                                                        },
-                                                                                        child: Container(
-                                                                                          decoration: BoxDecoration(
-                                                                                            borderRadius: BorderRadius.circular(width * 0.02),
-                                                                                            color: primaryMedium,
-                                                                                          ),
-                                                                                          padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.005),
-                                                                                          child: Text(
-                                                                                            "Accept",
-                                                                                            style: GoogleFonts.poppins(color: white, fontSize: height * 0.015, fontWeight: FontWeight.w400),
-                                                                                          ),
-                                                                                        ),
-                                                                                      )
-                                                                                    ],
-                                                                                  )
-                                                                                : loadDataController.userModel.value.added!.contains(_accountController.searchPeopleList[index].id)
+                                                                                ),
+                                                                                _accountController.requestList.any((element) => element.id == _accountController.searchPeopleList[index].id)
                                                                                     ? Row(
                                                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                                                         children: [
@@ -426,23 +385,44 @@ class _AddPeopleState extends State<AddPeople> {
                                                                                             padding: EdgeInsets.all(0.0),
                                                                                             minSize: 0.0001,
                                                                                             onPressed: () {
-                                                                                              _accountController.removePeople(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
+                                                                                              _accountController.denyRequest(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
                                                                                             },
                                                                                             child: Container(
                                                                                               decoration: BoxDecoration(
                                                                                                 borderRadius: BorderRadius.circular(width * 0.02),
-                                                                                                color: red,
+                                                                                                color: greyMedium,
                                                                                               ),
                                                                                               padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.005),
                                                                                               child: Text(
-                                                                                                "Remove",
+                                                                                                "Deny",
+                                                                                                style: GoogleFonts.poppins(color: textColor, fontSize: height * 0.015, fontWeight: FontWeight.w400),
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          SizedBox(
+                                                                                            width: width * 0.03,
+                                                                                          ),
+                                                                                          CupertinoButton(
+                                                                                            padding: EdgeInsets.all(0.0),
+                                                                                            minSize: 0.0001,
+                                                                                            onPressed: () {
+                                                                                              _accountController.acceptRequest(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
+                                                                                            },
+                                                                                            child: Container(
+                                                                                              decoration: BoxDecoration(
+                                                                                                borderRadius: BorderRadius.circular(width * 0.02),
+                                                                                                color: primaryMedium,
+                                                                                              ),
+                                                                                              padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.005),
+                                                                                              child: Text(
+                                                                                                "Accept",
                                                                                                 style: GoogleFonts.poppins(color: white, fontSize: height * 0.015, fontWeight: FontWeight.w400),
                                                                                               ),
                                                                                             ),
                                                                                           )
                                                                                         ],
                                                                                       )
-                                                                                    : loadDataController.userModel.value.requested!.contains(_accountController.searchPeopleList[index].id)
+                                                                                    : loadDataController.userModel.value.added!.contains(_accountController.searchPeopleList[index].id)
                                                                                         ? Row(
                                                                                             crossAxisAlignment: CrossAxisAlignment.center,
                                                                                             children: [
@@ -450,51 +430,87 @@ class _AddPeopleState extends State<AddPeople> {
                                                                                                 padding: EdgeInsets.all(0.0),
                                                                                                 minSize: 0.0001,
                                                                                                 onPressed: () {
-                                                                                                  _accountController.removeRequest(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
+                                                                                                  _accountController.removePeople(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
                                                                                                 },
                                                                                                 child: Container(
                                                                                                   decoration: BoxDecoration(
                                                                                                     borderRadius: BorderRadius.circular(width * 0.02),
-                                                                                                    color: yellowLight,
+                                                                                                    color: red,
                                                                                                   ),
                                                                                                   padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.005),
                                                                                                   child: Text(
-                                                                                                    "Remove Request",
-                                                                                                    style: GoogleFonts.poppins(color: brown, fontSize: height * 0.015, fontWeight: FontWeight.w400),
+                                                                                                    "Remove",
+                                                                                                    style: GoogleFonts.poppins(color: white, fontSize: height * 0.015, fontWeight: FontWeight.w400),
                                                                                                   ),
                                                                                                 ),
                                                                                               )
                                                                                             ],
                                                                                           )
-                                                                                        : Row(
-                                                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                            children: [
-                                                                                              CupertinoButton(
-                                                                                                padding: EdgeInsets.all(0.0),
-                                                                                                minSize: 0.0001,
-                                                                                                onPressed: () {
-                                                                                                  _accountController.addRequest(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    borderRadius: BorderRadius.circular(width * 0.02),
-                                                                                                    color: primaryMedium,
+                                                                                        : loadDataController.userModel.value.requested!.contains(_accountController.searchPeopleList[index].id)
+                                                                                            ? Row(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                                children: [
+                                                                                                  CupertinoButton(
+                                                                                                    padding: EdgeInsets.all(0.0),
+                                                                                                    minSize: 0.0001,
+                                                                                                    onPressed: () {
+                                                                                                      _accountController.removeRequest(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
+                                                                                                    },
+                                                                                                    child: Container(
+                                                                                                      decoration: BoxDecoration(
+                                                                                                        borderRadius: BorderRadius.circular(width * 0.02),
+                                                                                                        color: yellowLight,
+                                                                                                      ),
+                                                                                                      padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.005),
+                                                                                                      child: Text(
+                                                                                                        "Remove Request",
+                                                                                                        style: GoogleFonts.poppins(color: brown, fontSize: height * 0.015, fontWeight: FontWeight.w400),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  )
+                                                                                                ],
+                                                                                              )
+                                                                                            : Row(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                                children: [
+                                                                                                  CupertinoButton(
+                                                                                                    padding: EdgeInsets.all(0.0),
+                                                                                                    minSize: 0.0001,
+                                                                                                    onPressed: () {
+                                                                                                      _accountController.addRequest(loadDataController.userModel.value.id!, _accountController.searchPeopleList[index].id!).then((value) => _accountController.searchUsers());
+                                                                                                    },
+                                                                                                    child: Container(
+                                                                                                      decoration: BoxDecoration(
+                                                                                                        borderRadius: BorderRadius.circular(width * 0.02),
+                                                                                                        color: primaryMedium,
+                                                                                                      ),
+                                                                                                      padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.005),
+                                                                                                      child: Text(
+                                                                                                        "Add",
+                                                                                                        style: GoogleFonts.poppins(color: white, fontSize: height * 0.015, fontWeight: FontWeight.w400),
+                                                                                                      ),
+                                                                                                    ),
                                                                                                   ),
-                                                                                                  padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.005),
-                                                                                                  child: Text(
-                                                                                                    "Add",
-                                                                                                    style: GoogleFonts.poppins(color: white, fontSize: height * 0.015, fontWeight: FontWeight.w400),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            ],
-                                                                                          )
-                                                                          ],
-                                                                        )),
+                                                                                                ],
+                                                                                              )
+                                                                              ],
+                                                                            )),
+                                                                      ),
                                                               ),
-                                                              SizedBox(
-                                                                height: height *
-                                                                    0.022,
+                                                              Obx(
+                                                                () => SizedBox(
+                                                                  height: _accountController
+                                                                              .searchPeopleList[
+                                                                                  index]
+                                                                              .id ==
+                                                                          loadDataController
+                                                                              .userModel
+                                                                              .value
+                                                                              .id
+                                                                      ? 0
+                                                                      : height *
+                                                                          0.022,
+                                                                ),
                                                               )
                                                             ],
                                                           );
