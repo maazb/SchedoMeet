@@ -255,6 +255,7 @@ class _SelectEventMembersState extends State<SelectEventMembers> {
                                                                         .image ==
                                                                     null
                                                             ? picPlaceHolder
+                                                                .value
                                                             : _calendarController
                                                                 .addedUsers[
                                                                     index]

@@ -298,7 +298,7 @@ class _PeopleState extends State<People> {
                                                                           CachedNetworkImage(
                                                                         imageUrl: _accountController.requestList[index].image == "" ||
                                                                                 _accountController.requestList[index].image == null
-                                                                            ? picPlaceHolder
+                                                                            ? picPlaceHolder.value
                                                                             : _accountController.requestList[index].image!,
                                                                         fit: BoxFit
                                                                             .cover,
@@ -549,7 +549,7 @@ class _PeopleState extends State<People> {
                                                                                 BorderRadius.circular(width * 5),
                                                                             child:
                                                                                 CachedNetworkImage(
-                                                                              imageUrl: loadDataController.userNameList[index].image == "" || loadDataController.userNameList[index].image == null ? picPlaceHolder : loadDataController.userNameList[index].image!,
+                                                                              imageUrl: loadDataController.userNameList[index].image == "" || loadDataController.userNameList[index].image == null ? picPlaceHolder.value : loadDataController.userNameList[index].image!,
                                                                               fit: BoxFit.cover,
                                                                               height: height * 0.05,
                                                                               width: height * 0.05,

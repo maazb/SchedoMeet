@@ -325,7 +325,7 @@ class _AddPeopleState extends State<AddPeople> {
                                                                                   child: ClipRRect(
                                                                                     borderRadius: BorderRadius.circular(width * 5),
                                                                                     child: CachedNetworkImage(
-                                                                                      imageUrl: _accountController.searchPeopleList[index].image == "" || _accountController.searchPeopleList[index].image == null ? picPlaceHolder : _accountController.searchPeopleList[index].image!,
+                                                                                      imageUrl: _accountController.searchPeopleList[index].image == "" || _accountController.searchPeopleList[index].image == null ? picPlaceHolder.value : _accountController.searchPeopleList[index].image!,
                                                                                       fit: BoxFit.cover,
                                                                                       height: height * 0.05,
                                                                                       width: height * 0.05,

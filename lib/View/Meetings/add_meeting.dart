@@ -1248,7 +1248,7 @@ class _AddMeetingState extends State<AddMeeting> {
                                                             index]
                                                         .image ==
                                                     null
-                                            ? picPlaceHolder
+                                            ? picPlaceHolder.value
                                             : _meetingController
                                                 .selectedAttendees[index]
                                                 .image!,

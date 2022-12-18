@@ -170,7 +170,7 @@ class _AccountState extends State<Account> {
                                               loadDataController
                                                       .userModel.value.image ==
                                                   null
-                                          ? picPlaceHolder
+                                          ? picPlaceHolder.value
                                           : loadDataController
                                               .userModel.value.image!,
                                       fit: BoxFit.cover,

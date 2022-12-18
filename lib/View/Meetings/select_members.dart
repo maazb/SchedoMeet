@@ -254,6 +254,7 @@ class _SelectMembersState extends State<SelectMembers> {
                                                                         .image ==
                                                                     null
                                                             ? picPlaceHolder
+                                                                .value
                                                             : _meetingController
                                                                 .addedUsers[
                                                                     index]

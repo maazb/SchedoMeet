@@ -88,16 +88,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: width * 0.12,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(width * 5),
-                        child: CachedNetworkImage(
-                          imageUrl: loadDataController.userModel.value.image ==
-                                      "" ||
-                                  loadDataController.userModel.value.image ==
-                                      null
-                              ? picPlaceHolder
-                              : loadDataController.userModel.value.image!,
-                          fit: BoxFit.cover,
-                          height: width * 0.05,
-                          width: width * 0.05,
+                        child: Obx(
+                          () => CachedNetworkImage(
+                            imageUrl: loadDataController
+                                            .userModel.value.image ==
+                                        "" ||
+                                    loadDataController.userModel.value.image ==
+                                        null
+                                ? picPlaceHolder.value
+                                : loadDataController.userModel.value.image!,
+                            fit: BoxFit.cover,
+                            height: width * 0.05,
+                            width: width * 0.05,
+                          ),
                         )),
                   ),
                 ),
@@ -120,16 +123,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      Text(
-                        loadDataController.userModel.value.name!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: textColor,
-                              height: 1.3,
-                              fontSize: height * 0.024,
-                              fontWeight: FontWeight.w500),
+                      Obx(
+                        () => Text(
+                          loadDataController.userModel.value.name!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                color: textColor,
+                                height: 1.3,
+                                fontSize: height * 0.024,
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ),
                     ],
@@ -599,7 +604,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                                             : CircleAvatar(
                                                                                                 radius: width * 0.028,
 
-                                                                                                backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _homeController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image! == "" ? picPlaceHolder : loadDataController.userNameList.value.where((e) => _homeController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image!).image, // Provide your custom image
+                                                                                                backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _homeController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image! == "" ? picPlaceHolder.value : loadDataController.userNameList.value.where((e) => _homeController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image!).image, // Provide your custom image
                                                                                               ),
                                                                                       ),
                                                                                     );

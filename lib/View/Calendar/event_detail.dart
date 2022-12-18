@@ -333,7 +333,7 @@ class _EventDetailState extends State<EventDetail> {
                                                                       .createdBy)
                                                           .image ==
                                                       null
-                                              ? picPlaceHolder
+                                              ? picPlaceHolder.value
                                               : loadDataController.userNameList
                                                   .firstWhere((element) =>
                                                       element.id ==
@@ -640,7 +640,7 @@ class _EventDetailState extends State<EventDetail> {
                                                       attendeesAll[index]
                                                               .image ==
                                                           null
-                                                  ? picPlaceHolder
+                                                  ? picPlaceHolder.value
                                                   : attendeesAll[index].image!,
                                               fit: BoxFit.cover,
                                               height: height * 0.05,

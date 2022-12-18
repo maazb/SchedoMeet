@@ -737,7 +737,7 @@ class _MeetingsState extends State<Meetings> {
                                                                                     : CircleAvatar(
                                                                                         radius: width * 0.028,
 
-                                                                                        backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _meetingController.meetingList[index].attendees!.contains(e.id)).toList()[ind].image! == "" ? picPlaceHolder : loadDataController.userNameList.value.where((e) => _meetingController.meetingList[index].attendees!.contains(e.id)).toList()[ind].image!).image, // Provide your custom image
+                                                                                        backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _meetingController.meetingList[index].attendees!.contains(e.id)).toList()[ind].image! == "" ? picPlaceHolder.value : loadDataController.userNameList.value.where((e) => _meetingController.meetingList[index].attendees!.contains(e.id)).toList()[ind].image!).image, // Provide your custom image
                                                                                       ),
                                                                               ),
                                                                             );

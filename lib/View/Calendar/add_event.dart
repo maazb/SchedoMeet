@@ -749,7 +749,7 @@ class _AddEventState extends State<AddEvent> {
                                                             index]
                                                         .image ==
                                                     null
-                                            ? picPlaceHolder
+                                            ? picPlaceHolder.value
                                             : _eventController
                                                 .selectedAttendees[index]
                                                 .image!,

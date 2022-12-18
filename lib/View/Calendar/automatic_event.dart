@@ -818,7 +818,7 @@ class _AutomaticEventState extends State<AutomaticEvent> {
                                                             index]
                                                         .image ==
                                                     null
-                                            ? picPlaceHolder
+                                            ? picPlaceHolder.value
                                             : _eventController
                                                 .selectedAttendees[index]
                                                 .image!,

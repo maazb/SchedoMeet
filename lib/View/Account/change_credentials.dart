@@ -270,7 +270,7 @@ class _ChangeCredentialsState extends State<ChangeCredentials> {
                                                               .value
                                                               .image ==
                                                           null
-                                                  ? picPlaceHolder
+                                                  ? picPlaceHolder.value
                                                   : loadDataController
                                                       .userModel.value.image!,
                                               fit: BoxFit.cover,

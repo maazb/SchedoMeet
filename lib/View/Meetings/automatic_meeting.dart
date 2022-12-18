@@ -1320,7 +1320,7 @@ class _AutomaticMeetingState extends State<AutomaticMeeting> {
                                                             index]
                                                         .image ==
                                                     null
-                                            ? picPlaceHolder
+                                            ? picPlaceHolder.value
                                             : _meetingController
                                                 .selectedAttendees[index]
                                                 .image!,
