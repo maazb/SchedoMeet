@@ -244,32 +244,24 @@ class _MeetingsState extends State<Meetings> {
                           daysOfWeekHeight: height * 0.05,
                           rowHeight: height * 0.05,
                           headerVisible: false,
-                          eventLoader: (day) {
-                            if (day.weekday == DateTime.sunday ||
-                                day.weekday == DateTime.saturday) {
-                              return [];
-                            }
-                            if (day.day == 25) {
-                              return ['Absent'];
-                            } else {
-                              return ['Present'];
-                            }
-                          },
-                          calendarBuilders: CalendarBuilders(
-                            singleMarkerBuilder: (context, date, _) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: primaryBlue,
-                                    border: Border.all(
-                                        color: white, width: 1)), //Change color
-                                width: 6.0,
-                                height: 6.0,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 1.5),
-                              );
-                            },
-                          ),
+                          // eventLoader: (day) {
+
+                          // },
+                          // calendarBuilders: CalendarBuilders(
+                          //   singleMarkerBuilder: (context, date, _) {
+                          //     return Container(
+                          //       decoration: BoxDecoration(
+                          //           shape: BoxShape.circle,
+                          //           color: primaryBlue,
+                          //           border: Border.all(
+                          //               color: white, width: 1)), //Change color
+                          //       width: 6.0,
+                          //       height: 6.0,
+                          //       margin:
+                          //           const EdgeInsets.symmetric(horizontal: 1.5),
+                          //     );
+                          //   },
+                          // ),
                           headerStyle: HeaderStyle(
                             headerMargin:
                                 EdgeInsets.only(bottom: height * 0.02),

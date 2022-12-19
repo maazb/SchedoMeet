@@ -939,7 +939,7 @@ class _AutomaticEventState extends State<AutomaticEvent> {
                       _eventController.txtAddDetail.text.isEmpty ||
                       _eventController.selectedAttendees.isEmpty ||
                       _eventController.txtDuration.text.isEmpty) {
-                    await showSnackbarError("Incomplete data",
+                    showSnackbarError("Incomplete data",
                         "Title, Detail, Duration and Attendees must be entered.");
                   } else {
                     await _eventController.addEventAuto();

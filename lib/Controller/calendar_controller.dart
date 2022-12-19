@@ -120,6 +120,7 @@ class CalendarController extends GetxController {
                 Get.back();
                 showSnackbarSuccess("Success", "Event added.");
                 loadEvents();
+                loadDataController.getData();
               }
             }
           }
@@ -190,6 +191,7 @@ class CalendarController extends GetxController {
                 Get.back();
                 showSnackbarSuccess("Success", "Event added.");
                 loadEvents();
+                loadDataController.getData();
               }
             }
           }
@@ -253,22 +255,16 @@ class CalendarController extends GetxController {
             print(value);
 
             if (value != null) {
-              if (value['detail'].toString() == "Not authenticated") {
-                Get.to(() => Welcome);
-                showSnackbarError(
-                    'Access expired', 'Please login again to continue');
+              if (value["status"].toString() == "false") {
+                recomendationList.value =
+                    recomendationModelFromJson(value["recomended"]);
+                print("here");
+                Get.to(() => EventFailure());
               } else {
-                if (value["status"] == true) {
-                  showSnackbarSuccess("Success", "Event added.");
-                  Get.back();
-                  Get.back();
-
-                  await loadEvents();
-                } else {
-                  recomendationList.value =
-                      recomendationModelFromJson(value["recomended"]);
-                  Get.to(() => EventFailure());
-                }
+                Get.back();
+                Get.back();
+                await loadEvents();
+                loadDataController.getData();
               }
             }
           }

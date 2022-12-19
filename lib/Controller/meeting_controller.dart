@@ -126,6 +126,7 @@ class MeetingController extends GetxController {
                 Get.back();
                 showSnackbarSuccess("Success", "Meeting added.");
                 loadingMeetings();
+                loadDataController.getData();
               }
             }
           }
@@ -192,6 +193,7 @@ class MeetingController extends GetxController {
                 Get.back();
                 showSnackbarSuccess("Success", "Meeting added.");
                 loadMeetings();
+                loadDataController.getData();
               }
             }
           }
@@ -264,10 +266,10 @@ class MeetingController extends GetxController {
               print("here");
               Get.to(() => MeetingFailure());
             } else {
+              Get.back();
+              Get.back();
               await loadMeetings();
-
-              Get.back();
-              Get.back();
+              loadDataController.getData();
             }
           }
         });

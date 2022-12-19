@@ -1,6 +1,9 @@
 import 'package:bit_planner/Helper/common_widgets/snackbar_error.dart';
 import 'package:bit_planner/Helper/services.dart';
 import 'package:bit_planner/Helper/values.dart';
+import 'package:bit_planner/Model/event_model.dart';
+import 'package:bit_planner/Model/events_model.dart';
+import 'package:bit_planner/Model/meeting_model.dart';
 import 'package:bit_planner/Model/user_model.dart';
 import 'package:bit_planner/Model/user_name_model.dart';
 import 'package:bit_planner/View/Startup/welcome.dart';
@@ -21,6 +24,102 @@ class LoadDataController extends GetxController {
   RxBool loading = false.obs;
   RxBool loadingUsers = false.obs;
   RxBool loadingUser = false.obs;
+
+  getData() async {
+    await loadDataController.loadMeetings();
+    await loadDataController.loadEvents();
+    print("length: " + loadDataController.eventsList.length.toString());
+    // await _messagesController
+    //     .getChat()
+    //     .then((value) async => _messagesController.searchList.value =
+    //         _messagesController.chatList.where((p0) => true).toList())
+    //     .then((value) async => await _messagesController.getChatDates());
+  }
+
+  RxList<EventModel> eventList = RxList<EventModel>();
+
+  RxList<EventsModel> eventsList = RxList<EventsModel>();
+  RxList<MeetingModel> meetingsList = RxList<MeetingModel>();
+  RxList<MeetingModel> unseenMeetingsList = RxList<MeetingModel>();
+  RxBool loadingEvents = false.obs;
+  RxBool loadingNewMeetings = false.obs;
+  RxBool loadingMessages = false.obs;
+
+  Future<void> loadEvents() async {
+    if (!loadingEvents.value) {
+      try {
+        loadingEvents.value = true;
+
+        // var body = {
+        //   "username": username ?? txtEmailLogin.text,
+        //   "password": password ?? txtPasswordLogin.text
+        // };
+
+        int uId = loadDataController.userModel.value.id!;
+        String date = DateTime.now().toIso8601String().substring(0, 10);
+
+        await ApiRequest.getRequest(
+                baseURL + '/event/GetEventsByUser?date=$date&userId=$uId',
+                () {})
+            .then((value) async {
+          if (value != null) {
+            eventsList.value = eventsModelFromJson(value);
+            print("GoingHere");
+            print(value);
+
+            // if (value["detail"] == "Not authenticated") {
+            //   showSnackbarError(
+            //       "Error", "Access unauthorized, please login again");
+            //   Get.offAll(() => Welcome());
+            // }
+
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingEvents.value = false;
+      }
+    }
+  }
+
+  Future<void> loadMeetings() async {
+    if (!loadingNewMeetings.value) {
+      try {
+        loadingNewMeetings.value = true;
+
+        // var body = {
+        //   "username": username ?? txtEmailLogin.text,
+        //   "password": password ?? txtPasswordLogin.text
+        // };
+
+        int uId = loadDataController.userModel.value.id!;
+        String date = DateTime.now().toIso8601String().substring(0, 10);
+
+        await ApiRequest.getRequest(
+                baseURL + '/meeting/GetMeetingsByUser?date=$date&userId=$uId',
+                () {})
+            .then((value) async {
+          if (value != null) {
+            meetingsList.value = meetingModelFromJson(value);
+            unseenMeetingsList.value =
+                meetingsList.value.where((e) => e.seen == false).toList();
+            print("GoingHere");
+            print(value);
+
+            // if (value["detail"] == "Not authenticated") {
+            //   showSnackbarError(
+            //       "Error", "Access unauthorized, please login again");
+            //   Get.offAll(() => Welcome());
+            // }
+
+          }
+        });
+      } catch (e) {
+      } finally {
+        loadingNewMeetings.value = false;
+      }
+    }
+  }
 
   Future<void> loadAppData() async {
     try {

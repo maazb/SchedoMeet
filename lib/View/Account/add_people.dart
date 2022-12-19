@@ -148,7 +148,7 @@ class _AddPeopleState extends State<AddPeople> {
                                 borderRadius:
                                     BorderRadius.circular(width * 0.03)),
                             child: CupertinoSearchTextField(
-                              placeholder: "Search by email or phone",
+                              placeholder: "Search by name or email",
                               backgroundColor: white,
                               borderRadius: BorderRadius.circular(width * 0.03),
                               controller: _accountController.txtSearchUser,

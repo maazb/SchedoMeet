@@ -33,21 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   initMsg() {}
 
-  getData() async {
-    await _homeController.loadMeetings();
-    await _homeController.loadEvents();
-    print("length: " + _homeController.eventsList.length.toString());
-    // await _messagesController
-    //     .getChat()
-    //     .then((value) async => _messagesController.searchList.value =
-    //         _messagesController.chatList.where((p0) => true).toList())
-    //     .then((value) async => await _messagesController.getChatDates());
-  }
-
   @override
   void initState() {
     super.initState();
-    getData();
+    loadDataController.getData();
   }
 
   @override
@@ -363,270 +352,272 @@ class _HomeScreenState extends State<HomeScreen> {
                   // SizedBox(
                   //   height: height * 0.02,
                   // ),
-                  Obx(
-                    () => Container(
-                      child: _homeController.unseenMeetingsList.isEmpty
-                          ? Container(
-                              child: SizedBox(
-                                height: height * 0.02,
-                              ),
-                            )
-                          : Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.02,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: width * 0.05),
-                                    child: Text(
-                                      'Meetings today',
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                            color: textColor,
-                                            height: 1.3,
-                                            fontSize: height * 0.024,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                      height: height * 0.2,
-                                      child: Obx(
-                                        () =>
-                                            // _homeController.loadingNewMeetings.value
-                                            //     ? Column(
-                                            //         mainAxisAlignment: MainAxisAlignment.start,
-                                            //         crossAxisAlignment: CrossAxisAlignment.center,
-                                            //         children: [
-                                            //           SizedBox(
-                                            //             height: height * 0.02,
-                                            //           ),
-                                            //           Container(
-                                            //             height: height * 0.16,
-                                            //             child: LottieBuilder.asset(
-                                            //               "assets/animations/loading.json",
-                                            //             ),
-                                            //           ),
-                                            //         ],
-                                            //       )
-                                            // :
-                                            ListView.builder(
-                                                itemCount: _homeController
-                                                    .unseenMeetingsList.length,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemBuilder: ((context, index) {
-                                                  return Container(
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          width: index == 0
-                                                              ? width * 0.05
-                                                              : 0,
-                                                        ),
-                                                        CupertinoButton(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(0.0),
-                                                          minSize: 0.0001,
-                                                          onPressed: () {
-                                                            Get.to(() =>
-                                                                    MeetingDetail(
-                                                                      meeting: _homeController
-                                                                              .unseenMeetingsList[
-                                                                          index],
-                                                                    ))!
-                                                                .then((value) =>
-                                                                    {
-                                                                      _homeController
-                                                                          .loadMeetings()
-                                                                    });
-                                                          },
-                                                          child: Container(
-                                                            height:
-                                                                height * 0.16,
-                                                            width: width * 0.7,
-                                                            //height: height * 0.15,
-                                                            // margin: EdgeInsets.symmetric(
-                                                            //     horizontal: width * 0.05, vertical: height * 0.03),
-                                                            decoration: BoxDecoration(
-                                                                color:
-                                                                    yellowLight,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(width *
-                                                                            0.03)),
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: width * 0.05),
+                          child: Text(
+                            'Meetings today',
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: textColor,
+                                  height: 1.3,
+                                  fontSize: height * 0.024,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                        Container(
+                            height: height * 0.2,
+                            child: Obx(
+                              () =>
+                                  loadDataController.unseenMeetingsList.isEmpty
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "No meetings scheduled today",
+                                                  style: GoogleFonts.poppins(
+                                                      color: grey,
+                                                      fontSize: height * 0.018,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      : ListView.builder(
+                                          itemCount: loadDataController
+                                              .unseenMeetingsList.length,
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: ((context, index) {
+                                            return Container(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: index == 0
+                                                        ? width * 0.05
+                                                        : 0,
+                                                  ),
+                                                  CupertinoButton(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            0.0),
+                                                    minSize: 0.0001,
+                                                    onPressed: () {
+                                                      Get.to(() =>
+                                                              MeetingDetail(
+                                                                meeting:
+                                                                    loadDataController
+                                                                            .unseenMeetingsList[
+                                                                        index],
+                                                              ))!
+                                                          .then((value) => {
+                                                                loadDataController
+                                                                    .loadMeetings()
+                                                              });
+                                                    },
+                                                    child: Container(
+                                                      height: height * 0.16,
+                                                      width: width * 0.7,
+                                                      //height: height * 0.15,
+                                                      // margin: EdgeInsets.symmetric(
+                                                      //     horizontal: width * 0.05, vertical: height * 0.03),
+                                                      decoration: BoxDecoration(
+                                                          color: yellowLight,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      width *
+                                                                          0.03)),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                left: width *
+                                                                    0.04,
+                                                                top: height *
+                                                                    0.015,
+                                                                bottom: height *
+                                                                    0.005,
+                                                                right: width *
+                                                                    0.04),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      left: width *
-                                                                          0.04,
-                                                                      top: height *
-                                                                          0.015,
-                                                                      bottom: height *
-                                                                          0.005,
-                                                                      right: width *
-                                                                          0.04),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Text(
-                                                                        '${_homeController.unseenMeetingsList[index].title}',
-                                                                        style: GoogleFonts
-                                                                            .poppins(
-                                                                          textStyle: TextStyle(
-                                                                              color: brown,
-                                                                              //height: 1.3,
-                                                                              fontSize: height * 0.02,
-                                                                              fontWeight: FontWeight.w500),
-                                                                        ),
-                                                                      ),
-                                                                      // CupertinoButton(
-                                                                      //   padding:
-                                                                      //       const EdgeInsets.all(0.0),
-                                                                      //   minSize:
-                                                                      //       width *
-                                                                      //           0.05,
-                                                                      //   onPressed:
-                                                                      //       () {},
-                                                                      //   child:
-                                                                      //       Icon(
-                                                                      //     CupertinoIcons
-                                                                      //         .multiply,
-                                                                      //     size: height *
-                                                                      //         0.025,
-                                                                      //     color:
-                                                                      //         grey,
-                                                                      //   ),
-                                                                      // )
-                                                                    ],
+                                                                Text(
+                                                                  '${loadDataController.unseenMeetingsList[index].title}',
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    textStyle: TextStyle(
+                                                                        color: brown,
+                                                                        //height: 1.3,
+                                                                        fontSize: height * 0.02,
+                                                                        fontWeight: FontWeight.w500),
                                                                   ),
                                                                 ),
-                                                                Container(
-                                                                  margin: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          width *
-                                                                              0.04,
-                                                                      vertical:
-                                                                          height *
-                                                                              0.005),
-                                                                  child: Text(
-                                                                    '${_homeController.unseenMeetingsList[index].detail}',
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    maxLines: 2,
-                                                                    style: GoogleFonts
-                                                                        .poppins(
-                                                                      textStyle: TextStyle(
-                                                                          color:
-                                                                              grey,
-                                                                          height:
-                                                                              1.3,
-                                                                          fontSize: height *
-                                                                              0.017,
-                                                                          fontWeight:
-                                                                              FontWeight.w400),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      left: width *
-                                                                          0.04,
-                                                                      bottom: height *
-                                                                          0.015,
-                                                                      top: height *
-                                                                          0.00,
-                                                                      right: width *
-                                                                          0.04),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        DateFormat("hh:mm a").format(_homeController.unseenMeetingsList[index].startTime!) +
-                                                                            " - " +
-                                                                            DateFormat("hh:mm a").format(_homeController.unseenMeetingsList[index].endTime!),
-                                                                        style: GoogleFonts
-                                                                            .poppins(
-                                                                          textStyle: TextStyle(
-                                                                              color: brown,
-                                                                              //height: 1.3,
-                                                                              fontSize: height * 0.019,
-                                                                              fontWeight: FontWeight.w500),
-                                                                        ),
-                                                                      ),
-                                                                      CupertinoButton(
-                                                                          padding: const EdgeInsets.all(
-                                                                              0.0),
-                                                                          minSize:
-                                                                              0.0001,
-                                                                          onPressed:
-                                                                              () {},
-                                                                          child: SizedBox(
-                                                                              width: width * 0.14,
-                                                                              height: height * 0.04,
-                                                                              child: ListView.builder(
-                                                                                  scrollDirection: Axis.horizontal,
-                                                                                  itemCount: _homeController.meetingsList[index].attendees!.length < 3 ? _homeController.meetingsList[index].attendees!.length : 3,
-                                                                                  itemBuilder: (context, ind) {
-                                                                                    return Align(
-                                                                                      widthFactor: 0.6,
-                                                                                      child: CircleAvatar(
-                                                                                        radius: width * 0.032,
-                                                                                        backgroundColor: Colors.white,
-                                                                                        child: ind == 2
-                                                                                            ? CircleAvatar(
-                                                                                                radius: width * 0.028,
-                                                                                                backgroundColor: primaryBlue,
-                                                                                                child: Text(
-                                                                                                  '+' + (_homeController.meetingsList[index].attendees!.length - 2).toString(),
-                                                                                                  style: GoogleFonts.poppins(
-                                                                                                    textStyle: TextStyle(
-                                                                                                        color: white,
-                                                                                                        //height: 1.3,
-                                                                                                        fontSize: height * 0.012,
-                                                                                                        fontWeight: FontWeight.w400),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              )
-                                                                                            : CircleAvatar(
-                                                                                                radius: width * 0.028,
-
-                                                                                                backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => _homeController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image! == "" ? picPlaceHolder.value : loadDataController.userNameList.value.where((e) => _homeController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image!).image, // Provide your custom image
-                                                                                              ),
-                                                                                      ),
-                                                                                    );
-                                                                                  })))
-                                                                    ],
-                                                                  ),
-                                                                ),
+                                                                // CupertinoButton(
+                                                                //   padding:
+                                                                //       const EdgeInsets.all(0.0),
+                                                                //   minSize:
+                                                                //       width *
+                                                                //           0.05,
+                                                                //   onPressed:
+                                                                //       () {},
+                                                                //   child:
+                                                                //       Icon(
+                                                                //     CupertinoIcons
+                                                                //         .multiply,
+                                                                //     size: height *
+                                                                //         0.025,
+                                                                //     color:
+                                                                //         grey,
+                                                                //   ),
+                                                                // )
                                                               ],
                                                             ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: width * 0.03,
-                                                        )
-                                                      ],
+                                                          Container(
+                                                            margin: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        width *
+                                                                            0.04,
+                                                                    vertical:
+                                                                        height *
+                                                                            0.005),
+                                                            child: Text(
+                                                              '${loadDataController.unseenMeetingsList[index].detail}',
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              maxLines: 2,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                textStyle: TextStyle(
+                                                                    color: grey,
+                                                                    height: 1.3,
+                                                                    fontSize:
+                                                                        height *
+                                                                            0.017,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                left: width *
+                                                                    0.04,
+                                                                bottom: height *
+                                                                    0.015,
+                                                                top: height *
+                                                                    0.00,
+                                                                right: width *
+                                                                    0.04),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  DateFormat("hh:mm a").format(loadDataController
+                                                                          .unseenMeetingsList[
+                                                                              index]
+                                                                          .startTime!) +
+                                                                      " - " +
+                                                                      DateFormat("hh:mm a").format(loadDataController
+                                                                          .unseenMeetingsList[
+                                                                              index]
+                                                                          .endTime!),
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    textStyle: TextStyle(
+                                                                        color: brown,
+                                                                        //height: 1.3,
+                                                                        fontSize: height * 0.019,
+                                                                        fontWeight: FontWeight.w500),
+                                                                  ),
+                                                                ),
+                                                                CupertinoButton(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            0.0),
+                                                                    minSize:
+                                                                        0.0001,
+                                                                    onPressed:
+                                                                        () {},
+                                                                    child: SizedBox(
+                                                                        width: width * 0.14,
+                                                                        height: height * 0.04,
+                                                                        child: ListView.builder(
+                                                                            scrollDirection: Axis.horizontal,
+                                                                            itemCount: loadDataController.meetingsList[index].attendees!.length < 3 ? loadDataController.meetingsList[index].attendees!.length : 3,
+                                                                            itemBuilder: (context, ind) {
+                                                                              return Align(
+                                                                                widthFactor: 0.6,
+                                                                                child: CircleAvatar(
+                                                                                  radius: width * 0.032,
+                                                                                  backgroundColor: Colors.white,
+                                                                                  child: ind == 2
+                                                                                      ? CircleAvatar(
+                                                                                          radius: width * 0.028,
+                                                                                          backgroundColor: primaryBlue,
+                                                                                          child: Text(
+                                                                                            '+' + (loadDataController.meetingsList[index].attendees!.length - 2).toString(),
+                                                                                            style: GoogleFonts.poppins(
+                                                                                              textStyle: TextStyle(
+                                                                                                  color: white,
+                                                                                                  //height: 1.3,
+                                                                                                  fontSize: height * 0.012,
+                                                                                                  fontWeight: FontWeight.w400),
+                                                                                            ),
+                                                                                          ),
+                                                                                        )
+                                                                                      : CircleAvatar(
+                                                                                          radius: width * 0.028,
+
+                                                                                          backgroundImage: Image.network(loadDataController.userNameList.value.where((e) => loadDataController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image! == "" ? picPlaceHolder.value : loadDataController.userNameList.value.where((e) => loadDataController.meetingsList[index].attendees!.contains(e.id)).toList()[ind].image!).image, // Provide your custom image
+                                                                                        ),
+                                                                                ),
+                                                                              );
+                                                                            })))
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  );
-                                                })),
-                                      )),
-                                ],
-                              ),
-                            ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: width * 0.03,
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          })),
+                            )),
+                      ],
                     ),
                   ),
                   Container(
@@ -658,7 +649,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Obx(
                     () => Container(
-                      child: _homeController.loadingEvents.value
+                      child: loadDataController.loadingEvents.value
                           ? Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -675,7 +666,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ],
                             )
-                          : _homeController.eventsList.isEmpty
+                          : loadDataController.eventsList.isEmpty
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -688,14 +679,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: height * 0.2,
+                                      height: height * 0.01,
+                                    ),
+                                    Text(
+                                      "No events today",
+                                      style: GoogleFonts.poppins(
+                                          color: grey,
+                                          fontSize: height * 0.018,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(
+                                      height: height * 0.3,
                                     ),
                                   ],
                                 )
                               : Obx(
                                   () => ListView.builder(
                                       itemCount:
-                                          _homeController.eventsList.length,
+                                          loadDataController.eventsList.length,
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -709,12 +710,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                               minSize: width * 0.04,
                                               onPressed: () {
                                                 Get.to(() => EventDetail(
-                                                          event: _homeController
-                                                                  .eventsList[
-                                                              index],
+                                                          event:
+                                                              loadDataController
+                                                                      .eventsList[
+                                                                  index],
                                                         ))!
                                                     .then((value) =>
-                                                        _homeController
+                                                        loadDataController
                                                             .loadEvents());
                                               },
                                               child: Container(
@@ -746,7 +748,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     BorderRadius
                                                                         .circular(width *
                                                                             5)),
-                                                            child: _homeController
+                                                            child: loadDataController
                                                                         .eventsList[
                                                                             index]
                                                                         .eventType ==
@@ -760,7 +762,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         width *
                                                                             0.06,
                                                                   )
-                                                                : _homeController
+                                                                : loadDataController
                                                                             .eventsList[
                                                                                 index]
                                                                             .eventType ==
@@ -792,7 +794,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              _homeController
+                                                              loadDataController
                                                                   .eventsList[
                                                                       index]
                                                                   .title!,
@@ -815,7 +817,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                             ),
                                                             Text(
-                                                              _homeController
+                                                              loadDataController
                                                                   .eventsList[
                                                                       index]
                                                                   .detail!,
@@ -870,7 +872,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           child: Text(
                                                             DateFormat(
                                                                     "hh:mm a")
-                                                                .format(_homeController
+                                                                .format(loadDataController
                                                                     .eventsList[
                                                                         index]
                                                                     .startTime!),

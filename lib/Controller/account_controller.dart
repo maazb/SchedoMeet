@@ -735,21 +735,8 @@ class AccountController extends GetxController {
     if (!loadingUpdateInfo.value) {
       try {
         loadingUpdateInfo.value = true;
-        String imageUrl = "";
-
-        final storageRef = FirebaseStorage.instance.ref();
 
 // Create a reference to "mountains.jpg"
-        final imagesRef =
-            storageRef.child("images/${selectedImage.value.name}");
-        File file = File(selectedImage.value.path);
-        try {
-          print("Uploading to Firebase");
-          await imagesRef.putFile(file);
-          imageUrl = await imagesRef.getDownloadURL();
-        } on FirebaseException catch (e) {
-          print("firebase exception: $e");
-        }
 
         //Upload Images
         // List<String> imagesString = [];
