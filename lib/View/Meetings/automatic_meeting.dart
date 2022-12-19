@@ -1419,8 +1419,12 @@ class _AutomaticMeetingState extends State<AutomaticMeeting> {
                       _meetingController.txtAddDetail.text.isEmpty ||
                       _meetingController.selectedAttendees.isEmpty ||
                       _meetingController.txtDuration.text.isEmpty) {
-                    await showSnackbarError("Incomplete data",
+                    showSnackbarError("Incomplete data",
                         "Title, Detail, Duration and Attendees must be entered.");
+                  } else if (_meetingController.txtAddLink.text.isNotEmpty &&
+                      !_meetingController.txtAddLink.text.isURL) {
+                    showSnackbarError(
+                        "Invalid link", "Invalid meeting link entered");
                   } else {
                     await _meetingController.addMeetingAuto();
                   }

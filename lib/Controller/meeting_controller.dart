@@ -124,7 +124,7 @@ class MeetingController extends GetxController {
               } else {
                 Get.back();
                 Get.back();
-                showSnackbarSuccess("Success", "Meeting added.");
+
                 loadingMeetings();
                 loadDataController.getData();
               }
@@ -191,7 +191,7 @@ class MeetingController extends GetxController {
                 Get.back();
                 Get.back();
                 Get.back();
-                showSnackbarSuccess("Success", "Meeting added.");
+
                 loadMeetings();
                 loadDataController.getData();
               }

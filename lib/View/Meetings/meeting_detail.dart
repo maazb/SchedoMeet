@@ -1,3 +1,4 @@
+import 'package:bit_planner/Helper/common_widgets/snackbar_error.dart';
 import 'package:bit_planner/Model/meeting_model.dart';
 import 'package:bit_planner/Model/user_name_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../Helper/values.dart';
 
@@ -768,7 +770,14 @@ class _MeetingDetailState extends State<MeetingDetail> {
                   CupertinoButton(
                     padding: EdgeInsets.all(0.0),
                     minSize: 0.0001,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (widget.meeting.link!.isURL) {
+                        launchUrl(Uri.parse(widget.meeting.link!));
+                      } else {
+                        showSnackbarError("Broken link",
+                            "The meeting link that was entered is invalid");
+                      }
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       width: width * 0.9,

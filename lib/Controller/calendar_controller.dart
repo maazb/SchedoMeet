@@ -118,7 +118,7 @@ class CalendarController extends GetxController {
               } else {
                 Get.back();
                 Get.back();
-                showSnackbarSuccess("Success", "Event added.");
+
                 loadEvents();
                 loadDataController.getData();
               }
@@ -189,7 +189,7 @@ class CalendarController extends GetxController {
                 Get.back();
                 Get.back();
                 Get.back();
-                showSnackbarSuccess("Success", "Event added.");
+
                 loadEvents();
                 loadDataController.getData();
               }
